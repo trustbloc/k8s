@@ -1,0 +1,23 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+name: build
+on:
+  push:
+    branches-ignore:
+    - 'dependabot/**'
+  pull_request:
+jobs:
+  checks:
+    name: Checks
+    timeout-minutes: 10
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run checks
+        timeout-minutes: 10
+        run: make checks
