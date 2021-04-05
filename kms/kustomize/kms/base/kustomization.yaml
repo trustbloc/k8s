@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 # Labels to add to all resources and selectors.
 #commonLabels:
@@ -20,10 +20,6 @@ configMapGenerator:
   name: kms-env
 
 secretGenerator:
-- files:
-  - registry/.dockerconfigjson
-  name: kms-github-regcred
-  type: kubernetes.io/dockerconfigjson
 - envs:
   - secret.env
   name: kms-env-secret

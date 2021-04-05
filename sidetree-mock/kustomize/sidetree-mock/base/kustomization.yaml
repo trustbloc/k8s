@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 # Labels to add to all resources and selectors.
 #commonLabels:
@@ -27,12 +27,6 @@ configMapGenerator:
 - envs:
   - config.env
   name: sidetree-mock-env
-
-secretGenerator:
-- files:
-  - registry/.dockerconfigjson
-  name: sidetree-mock-github-regcred
-  type: kubernetes.io/dockerconfigjson
 
 resources:
 - deployment.yml

@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 ---
 kind: Deployment
@@ -19,8 +19,6 @@ spec:
       labels:
         app: did-resolver
     spec:
-      imagePullSecrets:
-      - name: resolver-github-regcred
       volumes:
         - name: config
           configMap:

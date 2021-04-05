@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 # Labels to add to all resources and selectors.
 #commonLabels:
@@ -20,10 +20,6 @@ configMapGenerator:
   name: vcs-env
 
 secretGenerator:
-- files:
-  - registry/.dockerconfigjson
-  name: vcs-github-regcred
-  type: kubernetes.io/dockerconfigjson
 - envs:
   - vcs/secret.env
   name: vcs-env-secret

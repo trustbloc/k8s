@@ -23,8 +23,6 @@ spec:
         - name: config
           configMap:
             name: rp-config
-      imagePullSecrets:
-      - name: adapters-github-regcred
       containers:
       - name: rp
         envFrom:
