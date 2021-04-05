@@ -1,0 +1,22 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: issuer
+spec:
+  template:
+    spec:
+      volumes:
+        - name: oidc-key
+          secret:
+            secretName: issuer-oidc-key
+      containers:
+        - name: issuer
+          volumeMounts:
+            - name: oidc-key
+              mountPath: /etc/store-keys

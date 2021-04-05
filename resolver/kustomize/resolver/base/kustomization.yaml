@@ -1,0 +1,50 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+
+generatorOptions: {}
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: DID_RESOLVER_SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: did-resolver
+
+secretGenerator:
+- files:
+  - registry/.dockerconfigjson
+  name: resolver-github-regcred
+  type: kubernetes.io/dockerconfigjson
+
+configMapGenerator:
+- envs:
+  - config.env
+  name: did-resolver-env
+- files:
+  - config.json
+  name: did-resolver-config
+
+resources:
+- deployment.yml
+- service.yml
+
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: did-resolver
+  newName: ghcr.io/trustbloc-cicd/did-resolver
+  newTag: 0.1.7-snapshot-7874fc2

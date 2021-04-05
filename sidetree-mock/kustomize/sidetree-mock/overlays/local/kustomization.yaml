@@ -1,0 +1,92 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+  group: core
+  instance: local
+  project: trustbloc
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: INGRESS_TLS_SECRET
+  objref:
+    apiVersion: v1
+    kind: Secret
+    name: sidetree-mock-wildcard-cert
+
+
+configMapGenerator:
+- files:
+  - keys/update_public.pem
+  - keys/recover_public.pem
+  name: sidetree-mock-keys-public
+- files:
+  - sidetree/testnet.json
+  name: sidetree-mock-config-data
+- behavior: merge
+  envs:
+  - sidetree-mock/config.env
+  name: sidetree-mock-env
+- behavior: merge
+  envs:
+  - stakeholder-one/config.env
+  name: env-stakeholder-one
+- behavior: merge
+  envs:
+  - testnet/config.env
+  name: env-stakeholder-zero
+
+secretGenerator:
+- files:
+  - keys/update_private.pem
+  - keys/recover_private.pem
+  name: sidetree-mock-keys-private
+  type: Opaque
+- files:
+  - sidetree/stakeholder-one_jwk.json
+  name: sidetree-mock-config-data-private
+  type: Opaque
+- files:
+  - certs/tls.crt
+  - certs/tls.key
+  name: sidetree-mock-wildcard-cert
+  type: kubernetes.io/tls
+
+resources:
+- pvc.yml
+- ../sidetree-mock
+- sidetree-mock/ingress.yml
+- ../stakeholder-one
+- stakeholder-one/ingress.yml
+- ../stakeholder-zero
+- testnet/ingress.yml
+- did-method-cli.yml
+
+transformers:
+- sedtransform.yml
+
+patchesStrategicMerge:
+- sidetree-mock/add-pvc.yml
+- stakeholder-one/add-pvc.yml
+- testnet/add-pvc.yml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: did-method-cli
+  newName: ghcr.io/trustbloc/did-method-cli
+  newTag: 0.1.6

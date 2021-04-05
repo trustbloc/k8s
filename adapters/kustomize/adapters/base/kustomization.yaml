@@ -1,0 +1,85 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+
+generatorOptions: {}
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: ISSUER_ADAPTER_SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: issuer
+- fieldref:
+    fieldPath: metadata.name
+  name: ISSUER_ADAPTER_DIDCOMM_SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: issuer-didcomm
+- fieldref:
+    fieldPath: metadata.name
+  name: RP_ADAPTER_SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: rp
+- fieldref:
+    fieldPath: metadata.name
+  name: RP_ADAPTER_DIDCOMM_SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: rp-didcomm
+
+
+configMapGenerator:
+- envs:
+  - issuer/config.env
+  name: issuer-env
+- envs:
+  - rp/config.env
+  name: rp-env
+- files:
+  - rp/config.json
+  name: rp-config
+
+secretGenerator:
+- files:
+  - registry/.dockerconfigjson
+  name: adapters-github-regcred
+  type: kubernetes.io/dockerconfigjson
+- envs:
+  - issuer/secret.env
+  name: issuer-env-secret
+- envs:
+  - rp/secret.env
+  name: rp-env-secret
+
+resources:
+- issuer/deployment.yml
+- issuer/service.yml
+- rp/deployment.yml
+- rp/service.yml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: issuer-adapter
+  newName: ghcr.io/trustbloc-cicd/issuer-adapter
+  newTag: 0.1.7-snapshot-813410f
+- name: rp-adapter
+  newName: ghcr.io/trustbloc-cicd/rp-adapter
+  newTag: 0.1.7-snapshot-813410f

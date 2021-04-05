@@ -1,0 +1,33 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: sidetree-mock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sidetree-mock
+  template:
+    metadata:
+      labels:
+        app: sidetree-mock
+    spec:
+      imagePullSecrets:
+      - name: sidetree-mock-github-regcred
+      containers:
+      - name: sidetree-mock
+        envFrom:
+          - configMapRef:
+              name: sidetree-mock-env
+        image: "sidetree-mock:latest"
+        ports:
+          - name: http-port
+            protocol: TCP
+            containerPort: 8081

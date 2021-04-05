@@ -1,0 +1,55 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+# Adds namespace to all resources.
+#namespace: edge-sandbox-system
+
+# Value of this field is prepended to the
+# names of all resources, e.g. a deployment named
+# "wordpress" becomes "alices-wordpress".
+# Note that it should also match with the prefix (text before '-') of the namespace
+# field above.
+commonLabels:
+  component: registrar
+  group: core
+  instance: local
+  project: trustbloc
+
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- uni-registrar-web/ingress.yml
+
+transformers:
+- sedtransform.yml
+
+components:
+- ../../components/driver-did-v1
+- ../../components/uni-registrar-web
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: INGRESS_TLS_SECRET
+  objref:
+    apiVersion: v1
+    kind: Secret
+    name: registrar-wildcard-cert
+
+secretGenerator:
+- files:
+  - certs/tls.crt
+  - certs/tls.key
+  name: registrar-wildcard-cert
+  type: kubernetes.io/tls
+
+configMapGenerator:
+- behavior: replace
+  files:
+  - uni-registrar-web/config.json
+  name: uni-registrar-web-config

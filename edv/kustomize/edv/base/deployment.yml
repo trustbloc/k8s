@@ -1,0 +1,36 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: edv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edv
+  template:
+    metadata:
+      labels:
+        app: edv
+    spec:
+      imagePullSecrets:
+      - name: edv-github-regcred
+      containers:
+      - name: edv
+        envFrom:
+          - configMapRef:
+              name: edv-env
+          - secretRef:
+              name: edv-env-secret
+        image: edv:latest
+        args: ["start"]
+        ports:
+          - containerPort: 8081
+            protocol: TCP
+            name: http-port

@@ -1,0 +1,47 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+
+generatorOptions: {}
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: DID_METHOD_SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: did-method
+
+secretGenerator:
+- files:
+  - registry/.dockerconfigjson
+  name: did-method-github-regcred
+  type: kubernetes.io/dockerconfigjson
+
+configMapGenerator:
+- envs:
+  - did-method.env
+  name: did-method-env
+
+resources:
+- deployment.yml
+- service.yml
+
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: driver-did-trustbloc
+  newName: ghcr.io/trustbloc-cicd/driver-did-trustbloc
+  newTag: 0.1.7-snapshot-aacd187

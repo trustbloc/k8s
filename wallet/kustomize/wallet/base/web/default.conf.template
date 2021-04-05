@@ -1,0 +1,47 @@
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+server {
+    listen 80;
+
+    index index.html;
+    root /usr/share/nginx/www;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location ~ agent-js-worker\.wasm$ {
+        gzip_static on;
+        types {
+            application/wasm  wasm;
+        }
+    }
+
+    location /walletconfig/agent {
+        add_header 'Content-Type' 'application/json charset=UTF-8';
+
+        return 200 '{
+            "http-resolver-url":"${HTTP_RESOLVER_URL}",
+            "agent-default-label":"${AGENT_DEFAULT_LABEL}",
+            "auto-accept": ${AUTO_ACCEPT},
+            "log-level":"${LOG_LEVEL}",
+            "indexedDB-namespace":"${INDEXEDDB_NAMESPACE}",
+            "blocDomain":"${BLOC_DOMAIN}",
+            "walletMediatorURL":"${WALLET_MEDIATOR_URL}",
+            "credentialMediatorURL":"${CREDENTIAL_MEDIATOR_URL}",
+            "blindedRouting":"${BLINDED_ROUTING}",
+            "storageType":"${STORAGE_TYPE}",
+            "edvServerURL":"${EDV_SERVER_URL}",
+            "edge-agent-server":"${EDGE_AGENT_SERVER}",
+            "kmsType":"${KMS_TYPE}",
+            "useEDVCache":${USE_EDV_CACHE},
+            "edvClearCache": "${EDV_CLEAR_CACHE}",
+            "useEDVBatch": ${USE_EDV_BATCH},
+            "edvBatchSize": ${EDV_BATCH_SIZE},
+            "cacheSize": ${CACHE_SIZE}
+        }';
+    }
+}

@@ -1,0 +1,49 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+
+generatorOptions: {}
+
+configMapGenerator:
+- envs:
+  - config.env
+  name: vault-server-env
+
+secretGenerator:
+- files:
+  - registry/.dockerconfigjson
+  name: vault-server-github-regcred
+  type: kubernetes.io/dockerconfigjson
+- envs:
+  - secret.env
+  name: vault-server-env-secret
+
+resources:
+- deployment.yml
+- service.yml
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: vault-server
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: vault-server
+  newName: ghcr.io/trustbloc-cicd/vault-server
+  newTag: 0.1.7-snapshot-7874fc2

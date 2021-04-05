@@ -1,0 +1,43 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+log:
+  level: debug
+
+serve:
+  proxy:
+    port: 4455
+    cors:
+      enabled: true
+      allowed_headers:
+        - 'Capability-Invocation,Content-Type,Digest,Signature'
+  api:
+    port: 4456
+
+access_rules:
+  repositories:
+  - file:///etc/rules/access-rules.json
+# Global configuration file oathkeeper.yml
+authenticators:
+  oauth2_introspection:
+    # Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
+    enabled: true
+    config:
+      introspection_url: https://hub-hydra-admin.||DOMAIN||/oauth2/introspect
+  noop:
+    enabled: true
+authorizers:
+  allow:
+  # Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
+    enabled: true
+mutators:
+  header:
+    # Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
+    enabled: true
+    config:
+      headers:
+        X-User: '{{ print .Subject }}'
+  noop:
+    enabled: true

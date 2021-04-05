@@ -1,0 +1,36 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+images:
+- name: uni-resolver-web
+  newName: universalresolver/uni-resolver-web
+  newTag: latest
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: UNI_RESOLVER_WEB_SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: uni-resolver-web
+
+configMapGenerator:
+- files:
+  - config.json
+  name: uni-resolver-web-config
+- files:
+  - run-uni-resolver-web.sh
+  name: uni-resolver-web-run
+
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+resources:
+- deployment.yml
+- service.yml

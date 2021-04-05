@@ -1,0 +1,41 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+
+generatorOptions: {}
+
+configMapGenerator:
+- envs:
+  - vcs/config.env
+  name: vcs-env
+
+secretGenerator:
+- files:
+  - registry/.dockerconfigjson
+  name: vcs-github-regcred
+  type: kubernetes.io/dockerconfigjson
+- envs:
+  - vcs/secret.env
+  name: vcs-env-secret
+
+resources:
+- vcs/deployment.yml
+- vcs/service.yml
+
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: vc-server
+  newName: ghcr.io/trustbloc-cicd/vc-server
+  newTag: 0.1.7-snapshot-7874fc2

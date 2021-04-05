@@ -1,0 +1,45 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: wallet-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+      group: wallet
+      component: wallet-web
+  template:
+    metadata:
+      labels:
+        app: web
+        group: wallet
+        component: wallet-web
+    spec:
+      volumes:
+        - name: nginx-config-template
+          configMap:
+            name: nginx-config-template
+      imagePullSecrets:
+      - name: wallet-github-regcred
+      containers:
+      - name: web
+        envFrom:
+          - configMapRef:
+              name: web-env
+        image: wallet-web:latest
+        ports:
+          - containerPort: 80
+            protocol: TCP
+            name: http-port
+        volumeMounts:
+          - name: nginx-config-template
+            mountPath: /etc/nginx/templates
+            readOnly: true

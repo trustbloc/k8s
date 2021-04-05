@@ -22,3 +22,9 @@ vendor
 *.out
 .idea
 .DS_Store
+
+# kustomize binaries
+*/bin
+
+# generated certificates
+.certs

@@ -1,0 +1,44 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: uni-resolver-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uni-resolver-web
+  template:
+    metadata:
+      labels:
+        app: uni-resolver-web
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: uni-resolver-web-config
+        - name: run
+          configMap:
+            name: uni-resolver-web-run
+      containers:
+      - name: uni-resolver-web
+        image: uni-resolver-web:latest
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+            name: http-port
+        volumeMounts:
+          - name: config
+            mountPath: /opt/uni-resolver-java/uni-resolver-web/config.json
+            subPath: config.json
+          - name: run
+            mountPath: /opt/uni-resolver-java/uni-resolver-web/docker/run-uni-resolver-web.sh
+            subPath: run-uni-resolver-web.sh
+        resources: {}
+status: {}
