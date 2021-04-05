@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 # Labels to add to all resources and selectors.
 #commonLabels:
@@ -20,10 +20,6 @@ configMapGenerator:
   name: vault-server-env
 
 secretGenerator:
-- files:
-  - registry/.dockerconfigjson
-  name: vault-server-github-regcred
-  type: kubernetes.io/dockerconfigjson
 - envs:
   - secret.env
   name: vault-server-env-secret

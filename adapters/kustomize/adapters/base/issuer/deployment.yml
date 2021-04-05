@@ -19,8 +19,6 @@ spec:
       labels:
         app: issuer
     spec:
-      imagePullSecrets:
-      - name: adapters-github-regcred
       containers:
       - name: issuer
         envFrom:

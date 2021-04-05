@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 # Labels to add to all resources and selectors.
 #commonLabels:
@@ -22,12 +22,6 @@ vars:
     apiVersion: v1
     kind: Service
     name: did-method
-
-secretGenerator:
-- files:
-  - registry/.dockerconfigjson
-  name: did-method-github-regcred
-  type: kubernetes.io/dockerconfigjson
 
 configMapGenerator:
 - envs:

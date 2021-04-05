@@ -19,8 +19,6 @@ spec:
       labels:
         app: csh
     spec:
-      imagePullSecrets:
-      - name: csh-github-regcred
       containers:
       - name: csh
         envFrom:

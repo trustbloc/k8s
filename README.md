@@ -22,10 +22,6 @@ The repo contains the scripts to deploy the core TrustBloc components.
   # PATH=~/gnu:$PATH
   # make setup-and-deploy
   ```
-- Make sure docker registry *auths* is present in *~/.docker/config.json*, content should look similar to the following:
-  ```
-  {"auths": {ghcr.io": {"auth": "KEY" ....
-  ```
 
 ## Running
 

@@ -57,10 +57,6 @@ configMapGenerator:
   name: rp-config
 
 secretGenerator:
-- files:
-  - registry/.dockerconfigjson
-  name: adapters-github-regcred
-  type: kubernetes.io/dockerconfigjson
 - envs:
   - issuer/secret.env
   name: issuer-env-secret
