@@ -1,0 +1,30 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: driver-did-key
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: driver-did-key
+  template:
+    metadata:
+      labels:
+        app: driver-did-key
+    spec:
+      containers:
+      - name: driver-did-key
+        image: driver-did-key:latest
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+            name: http-port
+        resources: {}
+status: {}

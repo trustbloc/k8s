@@ -1,0 +1,74 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+# Adds namespace to all resources.
+#namespace: edge-sandbox-system
+
+# Value of this field is prepended to the
+# names of all resources, e.g. a deployment named
+# "wordpress" becomes "alices-wordpress".
+# Note that it should also match with the prefix (text before '-') of the namespace
+# field above.
+namePrefix: vault-
+commonLabels:
+  component: vault-kms
+  group: core
+  instance: local
+  project: trustbloc
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../../base
+- kms/ingress.yml
+
+transformers:
+- sedtransform.yml
+- sedb64transform.yml
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: INGRESS_TLS_SECRET
+  objref:
+    apiVersion: v1
+    kind: Secret
+    name: vault-kms-wildcard-cert
+- fieldref:
+    fieldPath: metadata.name
+  name: SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: kms
+
+secretGenerator:
+- files:
+  - ../certs/tls.crt
+  - ../certs/tls.key
+  name: vault-kms-wildcard-cert
+  type: kubernetes.io/tls
+- behavior: merge
+  envs:
+  - kms/secret.env
+  name: kms-env-secret
+- files:
+  - secret-lock.key=../keys/vault-kms-secret-lock.key
+  name: kms-lock-key
+
+configMapGenerator:
+- behavior: merge
+  envs:
+  - kms/config.env
+  name: kms-env
+- files:
+  - ../certs/ca.crt
+  name: kms-ca-cert
+
+patchesStrategicMerge:
+- kms/add-key.yml
+- kms/add-ca.yml

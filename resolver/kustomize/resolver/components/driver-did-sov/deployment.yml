@@ -1,0 +1,51 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: driver-did-sov
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: driver-did-sov
+  template:
+    metadata:
+      labels:
+        app: driver-did-sov
+    spec:
+      containers:
+      - name: driver-did-sov
+        env:
+          - name: uniresolver_driver_did_sov_libIndyPath
+            valueFrom:
+              configMapKeyRef:
+                name: driver-did-sov-env
+                key: uniresolver_driver_did_sov_libIndyPath
+          - name: uniresolver_driver_did_sov_poolConfigs
+            valueFrom:
+              configMapKeyRef:
+                name: driver-did-sov-env
+                key: uniresolver_driver_did_sov_poolConfigs
+          - name: uniresolver_driver_did_sov_poolVersions
+            valueFrom:
+              configMapKeyRef:
+                name: driver-did-sov-env
+                key: uniresolver_driver_did_sov_poolVersions
+          - name: uniresolver_driver_did_sov_walletName
+            valueFrom:
+              configMapKeyRef:
+                name: driver-did-sov-env
+                key: uniresolver_driver_did_sov_walletName
+        image: driver-did-sov:latest
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+            name: http-port
+        resources: {}
+status: {}

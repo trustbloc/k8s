@@ -1,0 +1,31 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wallet-server
+  labels:
+    app: server
+    group: wallet
+    component: wallet-server    
+spec:
+  tls:
+  - hosts:
+      - $(SERVER_SERVICE_NAME).||DOMAIN||
+    secretName: $(INGRESS_TLS_SECRET)
+  rules:
+  - host: $(SERVER_SERVICE_NAME).||DOMAIN||
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: myagent-support
+            port:
+              name: http

@@ -1,0 +1,14 @@
+{
+  "drivers": [
+    {
+      "image": "did-method-rest",
+      "url": "http://did-method/"
+    },
+    {
+      "image": "universalregistrar/driver-did-v1",
+      "url": "http://driver-did-v1",
+      "imageProperties": "true",
+      "tag": "latest"
+    }
+  ]
+}

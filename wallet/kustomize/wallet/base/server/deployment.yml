@@ -1,0 +1,49 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: wallet-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+      group: wallet
+      component: wallet-server
+  template:
+    metadata:
+      labels:
+        app: server
+        group: wallet
+        component: wallet-server
+    spec:
+      volumes:
+        - name: keys
+          secret:
+            secretName: server-keys
+      imagePullSecrets:
+      - name: wallet-github-regcred
+      hostname: server
+      containers:
+      - name: server
+        envFrom:
+          - configMapRef:
+              name: server-env
+          - secretRef:
+              name: server-env-secret
+        image: wallet-server:latest
+        args: ["start"]
+        ports:
+          - containerPort: 8081
+            protocol: TCP
+            name: http-port
+        volumeMounts:
+          - name: keys
+            mountPath: /etc/server/keys
+            readOnly: true

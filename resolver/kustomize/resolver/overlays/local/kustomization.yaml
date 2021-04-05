@@ -1,0 +1,74 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+# Adds namespace to all resources.
+#namespace: edge-sandbox-system
+
+# Value of this field is prepended to the
+# names of all resources, e.g. a deployment named
+# "wordpress" becomes "alices-wordpress".
+# Note that it should also match with the prefix (text before '-') of the namespace
+# field above.
+commonLabels:
+  component: resolver
+  group: core
+  instance: local
+  project: trustbloc
+
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+- resolver/ingress.yml
+- uni-resolver-web/ingress.yml
+
+transformers:
+- sedtransform.yml
+
+components:
+- ../../components/driver-did-key
+- ../../components/driver-did-sov
+- ../../components/uni-resolver-did-v1-driver
+- ../../components/uni-resolver-driver-did-uport
+- ../../components/uni-resolver-web
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: INGRESS_TLS_SECRET
+  objref:
+    apiVersion: v1
+    kind: Secret
+    name: resolver-wildcard-cert
+
+secretGenerator:
+- files:
+  - certs/tls.crt
+  - certs/tls.key
+  name: resolver-wildcard-cert
+  type: kubernetes.io/tls
+
+configMapGenerator:
+- behavior: replace
+  files:
+  - resolver/config.json
+  name: did-resolver-config
+- behavior: merge
+  envs:
+  - resolver/config.env
+  name: did-resolver-env
+- behavior: replace
+  files:
+  - uni-resolver-web/config.json
+  name: uni-resolver-web-config
+- files:
+  - certs/ca.crt
+  name: resolver-ca-cert
+
+patchesStrategicMerge:
+- resolver/add-ca.yml

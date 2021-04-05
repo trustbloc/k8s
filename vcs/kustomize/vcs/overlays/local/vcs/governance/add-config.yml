@@ -1,0 +1,22 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: governance-vcs
+spec:
+  template:
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: governance-config
+      containers:
+        - name: vcs
+          volumeMounts:
+            - name: config
+              mountPath: /etc/vcs

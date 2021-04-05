@@ -1,0 +1,23 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: sidetree-mock
+spec:
+  template:
+    spec:
+      volumes:
+      - name: sidetree-mock-config
+        persistentVolumeClaim:
+          claimName: sidetree-mock-config
+      containers:
+      - name: sidetree-mock
+        volumeMounts:
+          - mountPath: /config
+            name: sidetree-mock-config

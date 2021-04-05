@@ -1,0 +1,20 @@
+{
+    "rules": [
+      {
+        "pattern": "^(did:trustbloc:.+)$",
+        "url": "http://did-method/resolveDID?did=$1"
+      },
+      {
+        "pattern": "^(did:factom:.+)$",
+        "url": "https://uniresolver.io/1.0/identifiers/$1"
+      },
+      {
+        "pattern": "^(did:web:.+)$",
+        "url": ""
+      },      
+      {
+        "pattern": "^(did:.+)$",
+        "url": "https://uni-resolver-web.||DOMAIN||/1.0/identifiers/$1"
+      }
+    ]
+  }

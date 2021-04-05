@@ -1,0 +1,73 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: did-method-cli
+spec:
+  template:
+    spec:
+#      ttlSecondsAfterFinished: 100s
+      volumes:
+      - name: sidetree-mock-config
+        persistentVolumeClaim:
+          claimName: sidetree-mock-config
+      - name: sidetree-mock-keys
+        projected:
+          sources:
+          - configMap:
+              name: sidetree-mock-keys-public
+          - secret:
+              name: sidetree-mock-keys-private
+      - name: sidetree-mock-config-data
+        projected:
+          sources:
+          - configMap:
+              name: sidetree-mock-config-data
+          - secret:
+              name: sidetree-mock-config-data-private
+
+      imagePullSecrets:
+      - name: github-regcred
+      restartPolicy: Never
+      containers:
+      - name: did-method-cli
+        env:
+          - name: DID_METHOD_CLI_OUTPUT_DIRECTORY
+            value: '/config/temp'
+          - name: DID_METHOD_CLI_CONFIG_FILE
+            value: '/config-data/testnet.json'
+          - name: DID_METHOD_CLI_SIDETREE_WRITE_TOKEN
+            value: 'rw_token'
+          - name: DID_METHOD_CLI_UPDATEKEY_FILE
+            value: '/keys/update_public.pem'
+          - name: DID_METHOD_CLI_RECOVERYKEY_FILE
+            value: '/keys/recover_public.pem'
+          - name: DID_METHOD_CLI_SIDETREE_URL
+            value: "http://sidetree-mock/sidetree/v1"
+        image: "did-method-cli:latest"
+        command: ["/bin/sh"]
+        args:
+          - "-c"
+          - |
+            while [[ "$(wget  -S --spider http://sidetree-mock/ 2>&1 | grep '404 Not Found')" == "" ]]; do echo "waiting for endopint"; sleep 5; done;
+            /usr/local/bin/did-method-cli create-config || true;
+            rm -rf /config/config/*;
+            mv /config/temp/did-trustbloc /config/config/;
+            cp /config/temp/stakeholder-one.||DOMAIN||/did-configuration.json /config/config/;
+            rm -rf /config/temp;
+            rm -rf /config/genesis-configs;
+            mkdir /config/genesis-configs;
+            cp /config/config/did-trustbloc/testnet.||DOMAIN||.json /config/genesis-configs/;
+        volumeMounts:
+          - mountPath: /config
+            name: sidetree-mock-config
+          - mountPath: /config-data
+            name: sidetree-mock-config-data
+          - mountPath: /keys
+            name: sidetree-mock-keys

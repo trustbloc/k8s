@@ -1,0 +1,46 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: rp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rp
+  template:
+    metadata:
+      labels:
+        app: rp
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: rp-config
+      imagePullSecrets:
+      - name: adapters-github-regcred
+      containers:
+      - name: rp
+        envFrom:
+          - configMapRef:
+              name: rp-env
+          - secretRef:
+              name: rp-env-secret
+        image: rp-adapter:latest
+        args: ["start"]
+        ports:
+          - containerPort: 8081
+            protocol: TCP
+            name: http-port
+          - containerPort: 8082
+            protocol: TCP
+            name: didcomm-port
+        volumeMounts:
+          - name: config
+            mountPath: /etc/rp-adapter/config

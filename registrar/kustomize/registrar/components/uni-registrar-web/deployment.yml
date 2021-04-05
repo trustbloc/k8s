@@ -1,0 +1,38 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: uni-registrar-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uni-registrar-web
+  template:
+    metadata:
+      labels:
+        app: uni-registrar-web
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: uni-registrar-web-config
+      containers:
+      - name: uni-registrar-web
+        image: uni-registrar-web:latest
+        ports:
+          - containerPort: 9080
+            protocol: TCP
+            name: http-port
+        volumeMounts:
+          - name: config
+            mountPath: /opt/uni-registrar-java/uni-registrar-web/config.json
+            subPath: config.json
+        resources: {}
+status: {}
