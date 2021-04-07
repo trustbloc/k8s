@@ -14,7 +14,7 @@ set -e
 : ${DOMAIN:=trustbloc.dev}
 : ${DEPLOYMENT_ENV:=local}
 ## Should be deployed in the listed order
-: ${COMPONENTS=sidetree-mock edv resolver registrar did-method csh vcs vault-server kms wallet adapters}
+: ${COMPONENTS=sidetree-mock edv resolver registrar did-method csh vcs vault-server kms hub-auth wallet adapters}
 DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)
@@ -28,6 +28,7 @@ declare -A HEALTCHECK_URL=(
     [vcs]="https://issuer-vcs.$DOMAIN/healthcheck https://rp-vcs.$DOMAIN/healthcheck https://rp-vcs.$DOMAIN/healthcheck https://governance-vcs.$DOMAIN/healthcheck"
     [vault-server]="https://vault-server.$DOMAIN/healthcheck"
     [kms]="https://authz-oathkeeper-proxy.$DOMAIN/healthcheck https://ops-oathkeeper-proxy.$DOMAIN/healthcheck https://vault-kms.$DOMAIN/healthcheck"
+    [hub-auth]="https://hub-auth.$DOMAIN/healthcheck"
     [wallet]="https://router-api.$DOMAIN:9084/healthcheck https://myagent.$DOMAIN/login"
     [wallet]="https://myagent.$DOMAIN/login"
     [adapters]="https://adapter-rp.$DOMAIN/healthcheck https://adapter-issuer.$DOMAIN/healthcheck"
@@ -51,6 +52,7 @@ declare -A HEALTHCHECK_CODE=(
     [https://ops-oathkeeper-proxy.$DOMAIN/healthcheck]=200
     [https://vault-kms.$DOMAIN/healthcheck]=200
     [https://router-api.$DOMAIN:9084/healthcheck]=200
+    [https://hub-auth.$DOMAIN/healthcheck]=200
     [https://myagent.$DOMAIN/login]=200
     [https://adapter-rp.$DOMAIN/healthcheck]=200
     [https://adapter-issuer.$DOMAIN/healthcheck]=200
