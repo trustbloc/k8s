@@ -21,14 +21,14 @@ vars:
   objref:
     apiVersion: v1
     kind: Service
-    name: myagent
+    name: wallet
 - fieldref:
     fieldPath: metadata.name
   name: SERVER_SERVICE_NAME
   objref:
     apiVersion: v1
     kind: Service
-    name: myagent-support
+    name: wallet-support
 - fieldref:
     fieldPath: metadata.name
   name: ROUTER_SERVICE_NAME
@@ -95,7 +95,7 @@ images:
   newTag: 0.1.7-snapshot-3a56649
 - name: wallet-server
   newName: ghcr.io/trustbloc-cicd/wallet-server
-  newTag: 0.1.7-snapshot-4384a34
+  newTag: 0.1.7-snapshot-27b5f96
 - name: wallet-web
   newName: ghcr.io/trustbloc-cicd/wallet-web
-  newTag: 0.1.7-snapshot-4384a34
+  newTag: 0.1.7-snapshot-27b5f96

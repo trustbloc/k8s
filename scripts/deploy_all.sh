@@ -29,13 +29,11 @@ declare -A HEALTCHECK_URL=(
     [vault-server]="https://vault-server.$DOMAIN/healthcheck"
     [kms]="https://authz-oathkeeper-proxy.$DOMAIN/healthcheck https://ops-oathkeeper-proxy.$DOMAIN/healthcheck https://vault-kms.$DOMAIN/healthcheck"
     [hub-auth]="https://hub-auth.$DOMAIN/healthcheck"
-    [wallet]="https://router-api.$DOMAIN:9084/healthcheck https://myagent.$DOMAIN/login"
-    [wallet]="https://myagent.$DOMAIN/login"
+    [wallet]="https://router-api.$DOMAIN/healthcheck https://wallet.$DOMAIN/healthcheck https://wallet-support.$DOMAIN/healthcheck"
     [adapters]="https://adapter-rp.$DOMAIN/healthcheck https://adapter-issuer.$DOMAIN/healthcheck"
 )
 ## Map: healthckeck --> http-code
 declare -A HEALTHCHECK_CODE=(
-    [http://localhost:45984]=200
     [https://testnet.$DOMAIN/.well-known/did-trustbloc/testnet.$DOMAIN.json]=200
     [https://sidetree-mock.$DOMAIN]=404
     [https://edv-oathkeeper-proxy.$DOMAIN/healthcheck]=200
@@ -51,9 +49,10 @@ declare -A HEALTHCHECK_CODE=(
     [https://authz-oathkeeper-proxy.$DOMAIN/healthcheck]=200
     [https://ops-oathkeeper-proxy.$DOMAIN/healthcheck]=200
     [https://vault-kms.$DOMAIN/healthcheck]=200
-    [https://router-api.$DOMAIN:9084/healthcheck]=200
+    [https://router-api.$DOMAIN/healthcheck]=200
     [https://hub-auth.$DOMAIN/healthcheck]=200
-    [https://myagent.$DOMAIN/login]=200
+    [https://wallet.$DOMAIN/healthcheck]=200
+    [https://wallet-support.$DOMAIN/healthcheck]=200
     [https://adapter-rp.$DOMAIN/healthcheck]=200
     [https://adapter-issuer.$DOMAIN/healthcheck]=200
 )
@@ -63,27 +62,26 @@ RED=$(tput setaf 1)
 GREEN=$(tput setaf 2)
 AQUA=$(tput setaf 6)
 NONE=$(tput sgr0)
-healthCheck()
-{
-sleep 3
-n=0
-maxAttempts=200
-echo "running health check : app=$1 url=$2 timeout=$maxAttempts seconds"
-until [ $n -ge $maxAttempts ]
-do
-  response=$(curl -H 'Cache-Control: no-cache' -o /dev/null -s -w "%{http_code}" --insecure "$2")
-   if [ "$response" == "$3" ]
-   then
-     echo "${GREEN}$1 $2 is up ${NONE}"
-     break
-   fi
-   n=$((n+1))
-   if [ $n -eq $maxAttempts ]
-   then
-     echo "${RED}failed health check : app=$1 url=$2 responseCode=$response ${NONE}"
-   fi
-   sleep 1
-done
+healthCheck() {
+	sleep 2
+	n=0
+	maxAttempts=200
+	echo "running health check : app=$1 url=$2 timeout=$maxAttempts seconds"
+	until [ $n -ge $maxAttempts ]
+	do
+	  response=$(curl -H 'Cache-Control: no-cache' -o /dev/null -s -w "%{http_code}" --insecure "$2")
+	   if [ "$response" == "$3" ]
+	   then
+		 echo "${GREEN}$1 $2 is up ${NONE}"
+		 break
+	   fi
+	   n=$((n+1))
+	   if [ $n -eq $maxAttempts ]
+	   then
+		 echo "${RED}failed health check : app=$1 url=$2 responseCode=$response ${NONE}"
+	   fi
+	   sleep 1
+	done
 }
 
 ## deploy the DBs dependency first
@@ -123,10 +121,4 @@ for component in ${DEPLOY_LIST[@]}; do
         healthCheck $component "$url" ${HEALTHCHECK_CODE["$url"]}
     done
 #    echo press ENTER to continue && read L
-done
-
-## Late health checks
-component=LATE
-for url in ${HEALTCHECK_URL[$component]}; do
-    healthCheck $component "$url" ${HEALTHCHECK_CODE["$url"]}
 done
