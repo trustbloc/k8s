@@ -13,6 +13,9 @@ edv-oathkeeper-proxy
 edv
 governance-vcs
 holder-vcs
+hub-auth
+hub-hydra-admin
+hub-hydra
 hydra-admin
 hydra
 issuer-vcs
