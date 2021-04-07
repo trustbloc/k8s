@@ -14,7 +14,7 @@ serve:
         - Authorization
         - Hub-Kms-Secret
       allowed_origins:
-        - https://myagent.||DOMAIN||
+        - https://wallet.||DOMAIN||
       allow_credentials: true
   api:
     port: 4456

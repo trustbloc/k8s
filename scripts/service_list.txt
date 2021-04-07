@@ -19,8 +19,6 @@ hub-hydra
 hydra-admin
 hydra
 issuer-vcs
-myagent-support
-myagent
 oathkeeper-proxy
 ops-oathkeeper-proxy
 router-api
@@ -34,3 +32,5 @@ uni-registrar-web
 uni-resolver-web
 vault-kms
 vault-server
+wallet-support
+wallet
