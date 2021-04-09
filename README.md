@@ -6,21 +6,20 @@ The repo contains the scripts to deploy the core TrustBloc components.
 - docker (running)
 - [minikube](https://minikube.sigs.k8s.io/docs/start/) [minimum version: v1.18]
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)  [minimum version: v1.20]
-- GNU bash [minimum version: v5]
+- GNU bash [minimum version: v5] (for macOS, refer #macos-additional-prerequisites)
 - GNU make
 - GNU sed
 
 ### MacOS additional prerequisites
-- HyperKit installed
+- [HyperKit](https://minikube.sigs.k8s.io/docs/drivers/hyperkit/) installed
 - Install GNU sed and base64 utils: `brew install gnu-sed coreutils bash`
 - Create directory with symlinks to the used GNU tools
   ```
   # mkdir ~/gnu && cd ~/gnu && ln -fs $( which gsed ) sed && ln -fs $( which gbase64 ) base64
   ```
-- Always prepend the directory with GNU tools to the PATH when using this repo, e.g.:
+- Always prepend the directory with GNU tools to the PATH when using this repo or add this to the bash profile, e.g.:
   ```
   # PATH=~/gnu:$PATH
-  # make setup-and-deploy
   ```
 
 ## Running
