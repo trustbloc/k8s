@@ -21,7 +21,7 @@ DEPLOY_LIST=( $COMPONENTS )
 declare -A HEALTCHECK_URL=(
     [sidetree-mock]="https://sidetree-mock.$DOMAIN https://testnet.$DOMAIN/.well-known/did-trustbloc/testnet.$DOMAIN.json"
     [edv]="https://edv-oathkeeper-proxy.$DOMAIN/healthcheck"
-    [resolver]="https://did-resolver.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A"
+    [resolver]="https://did-resolver.$DOMAIN/healthcheck https://uni-resolver-web.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A"
     [registrar]="https://uni-registrar-web.$DOMAIN/1.0/register"
     [did-method]="https://did-method.$DOMAIN/healthcheck"
     [csh]="https://csh.$DOMAIN/healthcheck"
@@ -37,7 +37,8 @@ declare -A HEALTHCHECK_CODE=(
     [https://testnet.$DOMAIN/.well-known/did-trustbloc/testnet.$DOMAIN.json]=200
     [https://sidetree-mock.$DOMAIN]=404
     [https://edv-oathkeeper-proxy.$DOMAIN/healthcheck]=200
-    [https://did-resolver.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A]=200
+    [https://did-resolver.$DOMAIN/healthcheck]=200
+    [https://uni-resolver-web.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A]=200
     [https://uni-registrar-web.$DOMAIN/1.0/register]=405
     [https://did-method.$DOMAIN/healthcheck]=200
     [https://issuer-vcs.$DOMAIN/healthcheck]=200
@@ -94,7 +95,6 @@ while [[ `kubectl get po | grep Running |wc -l` -lt 2 ]]; do
     sleep 1
 done
 # healthCheck couchdb $couchdbHealthCheckURL 200
-# checkMYSQLDB strapi
 # checkMYSQLDB rpadapter_hydra
 # checkMYSQLDB authresthydra
 # checkMYSQLDB edgeagent_aries

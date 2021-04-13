@@ -6,11 +6,6 @@ SPDX-License-Identifier: Apache-2.0
 
 \! echo "Configuring MySQL users...";
 
--- Strapi
-CREATE USER 'user'@'%' IDENTIFIED BY 'secret';
-CREATE DATABASE strapi;
-GRANT ALL PRIVILEGES ON strapi.* TO 'user'@'%';
-
 -- Hydra (RP Adapter)
 CREATE USER 'rpadapterhydra'@'%' IDENTIFIED BY 'secret';
 CREATE DATABASE rpadapter_hydra;
