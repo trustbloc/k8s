@@ -9,3 +9,5 @@ providers:
     url: https://hydra.||DOMAIN||/
     clientID: hub-auth
     clientSecret: hub-auth-secret
+    name: Universal Bank
+    logoURL: https://upload.wikimedia.org/wikipedia/en/a/a4/Universal_Bank.svg
