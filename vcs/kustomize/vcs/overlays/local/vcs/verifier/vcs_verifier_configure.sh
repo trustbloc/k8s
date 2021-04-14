@@ -11,12 +11,12 @@ apk --no-cache add curl
 trustbloc_ed25519signature2018_ed25519=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_verifier_rw_token" \
    --request POST \
    --data '{"id":"trustbloc-verifier","name":"Verifier", "credentialChecks":["proof","credentialStatus"], "presentationChecks":["proof","credentialStatus"]}' \
-   --insecure https://rp-vcs.||DOMAIN||/verifier/profile)
+   --insecure https://verifier-vcs.||DOMAIN||/verifier/profile)
 
 interop_ed25519signature2018_ed25519=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_verifier_rw_token" \
    --request POST \
    --data '{"id":"vc-verifier-interop","name":"Verifier", "credentialChecks":["proof","credentialStatus"], "presentationChecks":["proof","credentialStatus"]}' \
-   --insecure https://rp-vcs.||DOMAIN||/verifier/profile)
+   --insecure https://verifier-vcs.||DOMAIN||/verifier/profile)
 
 checkProfileIsCreated()
 {

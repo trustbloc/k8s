@@ -1,21 +1,21 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 ---
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: rp-vcs-add-profiles
+  name: verifier-vcs-add-profiles
 spec:
   template:
     spec:
       volumes:
         - name: script
           configMap:
-            name: rp-vcs-add-profiles-script
+            name: verifier-vcs-add-profiles-script
       restartPolicy: Never
       initContainers:
         - name: wait
@@ -30,12 +30,12 @@ spec:
           args:
             - "-c"
             - |
-              while [[ "$(wget -T 5 -S --spider http://${RP_VCS_SERVICE_HOST}/healthcheck 2>&1 | grep '200 OK')" == "" ]];
+              while [[ "$(wget -T 5 -S --spider http://${VERIFIER_VCS_SERVICE_HOST}/healthcheck 2>&1 | grep '200 OK')" == "" ]];
               do echo "waiting for endopint";
               sleep 5;
               done;
       containers:
-      - name: rp-vcs-add-profiles
+      - name: verifier-vcs-add-profiles
         image: "alpine:latest"
         imagePullPolicy: IfNotPresent
         command: ["/bin/sh"]

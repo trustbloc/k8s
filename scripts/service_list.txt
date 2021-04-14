@@ -24,7 +24,6 @@ ops-oathkeeper-proxy
 router-api
 router
 router-ws
-rp-vcs
 sidetree-mock
 stakeholder-one
 testnet
@@ -32,5 +31,6 @@ uni-registrar-web
 uni-resolver-web
 vault-kms
 vault-server
+verifier-vcs
 wallet-support
 wallet

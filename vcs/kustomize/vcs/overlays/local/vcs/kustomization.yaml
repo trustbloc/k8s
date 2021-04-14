@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 # Adds namespace to all resources.
 #namespace: edge-sandbox-system
@@ -40,11 +40,11 @@ configMapGenerator:
   name: issuer-vcs-add-profiles-script
 - behavior: merge
   envs:
-  - rp/config.env
-  name: rp-vcs-env
+  - verifier/config.env
+  name: verifier-vcs-env
 - files:
-  - rp/vcs_verifier_configure.sh
-  name: rp-vcs-add-profiles-script
+  - verifier/vcs_verifier_configure.sh
+  name: verifier-vcs-add-profiles-script
 - behavior: merge
   envs:
   - holder/config.env
@@ -74,8 +74,8 @@ secretGenerator:
   name: issuer-vcs-env-secret
 - behavior: merge
   envs:
-  - rp/secret.env
-  name: rp-vcs-env-secret
+  - verifier/secret.env
+  name: verifier-vcs-env-secret
 - behavior: merge
   envs:
   - holder/secret.env
@@ -92,15 +92,15 @@ secretGenerator:
 
 resources:
 - ../../issuer
-- ../../rp
+- ../../verifier
 - ../../holder
 - ../../governance
 - issuer/ingress.yml
-- rp/ingress.yml
+- verifier/ingress.yml
 - holder/ingress.yml
 - governance/ingress.yml
 - issuer/add-profiles.yml
-- rp/add-profiles.yml
+- verifier/add-profiles.yml
 - holder/add-profiles.yml
 - governance/add-profiles.yml
 
@@ -110,7 +110,7 @@ transformers:
 
 patchesStrategicMerge:
 - issuer/add-ca.yml
-- rp/add-ca.yml
+- verifier/add-ca.yml
 - holder/add-ca.yml
 - governance/add-ca.yml
 - governance/add-config.yml
