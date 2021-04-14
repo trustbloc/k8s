@@ -19,7 +19,7 @@
 * By default Bloc domain is `testnet.trustboc.dev`. To run with different domain (See next), run with: `make BLOC_DOMAIN=testnet.ali.trustbloc.dev`
 * Will create an Ingress for external access. When running with unregistered dns domains, create records (/etc/hosts) for:
 	- `issuer-vcs.DOMAIN`
-	- `rp-vcs.DOMAIN`
+	- `verifier-vcs.DOMAIN`
 	- `holder-vcs.DOMAIN`
 	- `governance-vcs.DOMAIN`
 * Will deploy Sandbox VCS, pointing to an already provisioned COUCHDB specified with `COUCHDB_URL`
