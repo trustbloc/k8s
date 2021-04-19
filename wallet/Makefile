@@ -13,8 +13,8 @@ CONTAINER_CMD_RUN_OPTS         ?= $(if $(findstring docker,$(CONTAINER_CMD)),$(D
 export DEPLOYMENT_ENV	?= local
 # space delimited of Key:Value pairs
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
-export DOMAIN      		?= trustbloc.dev
-export BLOC_DOMAIN		?= testnet.trustbloc.dev
+export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
+export BLOC_DOMAIN		?= testnet.${DOMAIN}
 export ARIESD_DATABASE_URL								?= edgeagent:edgeagent-secret-pw@tcp(mysql:3306)/
 export HUB_ROUTER_DSN_PERSISTENT			?= mysql://hubrouter:hubrouter-secret-pw@tcp(mysql:3306)/
 export HUB_ROUTER_DSN_TRANSIENT				?= mysql://hubrouter:hubrouter-secret-pw@tcp(mysql:3306)/

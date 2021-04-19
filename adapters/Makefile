@@ -12,8 +12,8 @@ CONTAINER_CMD_RUN_OPTS         ?= $(if $(findstring docker,$(CONTAINER_CMD)),$(D
 export DEPLOYMENT_ENV	?= local
 # space delimited of Key:Value pairs
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
-export DOMAIN      		?= trustbloc.dev
-export BLOC_DOMAIN		?= testnet.trustbloc.dev
+export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
+export BLOC_DOMAIN		?= testnet.${DOMAIN}
 export ISSUER_ADAPTER_REST_DSN								?= mysql://issueradapter:issueradapter-secret-pw@tcp(mysql:3306)/
 export RP_ADAPTER_REST_DSN								?= mysql://rpadapter:rpadapter-secret-pw@tcp(mysql:3306)/
 export HYDRA_MYSQL_DSN								?= mysql://rpadapterhydra:secret@tcp(mysql:3306)/rpadapter_hydra?max_conns=20&max_idle_conns=4

@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-export DOMAIN			?= trustbloc.dev
+export DOMAIN			?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export DEPLOYMENT_ENV	?= local
 COMPONENTS				?=
 

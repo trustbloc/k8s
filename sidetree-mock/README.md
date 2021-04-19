@@ -14,7 +14,7 @@
 * `make clean`
 
 ## options and features
-* By default dns domain is `trustboc.dev`. To run with different domain (See next), run with: `make DOMAIN=ali.trustbloc.dev`
+* By default dns domain is `local.trustboc.dev`. To run with different domain (See next), run with: `make DOMAIN=ali.trustbloc.dev`
 * When running with unregistered dns domains, create records (/etc/hosts) for:
 	- testnet.DOMAIN
 	- stakeholder-one.DOMAIN
