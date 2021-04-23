@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-VAULT_SERVER_IMG				?= ghcr.io/trustbloc-cicd/vault-server:0.1.7-snapshot-7874fc2
+VAULT_SERVER_IMG				?= ghcr.io/trustbloc-cicd/vault-server:0.1.7-snapshot-bcc953c
 COUCHDB_IMG			?= docker.io/library/couchdb:3.1
 
 # do not modify
@@ -80,6 +80,7 @@ set-images: kustomize
 
 .PHONY: deploy-vault-server
 deploy-vault-server: prechecks kustomize
+
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
 
@@ -88,6 +89,8 @@ undeploy: prechecks kustomize set-images set-labels undeploy-vault-server
 
 .PHONY: undeploy-vault-server
 undeploy-vault-server: prechecks kustomize
+	@docker pull $(VAULT_SERVER_IMG)
+	@minikube image load $(VAULT_SERVER_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl delete -f -
 

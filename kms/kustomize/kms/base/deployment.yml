@@ -27,6 +27,7 @@ spec:
           - secretRef:
               name: kms-env-secret
         image: kms:latest
+        imagePullPolicy: IfNotPresent
         args: ["start"]
         ports:
           - containerPort: 8081

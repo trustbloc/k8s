@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 ---
 kind: Deployment
@@ -29,6 +29,7 @@ spec:
       containers:
       - name: uni-resolver-web
         image: uni-resolver-web:latest
+        imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8080
             protocol: TCP

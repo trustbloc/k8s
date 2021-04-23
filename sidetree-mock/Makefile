@@ -20,9 +20,7 @@ OS    				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-SIDETREE_MOCK_IMG	 	?= ghcr.io/trustbloc/sidetree-mock:0.6.0
-STATIC_FILE_SERVER_IMG	 	?= halverneus/static-file-server:v1.8.2
-DID_METHOD_CLI_IMG		?= ghcr.io/trustbloc/did-method-cli:0.1.6
+SIDETREE_MOCK_IMG	 	?= ghcr.io/trustbloc-cicd/sidetree-mock:0.7.0-snapshot-8b4c1ed
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/sidetree-mock
@@ -90,16 +88,12 @@ set-labels: kustomize
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
 	${KUSTOMIZE} edit set image sidetree-mock=${SIDETREE_MOCK_IMG} &&\
-	popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/static-file-server &&\
-	${KUSTOMIZE} edit set image static-file-server=${STATIC_FILE_SERVER_IMG} &&\
-	popd &&\
-	pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} &&\
-	${KUSTOMIZE} edit set image did-method-cli=${DID_METHOD_CLI_IMG} &&\
 	popd
 
 .PHONY: deploy-sidetree-mock
 deploy-sidetree-mock: prechecks kustomize
+	@docker pull $(SIDETREE_MOCK_IMG)
+	@minikube image load $(SIDETREE_MOCK_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
 

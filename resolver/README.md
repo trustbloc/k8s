@@ -26,5 +26,3 @@
 	- ca.crt
 	- tls.crt
 	- tls.key
-## Known Issues
-driver-did-key:latest fails to start. running version (0.1.4/TAG:ae7b670beb34) not accessible.

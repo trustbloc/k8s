@@ -20,7 +20,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-CSH_IMAGE				?= ghcr.io/trustbloc-cicd/hub-confidential-storage:0.1.7-snapshot-7874fc2
+CSH_IMAGE				?= ghcr.io/trustbloc-cicd/hub-confidential-storage:0.1.7-snapshot-bcc953c
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/csh
@@ -78,6 +78,8 @@ set-images: kustomize
 
 .PHONY: deploy-csh
 deploy-csh: prechecks kustomize
+	@docker pull $(CSH_IMAGE)
+	@minikube image load $(CSH_IMAGE)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/csh | kubectl apply -f -
 

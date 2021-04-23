@@ -93,6 +93,10 @@ set-images: kustomize
 
 .PHONY: deploy-hub-auth
 deploy-hub-auth: prechecks kustomize
+	@docker pull $(HUB_AUTH_IMG)
+	@minikube image load $(HUB_AUTH_IMG)
+	@docker pull $(HYDRA_IMG)
+	@minikube image load $(HYDRA_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/hub-auth | kubectl apply -f -
 

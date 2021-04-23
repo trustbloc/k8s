@@ -72,6 +72,10 @@ set-images: kustomize
 
 .PHONY: deploy-registrar
 deploy-registrar: prechecks kustomize
+	@docker pull universalregistrar/driver-did-v1:latest
+	@minikube image load universalregistrar/driver-did-v1:latest
+	@docker pull honeyblock/uni-registrar-web:custom_v1.0
+	@minikube image load honeyblock/uni-registrar-web:custom_v1.0
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
 

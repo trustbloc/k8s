@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 
 CONTAINER_CMD         	 	?= docker
@@ -56,6 +56,10 @@ set-images: kustomize
 
 .PHONY: deploy-dbs
 deploy-dbs: prechecks kustomize
+	@docker pull $(COUCH_IMG)
+	@minikube image load $(COUCH_IMG)
+	@docker pull $(MYSQL_IMG)
+	@minikube image load $(MYSQL_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
 

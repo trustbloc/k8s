@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-KMS_IMG				?= ghcr.io/trustbloc-cicd/kms:0.1.7-snapshot-0fc8b89
+KMS_IMG				?= ghcr.io/trustbloc-cicd/kms:0.1.7-snapshot-6aeea55
 OATHKEEPER_IMG			?= oryd/oathkeeper:v0.38.4-alpine
 
 # do not modify
@@ -107,16 +107,22 @@ set-images: kustomize
 
 .PHONY: deploy-authz-kms
 deploy-authz-kms: prechecks set-images set-labels-authz-kms kustomize
+	@docker pull $(KMS_IMG)
+	@minikube image load $(KMS_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/authz-kms | kubectl apply -f -
 
 .PHONY: deploy-ops-kms
 deploy-ops-kms: prechecks set-images set-labels-ops-kms kustomize
+	@docker pull $(KMS_IMG)
+	@minikube image load $(KMS_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/ops-kms | kubectl apply -f -
 
 .PHONY: deploy-vault-kms
 deploy-vault-kms: prechecks set-images set-labels-vault-kms kustomize
+	@docker pull $(KMS_IMG)
+	@minikube image load $(KMS_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vault-kms | kubectl apply -f -
 

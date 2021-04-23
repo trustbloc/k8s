@@ -9,18 +9,18 @@ apk --no-cache add curl
 
 vc_holder_interop=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_holder_rw_token" \
    --request POST \
-   --data '{"name":"vc-holder-interop", "signatureType":"Ed25519Signature2018", "signatureRepresentation":1,"uniRegistrar":{"driverURL":"https://uni-registrar-web.||DOMAIN||/1.0/register?driverId=driver-did-method-rest"}, "didKeyType":"Ed25519"}' \
+   --data '{"name":"vc-holder-interop", "signatureType":"Ed25519Signature2018", "signatureRepresentation":1, "didKeyType":"Ed25519"}' \
    --insecure https://holder-vcs.||DOMAIN||/holder/profile)
 
 vc_holder_jsonwebsignature2020_ed25519=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_holder_rw_token" \
    --request POST \
-   --data '{"name":"vc-holder-jsonwebsignature2020-ed25519", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1,"uniRegistrar":{"driverURL":"https://uni-registrar-web.||DOMAIN||/1.0/register?driverId=driver-did-method-rest"}, "didKeyType":"Ed25519"}' \
+   --data '{"name":"vc-holder-jsonwebsignature2020-ed25519", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1, "didKeyType":"Ed25519"}' \
     --insecure https://holder-vcs.||DOMAIN||/holder/profile)
 
 
 vc_holder_jsonwebsignature2020_p256=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_holder_rw_token" \
    --request POST \
-   --data '{"name":"vc-holder-jsonwebsignature2020-p256", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1,"uniRegistrar":{"driverURL":"https://uni-registrar-web.||DOMAIN||/1.0/register?driverId=driver-did-method-rest"}, "didKeyType":"P256"}' \
+   --data '{"name":"vc-holder-jsonwebsignature2020-p256", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1, "didKeyType":"P256"}' \
    --insecure https://holder-vcs.||DOMAIN||/holder/profile)
 
 

@@ -20,35 +20,35 @@ checkProfileIsCreated()
 
 trustbloc_ed25519signature2018_ed25519=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_issuer_rw_token" \
    --request POST \
-   --data '{"name":"trustbloc-ed25519signature2018-ed25519", "uri":"http://example.com", "signatureType":"Ed25519Signature2018", "signatureRepresentation":1,"uniRegistrar":{"driverURL":"https://uni-registrar-web.||DOMAIN||/1.0/register?driverId=driver-did-method-rest"},"didKeyType":"Ed25519"}' \
+   --data '{"name":"trustbloc-ed25519signature2018-ed25519", "uri":"http://example.com", "signatureType":"Ed25519Signature2018", "signatureRepresentation":1,"didKeyType":"Ed25519"}' \
    --insecure https://issuer-vcs.||DOMAIN||/profile)
 
 trustbloc_jsonwebsignature2020_ed25519=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_issuer_rw_token" \
    --request POST \
-   --data '{"name":"trustbloc-jsonwebsignature2020-ed25519", "uri":"http://example.com", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1,"uniRegistrar":{"driverURL":"https://uni-registrar-web.||DOMAIN||/1.0/register?driverId=driver-did-method-rest"},"didKeyType":"Ed25519"}' \
+   --data '{"name":"trustbloc-jsonwebsignature2020-ed25519", "uri":"http://example.com", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1,"didKeyType":"Ed25519"}' \
    --insecure https://issuer-vcs.||DOMAIN||/profile)
 
 trustbloc_jsonwebsignature2020_p256=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_issuer_rw_token" \
    --request POST \
-   --data '{"name":"trustbloc-jsonwebsignature2020-p256", "uri":"http://vc-issuer-p256.com", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1,"uniRegistrar":{"driverURL":"https://uni-registrar-web.||DOMAIN||/1.0/register?driverId=driver-did-method-rest"},"didKeyType":"P256"}' \
+   --data '{"name":"trustbloc-jsonwebsignature2020-p256", "uri":"http://vc-issuer-p256.com", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1,"didKeyType":"P256"}' \
    --insecure https://issuer-vcs.||DOMAIN||/profile)
 
 
 interop_ed25519signature2018_ed25519=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_issuer_rw_token" \
    --request POST \
-   --data '{"name":"interop-ed25519signature2018-ed25519", "uri":"http://example.com", "signatureType":"Ed25519Signature2018", "signatureRepresentation":1,"uniRegistrar":{"driverURL":"https://uni-registrar-web.||DOMAIN||/1.0/register?driverId=driver-did-method-rest"},"disableVCStatus":true,"didKeyType":"Ed25519"}' \
+   --data '{"name":"interop-ed25519signature2018-ed25519", "uri":"http://example.com", "signatureType":"Ed25519Signature2018", "signatureRepresentation":1,"disableVCStatus":true,"didKeyType":"Ed25519"}' \
    --insecure https://issuer-vcs.||DOMAIN||/profile)
 
 
 interop_jsonwebsignature2020_ed25519=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_issuer_rw_token" \
    --request POST \
-   --data '{"name":"interop-jsonwebsignature2020-ed25519", "uri":"http://example.com", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1,"uniRegistrar":{"driverURL":"https://uni-registrar-web.||DOMAIN||/1.0/register?driverId=driver-did-method-rest"},"disableVCStatus":true,"didKeyType":"Ed25519"}' \
+   --data '{"name":"interop-jsonwebsignature2020-ed25519", "uri":"http://example.com", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1,"disableVCStatus":true,"didKeyType":"Ed25519"}' \
    --insecure https://issuer-vcs.||DOMAIN||/profile)
 
 
 interop_jsonwebsignature2020_p256=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_issuer_rw_token" \
    --request POST \
-   --data '{"name":"interop-jsonwebsignature2020-p256", "uri":"http://example.com", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1,"uniRegistrar":{"driverURL":"https://uni-registrar-web.||DOMAIN||/1.0/register?driverId=driver-did-method-rest"},"disableVCStatus":true,"didKeyType":"P256"}' \
+   --data '{"name":"interop-jsonwebsignature2020-p256", "uri":"http://example.com", "signatureType":"JsonWebSignature2020", "signatureRepresentation":1,"disableVCStatus":true,"didKeyType":"P256"}' \
    --insecure https://issuer-vcs.||DOMAIN||/profile)
 
 vc_issuer_interop_key=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_issuer_rw_token" \
@@ -59,7 +59,7 @@ vc_issuer_interop_key=$(curl -o /dev/null -s -w "%{http_code}" --header "Content
 
 vc_issuer_interop=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" --header "Authorization: Bearer vcs_issuer_rw_token" \
    --request POST \
-   --data '{"name":"vc-issuer-interop", "uri":"http://example.com", "signatureType":"Ed25519Signature2018", "signatureRepresentation":1,"uniRegistrar":{"driverURL":"https://uni-registrar-web.||DOMAIN||/1.0/register?driverId=driver-did-method-rest"},"disableVCStatus":false,"didKeyType":"Ed25519"}' \
+   --data '{"name":"vc-issuer-interop", "uri":"http://example.com", "signatureType":"Ed25519Signature2018", "signatureRepresentation":1,"disableVCStatus":false,"didKeyType":"Ed25519"}' \
    --insecure https://issuer-vcs.||DOMAIN||/profile)
 
 

@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-VCS_IMG				?= ghcr.io/trustbloc-cicd/vc-server:0.1.7-snapshot-7874fc2
+VCS_IMG				?= ghcr.io/trustbloc-cicd/vc-server:0.1.7-snapshot-bcc953c
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/vcs
@@ -79,6 +79,8 @@ set-images: kustomize
 
 .PHONY: deploy-vcs
 deploy-vcs: prechecks kustomize
+	@docker pull $(VCS_IMG)
+	@minikube image load $(VCS_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vcs | kubectl apply -f -
 
