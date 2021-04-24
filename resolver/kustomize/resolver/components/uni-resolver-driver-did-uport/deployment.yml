@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 ---
 kind: Deployment
@@ -22,6 +22,7 @@ spec:
       containers:
       - name: uni-resolver-driver-did-uport
         image: uni-resolver-driver-did-uport:latest
+        imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8081
             protocol: TCP

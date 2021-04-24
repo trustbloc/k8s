@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 ---
 apiVersion: apps/v1
@@ -31,6 +31,7 @@ spec:
       hostname: couchdb
       containers:
       - image: couchdb:latest
+        imagePullPolicy: IfNotPresent
         ports:
           - name: couchdb-port
             protocol: TCP

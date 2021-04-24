@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 ---
 kind: Deployment
@@ -43,6 +43,7 @@ spec:
                 name: driver-did-sov-env
                 key: uniresolver_driver_did_sov_walletName
         image: driver-did-sov:latest
+        imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8080
             protocol: TCP

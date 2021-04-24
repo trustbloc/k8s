@@ -95,7 +95,7 @@ images:
   newTag: 0.1.7-snapshot-3a56649
 - name: wallet-server
   newName: ghcr.io/trustbloc-cicd/wallet-server
-  newTag: 0.1.7-snapshot-8649cdc
+  newTag: 0.1.7-snapshot-bcf274b
 - name: wallet-web
   newName: ghcr.io/trustbloc-cicd/wallet-web
-  newTag: 0.1.7-snapshot-8649cdc
+  newTag: 0.1.7-snapshot-bcf274b

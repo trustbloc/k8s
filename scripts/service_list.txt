@@ -6,7 +6,6 @@ adapter-rp-didcomm
 adapter-rp
 authz-oathkeeper-proxy
 csh
-did-method
 did-resolver
 edv-oathkeeper-api
 edv-oathkeeper-proxy

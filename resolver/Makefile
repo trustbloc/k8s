@@ -19,7 +19,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-DID_IMG				?= ghcr.io/trustbloc-cicd/did-resolver:0.1.7-snapshot-7874fc2
+DID_IMG				?= ghcr.io/trustbloc-cicd/did-resolver:0.1.7-snapshot-bcc953c
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/resolver
@@ -77,6 +77,16 @@ set-images: kustomize
 
 .PHONY: deploy-resolver
 deploy-resolver: prechecks kustomize
+	#@docker pull universalresolver/driver-did-sov:latest
+	#@minikube image load universalresolver/driver-did-sov:latest
+	@docker pull veresone/uni-resolver-did-v1-driver:latest
+	@minikube image load veresone/uni-resolver-did-v1-driver:latest
+	@docker pull uport/uni-resolver-driver-did-uport:1.3.1
+	@minikube image load uport/uni-resolver-driver-did-uport:1.3.1
+	@docker pull universalresolver/uni-resolver-web:latest
+	@minikube image load universalresolver/uni-resolver-web:latest
+	@docker pull $(DID_IMG)
+	@minikube image load $(DID_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
 

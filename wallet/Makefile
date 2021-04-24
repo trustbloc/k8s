@@ -23,8 +23,8 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-WALLET_WEB_IMG				?= ghcr.io/trustbloc-cicd/wallet-web:0.1.7-snapshot-8649cdc
-WALLET_SERVER_IMG			?= ghcr.io/trustbloc-cicd/wallet-server:0.1.7-snapshot-8649cdc
+WALLET_WEB_IMG				?= ghcr.io/trustbloc-cicd/wallet-web:0.1.7-snapshot-bcf274b
+WALLET_SERVER_IMG			?= ghcr.io/trustbloc-cicd/wallet-server:0.1.7-snapshot-bcf274b
 HUB_ROUTER_IMG				?= ghcr.io/trustbloc-cicd/hub-router:0.1.7-snapshot-3a56649
 
 # do not modify
@@ -95,6 +95,12 @@ set-images: kustomize
 
 .PHONY: deploy-wallet
 deploy-wallet: prechecks kustomize
+	@docker pull $(WALLET_WEB_IMG)
+	@minikube image load $(WALLET_WEB_IMG)
+	@docker pull $(WALLET_SERVER_IMG)
+	@minikube image load $(WALLET_SERVER_IMG)
+	@docker pull $(HUB_ROUTER_IMG)
+	@minikube image load $(HUB_ROUTER_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/wallet | kubectl apply -f -
 

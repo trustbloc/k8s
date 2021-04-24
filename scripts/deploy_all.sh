@@ -14,16 +14,15 @@ set -e
 : ${DOMAIN:=trustbloc.dev}
 : ${DEPLOYMENT_ENV:=local}
 ## Should be deployed in the listed order
-: ${COMPONENTS=sidetree-mock edv resolver registrar did-method csh vcs vault-server kms hub-auth wallet adapters}
+: ${COMPONENTS=sidetree-mock edv resolver registrar csh vcs vault-server kms hub-auth wallet adapters}
 DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)
 declare -A HEALTCHECK_URL=(
-    [sidetree-mock]="https://sidetree-mock.$DOMAIN https://testnet.$DOMAIN/.well-known/did-trustbloc/testnet.$DOMAIN.json"
+    [sidetree-mock]="https://sidetree-mock.$DOMAIN https://testnet.$DOMAIN/.well-known/did-orb"
     [edv]="https://edv-oathkeeper-proxy.$DOMAIN/healthcheck"
     [resolver]="https://did-resolver.$DOMAIN/healthcheck https://uni-resolver-web.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A"
     [registrar]="https://uni-registrar-web.$DOMAIN/1.0/register"
-    [did-method]="https://did-method.$DOMAIN/healthcheck"
     [csh]="https://csh.$DOMAIN/healthcheck"
     [vcs]="https://issuer-vcs.$DOMAIN/healthcheck https://verifier-vcs.$DOMAIN/healthcheck https://holder-vcs.$DOMAIN/healthcheck https://governance-vcs.$DOMAIN/healthcheck"
     [vault-server]="https://vault-server.$DOMAIN/healthcheck"
@@ -34,13 +33,12 @@ declare -A HEALTCHECK_URL=(
 )
 ## Map: healthckeck --> http-code
 declare -A HEALTHCHECK_CODE=(
-    [https://testnet.$DOMAIN/.well-known/did-trustbloc/testnet.$DOMAIN.json]=200
+    [https://testnet.$DOMAIN/.well-known/did-orb]=200
     [https://sidetree-mock.$DOMAIN]=404
     [https://edv-oathkeeper-proxy.$DOMAIN/healthcheck]=200
     [https://did-resolver.$DOMAIN/healthcheck]=200
     [https://uni-resolver-web.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A]=200
     [https://uni-registrar-web.$DOMAIN/1.0/register]=405
-    [https://did-method.$DOMAIN/healthcheck]=200
     [https://issuer-vcs.$DOMAIN/healthcheck]=200
     [https://verifier-vcs.$DOMAIN/healthcheck]=200
     [https://holder-vcs.$DOMAIN/healthcheck]=200

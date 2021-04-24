@@ -22,8 +22,8 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ISSUER_ADAPTER_IMG				?= ghcr.io/trustbloc-cicd/issuer-adapter:0.1.7-snapshot-813410f
-RP_ADAPTER_IMG						?= ghcr.io/trustbloc-cicd/rp-adapter:0.1.7-snapshot-813410f
+ISSUER_ADAPTER_IMG				?= ghcr.io/trustbloc-cicd/issuer-adapter:0.1.7-snapshot-4c102ba
+RP_ADAPTER_IMG						?= ghcr.io/trustbloc-cicd/rp-adapter:0.1.7-snapshot-4c102ba
 HYDRA_IMG			?= oryd/hydra:v1.3.2-alpine
 
 # do not modify
@@ -96,6 +96,12 @@ set-images: kustomize
 
 .PHONY: deploy-adapters
 deploy-adapters: prechecks kustomize
+	@docker pull $(ISSUER_ADAPTER_IMG)
+	@minikube image load $(ISSUER_ADAPTER_IMG)
+	@docker pull $(RP_ADAPTER_IMG)
+	@minikube image load $(RP_ADAPTER_IMG)
+	@docker pull $(HYDRA_IMG)
+	@minikube image load $(HYDRA_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/adapters | kubectl apply -f -
 

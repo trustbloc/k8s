@@ -36,7 +36,7 @@ spec:
           args:
             - "-c"
             - |
-              while [[ "$(curl -o /dev/null -s -w '%{http_code}' --insecure --connect-timeout 5 https://||BLOC_DOMAIN||/)" != "200" ]];
+              while [[ "$(curl -o /dev/null -s -w '%{http_code}' --insecure --connect-timeout 5 https://||BLOC_DOMAIN||/.well-known/did-orb)" != "200" ]];
               do echo "waiting for BLOC endopint";
               sleep 5;
               done;

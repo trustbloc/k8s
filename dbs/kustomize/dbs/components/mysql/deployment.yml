@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 ---
 apiVersion: apps/v1
@@ -26,6 +26,7 @@ spec:
     spec:
       containers:
       - image: mysql:latest
+        imagePullPolicy: IfNotPresent
         name: mysql
         env:
           - name: MYSQL_ROOT_PASSWORD

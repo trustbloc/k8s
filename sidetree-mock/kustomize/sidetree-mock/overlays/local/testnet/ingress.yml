@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -22,6 +22,6 @@ spec:
         path: "/"
         backend:
           service:
-            name: stakeholder-zero
+            name: sidetree-mock
             port:
               name: http
