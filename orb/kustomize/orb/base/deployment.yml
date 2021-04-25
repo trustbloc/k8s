@@ -1,0 +1,35 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: orb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orb
+  template:
+    metadata:
+      labels:
+        app: orb
+    spec:
+      containers:
+        - name: orb
+          envFrom:
+            - configMapRef:
+                name: orb-env
+            - secretRef:
+                name: orb-env-secret
+          image: orb:latest
+          command: [ "/bin/sh" ]
+          args: [ "-c", "orb start" ]
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+              name: http-port

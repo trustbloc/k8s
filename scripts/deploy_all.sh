@@ -14,12 +14,12 @@ set -e
 : ${DOMAIN:=trustbloc.dev}
 : ${DEPLOYMENT_ENV:=local}
 ## Should be deployed in the listed order
-: ${COMPONENTS=sidetree-mock edv resolver registrar csh vcs vault-server kms hub-auth wallet adapters}
+: ${COMPONENTS=orb edv resolver registrar csh vcs vault-server kms hub-auth wallet adapters}
 DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)
 declare -A HEALTCHECK_URL=(
-    [sidetree-mock]="https://sidetree-mock.$DOMAIN https://testnet.$DOMAIN/.well-known/did-orb"
+    [orb]="https://orb.$DOMAIN https://testnet.$DOMAIN/.well-known/did-orb"
     [edv]="https://edv-oathkeeper-proxy.$DOMAIN/healthcheck"
     [resolver]="https://did-resolver.$DOMAIN/healthcheck https://uni-resolver-web.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A"
     [registrar]="https://uni-registrar-web.$DOMAIN/1.0/register"
@@ -34,7 +34,7 @@ declare -A HEALTCHECK_URL=(
 ## Map: healthckeck --> http-code
 declare -A HEALTHCHECK_CODE=(
     [https://testnet.$DOMAIN/.well-known/did-orb]=200
-    [https://sidetree-mock.$DOMAIN]=404
+    [https://orb.$DOMAIN]=404
     [https://edv-oathkeeper-proxy.$DOMAIN/healthcheck]=200
     [https://did-resolver.$DOMAIN/healthcheck]=200
     [https://uni-resolver-web.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A]=200
@@ -99,10 +99,10 @@ done
 
 ## generate certificate for all components, skip if already exists
 if ! [[ -d ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs ]]; then
-pushd sidetree-mock
+pushd orb
     make generate-test-certs
     mkdir -p ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs
-    mv kustomize/sidetree-mock/overlays/${DEPLOYMENT_ENV}/certs ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/
+    mv kustomize/orb/overlays/${DEPLOYMENT_ENV}/certs ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/
 popd
 fi
 

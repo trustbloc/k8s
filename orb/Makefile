@@ -12,18 +12,19 @@ CONTAINER_CMD_RUN_OPTS         ?= $(if $(findstring docker,$(CONTAINER_CMD)),$(D
 
 export DEPLOYMENT_ENV	?= local
 # space delimited of Key:Value pairs
-COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
-export DOMAIN      	?= ${DEPLOYMENT_ENV}.trustbloc.dev
-export BLOC_DOMAIN      	?= testnet.${DOMAIN}
+COMMON_LABELS									:= instance:${DEPLOYMENT_ENV}
+export DOMAIN      								?= ${DEPLOYMENT_ENV}.trustbloc.dev
+export BLOC_DOMAIN      						?= testnet.${DOMAIN}
+export COUCHDB_URL								?= cdbadmin:secret@couchdb:5984
 
 OS    				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-SIDETREE_MOCK_IMG	 	?= ghcr.io/trustbloc-cicd/sidetree-mock:0.7.0-snapshot-8b4c1ed
+ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:0.1.6-snapshot-c138c96
 
 # do not modify
-KUSTOMIZE_DIR       	= kustomize/sidetree-mock
+KUSTOMIZE_DIR       	= kustomize/orb
 KEYS_OUTPUT_DIR        	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/keys
 CERTS_OUTPUT_DIR       	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
 export SIDETREE_OUTPUT_DIR   	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/sidetree
@@ -35,11 +36,11 @@ export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
 all: setup
 
 .PHONY: setup
-setup: generate-test-keys generate-test-certs seed-sidetree-mock
+setup: generate-test-keys generate-test-certs
 	@echo setup
 
 .PHONY: setup-no-certs
-setup-no-certs: generate-test-keys seed-sidetree-mock
+setup-no-certs: generate-test-keys
 	@echo setup-no-certs
 
 .PHONY: generate-test-keys
@@ -64,12 +65,8 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.key tls.key
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
-.PHONY: seed-sidetree-mock
-seed-sidetree-mock: clean-sidetree
-	@scripts/seed_sidetree_mock.sh
-
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-sidetree-mock
+deploy: prechecks kustomize set-images set-labels deploy-orb
 
 .PHONY: prechecks
 prechecks:
@@ -87,21 +84,23 @@ set-labels: kustomize
 .PHONY: set-images
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
-	${KUSTOMIZE} edit set image sidetree-mock=${SIDETREE_MOCK_IMG} &&\
+	${KUSTOMIZE} edit set image orb=${ORB_IMG} &&\
 	popd
 
-.PHONY: deploy-sidetree-mock
-deploy-sidetree-mock: prechecks kustomize
-	@docker pull $(SIDETREE_MOCK_IMG)
-	@minikube image load $(SIDETREE_MOCK_IMG)
+.PHONY: deploy-orb
+deploy-orb: prechecks kustomize
+	@docker pull $(ORB_IMG)
+	@minikube image load $(ORB_IMG)
+	@docker pull ipfs/go-ipfs:master-2021-04-22-eea198f
+	@minikube image load ipfs/go-ipfs:master-2021-04-22-eea198f
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-sidetree-mock
+undeploy: prechecks kustomize set-images set-labels undeploy-orb
 
-.PHONY: undeploy-sidetree-mock
-undeploy-sidetree-mock: prechecks kustomize
+.PHONY: undeploy-orb
+undeploy-orb: prechecks kustomize
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl delete -f -
 

@@ -1,4 +1,4 @@
-# sidetree-mock k8s deployment #
+# orb k8s deployment #
 
 
 ## pre-requisits
@@ -17,10 +17,9 @@
 * By default dns domain is `local.trustboc.dev`. To run with different domain (See next), run with: `make DOMAIN=ali.trustbloc.dev`
 * When running with unregistered dns domains, create records (/etc/hosts) for:
 	- testnet.DOMAIN
-	- stakeholder-one.DOMAIN
-	- sidetree-mock.DOMAIN
+	- orb.DOMAIN
 * When running `podman` pass `CONTAINER_CMD=podman` as option to make.
-* Running with none self-signed certificates: place certs into kustomize/sidetree-mock/overlays/sandbox/certs, then run with: `make setup-no-certs`
+* Running with none self-signed certificates: place certs into kustomize/orb/overlays/sandbox/certs, then run with: `make setup-no-certs`
 >files:
 	- ca.crt
 	- tls.crt

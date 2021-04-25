@@ -23,8 +23,7 @@ ops-oathkeeper-proxy
 router-api
 router
 router-ws
-sidetree-mock
-stakeholder-one
+orb
 testnet
 uni-registrar-web
 uni-resolver-web
