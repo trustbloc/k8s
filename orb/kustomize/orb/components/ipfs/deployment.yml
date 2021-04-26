@@ -1,0 +1,48 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ipfs
+  name: ipfs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ipfs
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ipfs
+    spec:
+#      volumes:
+#        - name: ifps-data
+#          configMap:
+#            name: ifps-data
+      hostname: ipfs
+      containers:
+      - image: ipfs:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+          - name: ipfs-port
+            protocol: TCP
+            containerPort: 5001
+        name: ipfs
+#        env:
+#        - name: IPFS_PATH
+#          value: '/data/ipfs'
+#        volumeMounts:
+#          - name: ipfs-data
+#            mountPath: /data/ipfs
+#            subPath: ./data/ipfs
+        resources: {}
+status: {}

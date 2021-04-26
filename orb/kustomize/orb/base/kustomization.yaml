@@ -17,16 +17,21 @@ generatorOptions: {}
 vars:
 - fieldref:
     fieldPath: metadata.name
-  name: SIDETREE_MOCK_SERVICE_NAME
+  name: ORB_SERVICE_NAME
   objref:
     apiVersion: v1
     kind: Service
-    name: sidetree-mock
+    name: orb
 
 configMapGenerator:
 - envs:
   - config.env
-  name: sidetree-mock-env
+  name: orb-env
+
+secretGenerator:
+- envs:
+  - secret.env
+  name: orb-env-secret
 
 resources:
 - deployment.yml
@@ -35,6 +40,6 @@ resources:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
-- name: sidetree-mock
-  newName: ghcr.io/trustbloc-cicd/sidetree-mock
-  newTag: 0.7.0-snapshot-8b4c1ed
+- name: orb
+  newName: ghcr.io/trustbloc-cicd/orb
+  newTag: 0.1.6-snapshot-c138c96

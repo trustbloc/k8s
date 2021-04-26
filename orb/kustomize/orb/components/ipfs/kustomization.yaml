@@ -1,0 +1,19 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+images:
+  - name: ipfs
+    newName: ipfs/go-ipfs
+    newTag: master-2021-04-22-eea198f
+
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+resources:
+  - deployment.yml
+  - service.yml

@@ -33,4 +33,4 @@
 	- tls.key
 ## Known issues
 * base is broken until this is resolved: https://github.com/trustbloc/edge-adapter/issues/323
-* sidetree-mock/sidetree BLOC_DOMAIN needs to be reachable for issuer adapter to be initialized with profiles, therefore issuer-add-profiles job will always fail if otherwise
+* orb BLOC_DOMAIN needs to be reachable for issuer adapter to be initialized with profiles, therefore issuer-add-profiles job will always fail if otherwise

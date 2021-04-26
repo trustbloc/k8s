@@ -26,27 +26,35 @@ vars:
   objref:
     apiVersion: v1
     kind: Secret
-    name: sidetree-mock-wildcard-cert
+    name: orb-wildcard-cert
 
 
 configMapGenerator:
 - behavior: merge
   envs:
-  - sidetree-mock/config.env
-  name: sidetree-mock-env
+  - orb/config.env
+  name: orb-env
 
 
 secretGenerator:
 - files:
   - certs/tls.crt
   - certs/tls.key
-  name: sidetree-mock-wildcard-cert
+  name: orb-wildcard-cert
   type: kubernetes.io/tls
+- behavior: merge
+  envs:
+  - orb/secret.env
+  name: orb-env-secret
 
 resources:
-- ../sidetree-mock
-- sidetree-mock/ingress.yml
+- ../orb
+- orb/ingress.yml
 - testnet/ingress.yml
+
+components:
+- ../../components/ipfs
 
 transformers:
 - sedtransform.yml
+- sedb64transform.yml
