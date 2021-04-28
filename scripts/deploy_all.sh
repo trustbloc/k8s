@@ -14,7 +14,7 @@ set -e
 : ${DOMAIN:=trustbloc.dev}
 : ${DEPLOYMENT_ENV:=local}
 ## Should be deployed in the listed order
-: ${COMPONENTS=orb edv resolver registrar csh vcs vault-server kms hub-auth hub-router wallet-server wallet-web adapters}
+: ${COMPONENTS=orb edv resolver registrar csh vcs vault-server kms hub-auth hub-router wallet-server wallet-web adapter-issuer adapter-rp}
 DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)
@@ -31,7 +31,8 @@ declare -A HEALTCHECK_URL=(
     [hub-router]="https://router-api.$DOMAIN/healthcheck"
     [wallet-server]="https://wallet-support.$DOMAIN/healthcheck"
     [wallet-web]="https://wallet.$DOMAIN/healthcheck"
-    [adapters]="https://adapter-rp.$DOMAIN/healthcheck https://adapter-issuer.$DOMAIN/healthcheck"
+    [adapter-issuer]="https://adapter-issuer.$DOMAIN/healthcheck"
+    [adapter-rp]="https://adapter-rp.$DOMAIN/healthcheck"
 )
 ## Map: healthckeck --> http-code
 declare -A HEALTHCHECK_CODE=(

@@ -1,4 +1,4 @@
-# [adapters](https://github.com/trustbloc/edge-adapter) k8s deployment #
+# [Issuer Adapter](https://github.com/trustbloc/edge-adapter) k8s deployment #
 
 
 ## pre-requisits
@@ -8,10 +8,10 @@
 
 ## Quick Run
 * `make all`
-* `make deploy-sandbox`
+* `make deploy-adapter-issuer`
 
 ## Cleanup
-* `make undeploy-sandbox`
+* `make undeploy-adapter-issuer`
 * `make clean`
 
 ## options and features
@@ -19,10 +19,6 @@
 * Will create an Ingress for external access. When running with unregistered dns domains, create records (/etc/hosts) for:
 	- `adapter-issuer.DOMAIN`
 	- `adapter-issuer-didcomm.DOMAIN`
-	- `adapter-rp.DOMAIN`
-	- `adapter-rp-didcomm.DOMAIN`
-	- `adapter-hydra.DOMAIN`
-	- `adapter-hydra-admin.DOMAIN`
 * Will deploy Sandbox adapters with [Hydra](https://github.com/ory/hydra), pointing to an already provisioned MySQL specified with `HYDRA_MYSQL_DSN`, `ISSUER_ADAPTER_REST_DSN`, and `RP_ADAPTER_REST_DSN`:
 	- `make deploy HYDRA_MYSQL_DSN=mysql://user:pass@@tcp(address:3306)`
 * if running `podman` pass `CONTAINER_CMD=podman` as option to make
