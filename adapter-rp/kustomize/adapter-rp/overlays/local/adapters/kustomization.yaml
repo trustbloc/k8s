@@ -1,0 +1,81 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Adds namespace to all resources.
+#namespace: edge-sandbox-system
+
+# Value of this field is prepended to the
+# names of all resources, e.g. a deployment named
+# "wordpress" becomes "alices-wordpress".
+# Note that it should also match with the prefix (text before '-') of the namespace
+# field above.
+namePrefix: adapter-
+commonLabels:
+  component: adapter
+  group: services
+  instance: local
+  project: trustbloc
+
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: INGRESS_TLS_SECRET
+  objref:
+    apiVersion: v1
+    kind: Secret
+    name: adapters-wildcard-cert
+
+secretGenerator:
+- behavior: merge
+  envs:
+  - rp/secret.env
+  name: rp-env-secret
+- behavior: merge
+  envs:
+  - hydra/hydra-secret.env
+  name: hydra-secret
+- files:
+  - ../certs/tls.crt
+  - ../certs/tls.key
+  name: adapters-wildcard-cert
+  type: kubernetes.io/tls
+
+
+configMapGenerator:
+- behavior: merge
+  envs:
+  - rp/config.env
+  name: rp-env
+- behavior: replace
+  files:
+  - rp/config.json
+  name: rp-config
+- behavior: merge
+  envs:
+  - hydra/hydra-env.env
+  name: hydra-env
+- files:
+  - ../certs/ca.crt
+  name: ca-cert
+
+resources:
+- ../../../base
+- rp/ingress.yml
+- hydra/ingress.yml
+
+transformers:
+- sedtransform.yml
+- sedb64transform.yml
+
+components:
+- ../../../components/hydra
+
+patchesStrategicMerge:
+- rp/add-ca.yml

@@ -29,53 +29,25 @@ vars:
     apiVersion: v1
     kind: Service
     name: issuer-didcomm
-- fieldref:
-    fieldPath: metadata.name
-  name: RP_ADAPTER_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: rp
-- fieldref:
-    fieldPath: metadata.name
-  name: RP_ADAPTER_DIDCOMM_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: rp-didcomm
 
 
 configMapGenerator:
 - envs:
-  - issuer/config.env
+  - config.env
   name: issuer-env
-- envs:
-  - rp/config.env
-  name: rp-env
-- files:
-  - rp/config.json
-  name: rp-config
 
 secretGenerator:
 - envs:
-  - issuer/secret.env
+  - secret.env
   name: issuer-env-secret
-- envs:
-  - rp/secret.env
-  name: rp-env-secret
 
 resources:
-- issuer/deployment.yml
-- issuer/service.yml
-- rp/deployment.yml
-- rp/service.yml
+- deployment.yml
+- service.yml
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: issuer-adapter
   newName: ghcr.io/trustbloc-cicd/issuer-adapter
-  newTag: 0.1.7-snapshot-4c102ba
-- name: rp-adapter
-  newName: ghcr.io/trustbloc-cicd/rp-adapter
   newTag: 0.1.7-snapshot-4c102ba
