@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 # Adds namespace to all resources.
 #namespace: edge-sandbox-system
@@ -25,3 +25,4 @@ kind: Kustomization
 components:
 - ../../components/couch
 - ../../components/mysql
+- ../../components/ipfs

@@ -14,19 +14,20 @@ set -e
 : ${DOMAIN:=trustbloc.dev}
 : ${DEPLOYMENT_ENV:=local}
 ## Should be deployed in the listed order
-: ${COMPONENTS=orb edv resolver registrar csh vcs vault-server kms hub-auth hub-router wallet-server wallet-web adapter-issuer adapter-rp}
+: ${COMPONENTS=edv kms vct orb resolver registrar csh vcs vault-server hub-auth hub-router wallet-server wallet-web adapter-issuer adapter-rp}
 DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)
 declare -A HEALTCHECK_URL=(
-    [orb]="https://orb.$DOMAIN https://testnet.$DOMAIN/.well-known/did-orb"
+    [orb]="https://orb-1.$DOMAIN/healthcheck https://orb-2.$DOMAIN/healthcheck https://testnet.$DOMAIN/.well-known/did-orb"
+    [vct]="https://vct-1.$DOMAIN/healthcheck https://vct-2.$DOMAIN/healthcheck"
     [edv]="https://edv-oathkeeper-proxy.$DOMAIN/healthcheck"
     [resolver]="https://did-resolver.$DOMAIN/healthcheck https://uni-resolver-web.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A"
     [registrar]="https://uni-registrar-web.$DOMAIN/1.0/register"
     [csh]="https://csh.$DOMAIN/healthcheck"
     [vcs]="https://issuer-vcs.$DOMAIN/healthcheck https://verifier-vcs.$DOMAIN/healthcheck https://holder-vcs.$DOMAIN/healthcheck https://governance-vcs.$DOMAIN/healthcheck"
     [vault-server]="https://vault-server.$DOMAIN/healthcheck"
-    [kms]="https://authz-oathkeeper-proxy.$DOMAIN/healthcheck https://ops-oathkeeper-proxy.$DOMAIN/healthcheck https://vault-kms.$DOMAIN/healthcheck"
+    [kms]="https://authz-oathkeeper-proxy.$DOMAIN/healthcheck https://ops-oathkeeper-proxy.$DOMAIN/healthcheck https://vault-kms.$DOMAIN/healthcheck https://orb-1-kms.$DOMAIN/healthcheck https://orb-2-kms.$DOMAIN/healthcheck"
     [hub-auth]="https://hub-auth.$DOMAIN/healthcheck"
     [hub-router]="https://router-api.$DOMAIN/healthcheck"
     [wallet-server]="https://wallet-support.$DOMAIN/healthcheck"
@@ -37,7 +38,10 @@ declare -A HEALTCHECK_URL=(
 ## Map: healthckeck --> http-code
 declare -A HEALTHCHECK_CODE=(
     [https://testnet.$DOMAIN/.well-known/did-orb]=200
-    [https://orb.$DOMAIN]=404
+    [https://vct-1.$DOMAIN/healthcheck]=200
+    [https://vct-2.$DOMAIN/healthcheck]=200
+    [https://orb-1.$DOMAIN/healthcheck]=200
+    [https://orb-2.$DOMAIN/healthcheck]=200
     [https://edv-oathkeeper-proxy.$DOMAIN/healthcheck]=200
     [https://did-resolver.$DOMAIN/healthcheck]=200
     [https://uni-resolver-web.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A]=200
@@ -51,6 +55,8 @@ declare -A HEALTHCHECK_CODE=(
     [https://authz-oathkeeper-proxy.$DOMAIN/healthcheck]=200
     [https://ops-oathkeeper-proxy.$DOMAIN/healthcheck]=200
     [https://vault-kms.$DOMAIN/healthcheck]=200
+    [https://orb-1-kms.$DOMAIN/healthcheck]=200
+    [https://orb-2-kms.$DOMAIN/healthcheck]=200
     [https://router-api.$DOMAIN/healthcheck]=200
     [https://hub-auth.$DOMAIN/healthcheck]=200
     [https://wallet.$DOMAIN/healthcheck]=200
@@ -102,10 +108,10 @@ done
 
 ## generate certificate for all components, skip if already exists
 if ! [[ -d ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs ]]; then
-pushd orb
+pushd edv
     make generate-test-certs
     mkdir -p ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs
-    mv kustomize/orb/overlays/${DEPLOYMENT_ENV}/certs ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/
+    mv kustomize/edv/overlays/${DEPLOYMENT_ENV}/certs ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/
 popd
 fi
 

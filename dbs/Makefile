@@ -60,6 +60,8 @@ deploy-dbs: prechecks kustomize
 	@minikube image load $(COUCH_IMG)
 	@docker pull $(MYSQL_IMG)
 	@minikube image load $(MYSQL_IMG)
+	@docker pull ipfs/go-ipfs:master-2021-04-22-eea198f
+	@minikube image load ipfs/go-ipfs:master-2021-04-22-eea198f
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
 

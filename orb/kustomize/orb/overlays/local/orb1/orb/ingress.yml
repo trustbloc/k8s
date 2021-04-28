@@ -12,10 +12,10 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(ORB_SERVICE_NAME).||DOMAIN||
+      - $(SERVICE_NAME).||DOMAIN||
     secretName: $(INGRESS_TLS_SECRET)
   rules:
-  - host: $(ORB_SERVICE_NAME).||DOMAIN||
+  - host: $(SERVICE_NAME).||DOMAIN||
     http:
       paths:
       - pathType: Prefix
