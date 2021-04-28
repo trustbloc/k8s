@@ -1,0 +1,46 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+
+generatorOptions: {}
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: WEB_SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: wallet
+
+
+configMapGenerator:
+- envs:
+  - config.env
+  name: web-env
+- files:
+  - default.conf.template
+  name: nginx-config-template
+
+
+resources:
+- deployment.yml
+- service.yml
+
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: wallet-web
+  newName: ghcr.io/trustbloc-cicd/wallet-web
+  newTag: 0.1.7-snapshot-bcf274b

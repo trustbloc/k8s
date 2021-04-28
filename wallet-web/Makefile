@@ -15,20 +15,15 @@ export DEPLOYMENT_ENV	?= local
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN		?= testnet.${DOMAIN}
-export ARIESD_DATABASE_URL								?= edgeagent:edgeagent-secret-pw@tcp(mysql:3306)/
-export HUB_ROUTER_DSN_PERSISTENT			?= mysql://hubrouter:hubrouter-secret-pw@tcp(mysql:3306)/
-export HUB_ROUTER_DSN_TRANSIENT				?= mysql://hubrouter:hubrouter-secret-pw@tcp(mysql:3306)/
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
 WALLET_WEB_IMG				?= ghcr.io/trustbloc-cicd/wallet-web:0.1.7-snapshot-bcf274b
-WALLET_SERVER_IMG			?= ghcr.io/trustbloc-cicd/wallet-server:0.1.7-snapshot-bcf274b
-HUB_ROUTER_IMG				?= ghcr.io/trustbloc-cicd/hub-router:0.1.7-snapshot-3a56649
 
 # do not modify
-KUSTOMIZE_DIR       	= kustomize/wallet
+KUSTOMIZE_DIR       	= kustomize/wallet-web
 KEYS_OUTPUT_DIR        	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/keys
 CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
 REGISTRY_DIRECTORY           	= ${KUSTOMIZE_DIR}/base/registry
@@ -70,7 +65,7 @@ generate-test-keys: clean-keys
 		docker.io/frapsoft/openssl:latest
 
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-wallet
+deploy: prechecks kustomize set-images set-labels deploy-wallet-web
 
 .PHONY: prechecks
 prechecks:
@@ -81,7 +76,7 @@ endif
 
 .PHONY: set-labels
 set-labels: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/wallet &&\
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} &&\
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
@@ -89,28 +84,22 @@ set-labels: kustomize
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
 	${KUSTOMIZE} edit set image wallet-web=${WALLET_WEB_IMG} &&\
-	${KUSTOMIZE} edit set image wallet-server=${WALLET_SERVER_IMG} &&\
-	${KUSTOMIZE} edit set image hub-router=${HUB_ROUTER_IMG} &&\
 	popd
 
-.PHONY: deploy-wallet
-deploy-wallet: prechecks kustomize
+.PHONY: deploy-wallet-web
+deploy-wallet-web: prechecks kustomize
 	@docker pull $(WALLET_WEB_IMG)
 	@minikube image load $(WALLET_WEB_IMG)
-	@docker pull $(WALLET_SERVER_IMG)
-	@minikube image load $(WALLET_SERVER_IMG)
-	@docker pull $(HUB_ROUTER_IMG)
-	@minikube image load $(HUB_ROUTER_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/wallet | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-wallet
+undeploy: prechecks kustomize set-images set-labels undeploy-wallet-web
 
-.PHONY: undeploy-wallet
-undeploy-wallet: prechecks kustomize
+.PHONY: undeploy-wallet-web
+undeploy-wallet-web: prechecks kustomize
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/wallet | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl delete -f -
 
 .PHONY: kustomize
 kustomize:

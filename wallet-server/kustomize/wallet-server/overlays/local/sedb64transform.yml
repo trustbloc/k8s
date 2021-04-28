@@ -1,0 +1,11 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+apiVersion: svceng
+kind: SedB64Transformer
+metadata:
+  name: sedb64transformer
+argsOneLiner: s^||ARIESD_DATABASE_URL||^${ARIESD_DATABASE_URL}^ s^||HUB_ROUTER_DSN_PERSISTENT||^${HUB_ROUTER_DSN_PERSISTENT}^ s^||HUB_ROUTER_DSN_TRANSIENT||^${HUB_ROUTER_DSN_TRANSIENT}^
