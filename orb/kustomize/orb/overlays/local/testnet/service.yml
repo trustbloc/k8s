@@ -17,7 +17,7 @@ spec:
     protocol: TCP
     targetPort: http-port
   selector:
-    component: orb-1
+    app: orb
 status:
   loadBalancer: {}
 ---
