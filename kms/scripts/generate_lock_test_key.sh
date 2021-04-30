@@ -26,5 +26,9 @@ openssl rand 32 | base64 | sed 's/+/-/g; s/\//_/g' > ${KEYS_OUTPUT_DIR}/authz-km
 openssl rand 32 | base64 | sed 's/+/-/g; s/\//_/g' > ${KEYS_OUTPUT_DIR}/ops-kms-secret-lock.key
 # vault-kms create secret lock key
 openssl rand 32 | base64 | sed 's/+/-/g; s/\//_/g' > ${KEYS_OUTPUT_DIR}/vault-kms-secret-lock.key
+# orb1-kms create secret lock key
+openssl rand 32 | base64 | sed 's/+/-/g; s/\//_/g' > ${KEYS_OUTPUT_DIR}/orb1-kms-secret-lock.key
+# orb2-kms create secret lock key
+openssl rand 32 | base64 | sed 's/+/-/g; s/\//_/g' > ${KEYS_OUTPUT_DIR}/orb2-kms-secret-lock.key
 
 echo "... Done generating test keys"

@@ -11,6 +11,7 @@
 # Annotations to add to all resources
 #commonAnnotations:
 #  someName: someValue
+
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -28,33 +29,22 @@ vars:
     kind: Secret
     name: orb-wildcard-cert
 
-
 configMapGenerator:
-- behavior: merge
-  envs:
-  - orb/config.env
-  name: orb-env
-
+- files:
+  - ./create_follow_activity.sh
+  name: orb-add-followers-script
 
 secretGenerator:
 - files:
-  - certs/tls.crt
-  - certs/tls.key
+  - ../certs/tls.crt
+  - ../certs/tls.key
   name: orb-wildcard-cert
   type: kubernetes.io/tls
-- behavior: merge
-  envs:
-  - orb/secret.env
-  name: orb-env-secret
-
-resources:
-- ../orb
-- orb/ingress.yml
-- testnet/ingress.yml
-
-components:
-- ../../components/ipfs
 
 transformers:
 - sedtransform.yml
-- sedb64transform.yml
+
+resources:
+- ingress.yml
+- service.yml
+- add-followers.yml

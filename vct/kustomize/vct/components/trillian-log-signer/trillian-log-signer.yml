@@ -1,0 +1,39 @@
+
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: trillian-log-signer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trillian-log-signer
+  template:
+    metadata:
+      labels:
+        app: trillian-log-signer
+    spec:
+      containers:
+        - name: trillian-log-signer
+          args: [
+              "--mysql_uri=$(MYSQL_URI)",
+              "--http_endpoint=$(HTTP_ENDPOINT)",
+              "--force_master=true",
+              "--alsologtostderr"
+          ]
+          envFrom:
+            - configMapRef:
+                name: trillian-log-signer-env
+            - secretRef:
+                name: trillian-log-signer-env-secret
+          image: trillian-log-signer:latest
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+              name: http-port

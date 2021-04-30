@@ -5,30 +5,30 @@
 #
 
 
-CONTAINER_CMD      	 	?= docker
+CONTAINER_CMD         	 	?= docker
 USER_ID                          = $(shell id -u)
 DOCKER_CMD_RUN_OPTS            ?= -u $(USER_ID)
 CONTAINER_CMD_RUN_OPTS         ?= $(if $(findstring docker,$(CONTAINER_CMD)),$(DOCKER_CMD_RUN_OPTS),)
 
 export DEPLOYMENT_ENV	?= local
 # space delimited of Key:Value pairs
-COMMON_LABELS									:= instance:${DEPLOYMENT_ENV}
-export DOMAIN      								?= ${DEPLOYMENT_ENV}.trustbloc.dev
-export BLOC_DOMAIN      						?= testnet.${DOMAIN}
+COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
+export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
+export BLOC_DOMAIN      		?= testnet.${DOMAIN}
 export COUCHDB_URL								?= cdbadmin:secret@couchdb:5984
 
-OS    				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
+OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:0.1.6-snapshot-c138c96
+ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.0-snapshot-f3d673f
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/orb
-KEYS_OUTPUT_DIR        	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/keys
-CERTS_OUTPUT_DIR       	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
-export SIDETREE_OUTPUT_DIR   	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/sidetree
+CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
+KEYS_OUTPUT_DIR						= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/keys
 REGISTRY_DIRECTORY           	= ${KUSTOMIZE_DIR}/base/registry
+PREFIX							?=
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
 export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
 
@@ -36,7 +36,7 @@ export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
 all: setup
 
 .PHONY: setup
-setup: generate-test-keys generate-test-certs
+setup: generate-test-certs generate-test-keys
 	@echo setup
 
 .PHONY: setup-no-certs
@@ -66,7 +66,7 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-orb
+deploy: prechecks kustomize set-images set-labels deploy-orb1 deploy-orb2 deploy-testnet
 
 .PHONY: prechecks
 prechecks:
@@ -76,8 +76,17 @@ ifeq (, $(shell stat ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} 2>/dev/null))
 endif
 
 .PHONY: set-labels
-set-labels: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} &&\
+set-labels: kustomize set-labels-orb1 set-labels-orb2
+
+.PHONY: set-labels-orb1
+set-labels-orb1: kustomize
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1 &&\
+		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
+		popd
+
+.PHONY: set-labels-orb2
+set-labels-orb2: kustomize
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 &&\
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
@@ -87,22 +96,43 @@ set-images: kustomize
 	${KUSTOMIZE} edit set image orb=${ORB_IMG} &&\
 	popd
 
-.PHONY: deploy-orb
-deploy-orb: prechecks kustomize
+.PHONY: deploy-orb1
+deploy-orb1: prechecks set-images set-labels-orb1 kustomize
 	@docker pull $(ORB_IMG)
 	@minikube image load $(ORB_IMG)
-	@docker pull ipfs/go-ipfs:master-2021-04-22-eea198f
-	@minikube image load ipfs/go-ipfs:master-2021-04-22-eea198f
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1 | kubectl apply -f -
+
+.PHONY: deploy-orb2
+deploy-orb2: prechecks set-images set-labels-orb2 kustomize
+	@docker pull $(ORB_IMG)
+	@minikube image load $(ORB_IMG)
+	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 | kubectl apply -f -
+
+.PHONY: deploy-testnet
+deploy-testnet: prechecks set-images kustomize
+	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/testnet | kubectl apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-orb
+undeploy: prechecks kustomize set-images set-labels undeploy-orb1 undeploy-orb2 undeploy-testnet
 
-.PHONY: undeploy-orb
-undeploy-orb: prechecks kustomize
+.PHONY: undeploy-orb1
+undeploy-orb1: prechecks set-images set-labels-orb1 kustomize
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1 | kubectl delete -f -
+
+.PHONY: undeploy-orb2
+undeploy-orb2: prechecks set-images set-labels-orb2 kustomize
+	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 | kubectl delete -f -
+
+.PHONY: undeploy-testnet
+undeploy-testnet: prechecks set-images kustomize
+	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/testnet | kubectl delete -f -
+
 
 .PHONY: kustomize
 kustomize:
@@ -121,14 +151,10 @@ endif
 clean: clean-all
 
 .PHONY: clean-all
-clean-all: clean-sidetree clean-keys clean-certs clean-registry
+clean-all: clean-certs clean-keys clean-registry
 
-.PHONY: clean-no-certs-registry
-clean-no-certs-registry: clean-sidetree clean-keys
-
-.PHONY: clean-sidetree
-clean-sidetree:
-	@rm -Rf ${SIDETREE_OUTPUT_DIR}
+.PHONY: clean-no-registry
+clean-no-registry: clean-certs clean-keys
 
 .PHONY: clean-keys
 clean-keys:

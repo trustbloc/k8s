@@ -14,14 +14,6 @@
 
 generatorOptions: {}
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: ORB_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: orb
 
 configMapGenerator:
 - envs:
@@ -42,4 +34,4 @@ kind: Kustomization
 images:
 - name: orb
   newName: ghcr.io/trustbloc-cicd/orb
-  newTag: 0.1.6-snapshot-c138c96
+  newTag: v0.1.0-snapshot-f3d673f

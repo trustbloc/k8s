@@ -1,0 +1,54 @@
+
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: trillian-log-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trillian-log-server
+  template:
+    metadata:
+      labels:
+        app: trillian-log-server
+    spec:
+      containers:
+        - name: trillian-log-server
+          args: [
+              "--mysql_uri=$(MYSQL_URI)",
+              "--rpc_endpoint=$(RPC_ENDPOINT)",
+              "--alsologtostderr"
+          ]
+          envFrom:
+            - configMapRef:
+                name: trillian-log-server-env
+            - secretRef:
+                name: trillian-log-server-env-secret
+          image: trillian-log-server:latest
+          ports:
+            - containerPort: 9081
+              protocol: TCP
+              name: http-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: trillian-log-server
+spec:
+  ports:
+    - name: http-port
+      port: 9081
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    app: trillian-log-server
+status:
+  loadBalancer: {}

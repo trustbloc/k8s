@@ -12,16 +12,16 @@ metadata:
 spec:
   tls:
   - hosts:
-      - '||BLOC_DOMAIN||'
+      - testnet.||DOMAIN||
     secretName: $(INGRESS_TLS_SECRET)
   rules:
-  - host: '||BLOC_DOMAIN||'
+  - host: testnet.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: orb
+            name: testnet
             port:
               name: http

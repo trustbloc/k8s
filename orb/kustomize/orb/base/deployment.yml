@@ -27,8 +27,7 @@ spec:
             - secretRef:
                 name: orb-env-secret
           image: orb:latest
-          command: [ "/bin/sh" ]
-          args: [ "-c", "orb start" ]
+          args: ["start"]
           ports:
             - containerPort: 8081
               protocol: TCP
