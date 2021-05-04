@@ -1,0 +1,31 @@
+# TrustBloc k8s - Component Deployment Structure
+
+## Component folder structure
+- component_name
+  - kustomize
+     - component_name
+       - base
+         - deployment.yml : k8s configuration
+         - kustomization.yaml : customize k8s configurations
+         - config.env : component general configurations
+         - secrete.env : component secrete configurations
+         - service.yml : 
+       - overlays : support to configure different environments
+         - local : local deployment environment
+           - add-ca.yml : add ca certs
+           - config.env : configs for local env
+           - ingress.yml : define ingress rules
+           - kustomization.yaml : configs for local env
+           - secret.env : secrete configs for local env
+           - sedb64transform.yml
+           - sedtransform.yml
+           - (If applicable, Environment Configuration files)
+     - plugin
+       - svceng
+         - sedb64transformer
+         - sedtransformet
+  - scripts
+     - scripts to generate test certs (for local deployment)
+     - any scripts related to the component
+  - Makefile
+  - README.md
