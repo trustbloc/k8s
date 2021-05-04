@@ -18,25 +18,25 @@ orb2InviteWitnessID=4
 followActivityORB2=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" \
    --request POST \
    --data '{"@context":"https://www.w3.org/ns/activitystreams","id":"'$domain2IRI'/activities/'$orb2FollowID'","type":"Follow","actor":"'$domain2IRI'","to":"'$domain1IRI'","object":"'$domain1IRI'"}' \
-   --insecure https://orb-1.||DOMAIN||/services/orb/inbox)
+   --insecure https://orb-2.||DOMAIN||/services/orb/outbox)
 
 # orb1 server follows orb2 server
 followActivityORB1=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" \
    --request POST \
    --data '{"@context":"https://www.w3.org/ns/activitystreams","id":"'$domain1IRI'/activities/'$orb1FollowID'","type":"Follow","actor":"'$domain1IRI'","to":"'$domain2IRI'","object":"'$domain2IRI'"}' \
-   --insecure https://orb-2.||DOMAIN||/services/orb/inbox)
+   --insecure https://orb-1.||DOMAIN||/services/orb/outbox)
 
 # orb1 invites orb2 to be a witness
 inviteWitnessORB1=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" \
    --request POST \
    --data '{"@context":["https://www.w3.org/ns/activitystreams","https://trustbloc.github.io/did-method-orb/contexts/anchor/v1"],"id":"'$domain1IRI'/activities/'$orb1InviteWitnessID'","type":"InviteWitness","actor":"'$domain1IRI'","to":"'$domain2IRI'","object":"'$domain2IRI'"}' \
-   --insecure https://orb-2.||DOMAIN||/services/orb/inbox)
+   --insecure https://orb-1.||DOMAIN||/services/orb/outbox)
 
 # orb2 invites orb1 to be a witness
 inviteWitnessORB2=$(curl -o /dev/null -s -w "%{http_code}" --header "Content-Type: application/json" \
    --request POST \
    --data '{"@context":["https://www.w3.org/ns/activitystreams","https://trustbloc.github.io/did-method-orb/contexts/anchor/v1"],"id":"'$domain2IRI'/activities/'$orb2InviteWitnessID'","type":"InviteWitness","actor":"'$domain2IRI'","to":"'$domain1IRI'","object":"'$domain1IRI'"}' \
-   --insecure https://orb-1.||DOMAIN||/services/orb/inbox)
+   --insecure https://orb-2.||DOMAIN||/services/orb/outbox)
 
 
 checkIsCreated()
