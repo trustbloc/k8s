@@ -21,7 +21,7 @@ OS 								= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  							= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.0-snapshot-eacaec8
+VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.0-snapshot-66a3ac6
 
 export TRILLIAN1_LOG_MYSQL		?= orb1vct:orb1vct-secret-pw@tcp(mysql:3306)/orb1vct
 export TRILLIAN2_LOG_MYSQL		?= orb2vct:orb2vct-secret-pw@tcp(mysql:3306)/orb2vct
