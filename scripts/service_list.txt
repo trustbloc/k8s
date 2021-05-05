@@ -29,6 +29,7 @@ vct-1
 orb-2
 vct-2
 orb-2-kms
+orb-3-kms
 testnet
 uni-registrar-web
 uni-resolver-web
