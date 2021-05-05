@@ -66,7 +66,7 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-orb1 deploy-orb2 deploy-testnet
+deploy: prechecks kustomize set-images set-labels deploy-orb1 deploy-orb2 deploy-orb3 deploy-testnet
 
 .PHONY: prechecks
 prechecks:
@@ -76,7 +76,7 @@ ifeq (, $(shell stat ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} 2>/dev/null))
 endif
 
 .PHONY: set-labels
-set-labels: kustomize set-labels-orb1 set-labels-orb2
+set-labels: kustomize set-labels-orb1 set-labels-orb2 set-labels-orb3
 
 .PHONY: set-labels-orb1
 set-labels-orb1: kustomize
@@ -87,6 +87,12 @@ set-labels-orb1: kustomize
 .PHONY: set-labels-orb2
 set-labels-orb2: kustomize
 	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 &&\
+		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
+		popd
+
+.PHONY: set-labels-orb3
+set-labels-orb3: kustomize
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 &&\
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
@@ -110,13 +116,21 @@ deploy-orb2: prechecks set-images set-labels-orb2 kustomize
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 | kubectl apply -f -
 
+.PHONY: deploy-orb3
+deploy-orb3: prechecks set-images set-labels-orb3 kustomize
+	@docker pull $(ORB_IMG)
+	@minikube image load $(ORB_IMG)
+	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 | kubectl apply -f -
+
+
 .PHONY: deploy-testnet
 deploy-testnet: prechecks set-images kustomize
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/testnet | kubectl apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-orb1 undeploy-orb2 undeploy-testnet
+undeploy: prechecks kustomize set-images set-labels undeploy-orb1 undeploy-orb2 undeploy-orb3 undeploy-testnet
 
 .PHONY: undeploy-orb1
 undeploy-orb1: prechecks set-images set-labels-orb1 kustomize
@@ -127,6 +141,11 @@ undeploy-orb1: prechecks set-images set-labels-orb1 kustomize
 undeploy-orb2: prechecks set-images set-labels-orb2 kustomize
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 | kubectl delete -f -
+
+.PHONY: undeploy-orb3
+undeploy-orb3: prechecks set-images set-labels-orb3 kustomize
+	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 | kubectl delete -f -
 
 .PHONY: undeploy-testnet
 undeploy-testnet: prechecks set-images kustomize
