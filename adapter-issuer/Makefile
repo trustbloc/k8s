@@ -15,13 +15,13 @@ export DEPLOYMENT_ENV	?= local
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN		?= testnet.${DOMAIN}
-export ISSUER_ADAPTER_REST_DSN								?= mysql://issueradapter:issueradapter-secret-pw@tcp(mysql:3306)/
+export ISSUER_ADAPTER_REST_DSN								?= mysql://issueradapter:issueradapter-secret-pw@tcp(mysql:3306)/?interpolateParams=true&multiStatements=true
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ISSUER_ADAPTER_IMG				?= ghcr.io/trustbloc-cicd/issuer-adapter:0.1.7-snapshot-4c102ba
+ISSUER_ADAPTER_IMG				?= ghcr.io/trustbloc-cicd/issuer-adapter:0.1.7-snapshot-e86a91f
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/adapter-issuer

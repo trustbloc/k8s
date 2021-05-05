@@ -15,13 +15,13 @@ export DEPLOYMENT_ENV	?= local
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN		?= testnet.${DOMAIN}
-export ARIESD_DATABASE_URL								?= edgeagent:edgeagent-secret-pw@tcp(mysql:3306)/
+export ARIESD_DATABASE_URL								?= edgeagent:edgeagent-secret-pw@tcp(mysql:3306)/?interpolateParams=true&multiStatements=true
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-WALLET_SERVER_IMG			?= ghcr.io/trustbloc-cicd/wallet-server:0.1.7-snapshot-bcf274b
+WALLET_SERVER_IMG			?= ghcr.io/trustbloc-cicd/wallet-server:0.1.7-snapshot-eb095e7
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/wallet-server
