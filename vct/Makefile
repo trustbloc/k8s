@@ -25,6 +25,7 @@ VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.0-snapshot-66a3ac6
 
 export TRILLIAN1_LOG_MYSQL		?= orb1vct:orb1vct-secret-pw@tcp(mysql:3306)/orb1vct
 export TRILLIAN2_LOG_MYSQL		?= orb2vct:orb2vct-secret-pw@tcp(mysql:3306)/orb2vct
+export TRILLIAN3_LOG_MYSQL		?= orb3vct:orb3vct-secret-pw@tcp(mysql:3306)/orb3vct
 
 
 # do not modify
@@ -47,7 +48,7 @@ setup-no-certs:
 	@echo setup-no-certs
 
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-vct1 deploy-vct2
+deploy: prechecks kustomize set-images set-labels deploy-vct1 deploy-vct2 deploy-vct3
 
 .PHONY: generate-test-certs
 generate-test-certs: clean-certs
@@ -70,7 +71,7 @@ ifeq (, $(shell stat ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} 2>/dev/null))
 endif
 
 .PHONY: set-labels
-set-labels: kustomize set-labels-vct1 set-labels-vct2
+set-labels: kustomize set-labels-vct1 set-labels-vct2 set-labels-vct3
 
 .PHONY: set-labels-vct1
 set-labels-vct1: kustomize
@@ -81,6 +82,12 @@ set-labels-vct1: kustomize
 .PHONY: set-labels-vct2
 set-labels-vct2: kustomize
 	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct2 &&\
+		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
+		popd
+
+.PHONY: set-labels-vct3
+set-labels-vct3: kustomize
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct3 &&\
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
@@ -104,10 +111,16 @@ deploy-vct2: prechecks set-images set-labels-vct2 kustomize
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct2 | kubectl apply -f -
 
+.PHONY: deploy-vct3
+deploy-vct3: prechecks set-images set-labels-vct3 kustomize
+	@docker pull $(VCT_IMG)
+	@minikube image load $(VCT_IMG)
+	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct3 | kubectl apply -f -
 
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-vct1 undeploy-vct2
+undeploy: prechecks kustomize set-images set-labels undeploy-vct1 undeploy-vct2 undeploy-vct3
 
 .PHONY: undeploy-vct1
 undeploy-vct1: prechecks set-images set-labels-vct1 kustomize
@@ -119,6 +132,10 @@ undeploy-vct2: prechecks set-images set-labels-vct2 kustomize
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct2 | kubectl delete -f -
 
+.PHONY: undeploy-vct3
+undeploy-vct3: prechecks set-images set-labels-vct3 kustomize
+	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct3 | kubectl delete -f -
 
 .PHONY: kustomize
 kustomize:

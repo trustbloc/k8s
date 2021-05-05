@@ -20,7 +20,7 @@ DEPLOY_LIST=( $COMPONENTS )
 ## Map: component --> healthcheck(s)
 declare -A HEALTCHECK_URL=(
     [orb]="https://orb-1.$DOMAIN/healthcheck https://orb-2.$DOMAIN/healthcheck https://testnet.$DOMAIN/.well-known/did-orb"
-    [vct]="https://vct-1.$DOMAIN/healthcheck https://vct-2.$DOMAIN/healthcheck"
+    [vct]="https://vct-1.$DOMAIN/healthcheck https://vct-2.$DOMAIN/healthcheck https://vct-3.$DOMAIN/healthcheck"
     [edv]="https://edv-oathkeeper-proxy.$DOMAIN/healthcheck"
     [resolver]="https://did-resolver.$DOMAIN/healthcheck https://uni-resolver-web.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A"
     [registrar]="https://uni-registrar-web.$DOMAIN/1.0/register"
@@ -40,6 +40,7 @@ declare -A HEALTHCHECK_CODE=(
     [https://testnet.$DOMAIN/.well-known/did-orb]=200
     [https://vct-1.$DOMAIN/healthcheck]=200
     [https://vct-2.$DOMAIN/healthcheck]=200
+    [https://vct-3.$DOMAIN/healthcheck]=200
     [https://orb-1.$DOMAIN/healthcheck]=200
     [https://orb-2.$DOMAIN/healthcheck]=200
     [https://edv-oathkeeper-proxy.$DOMAIN/healthcheck]=200
