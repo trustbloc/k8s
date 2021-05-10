@@ -4,7 +4,7 @@ The repo contains the scripts to deploy the core TrustBloc components.
 
 ## Prerequisites
 - docker (running)
-- [minikube](#minikube)
+- [minikube](#minikube) [minimum version: v1.20]
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)  [minimum version: v1.20]
 - GNU bash [minimum version: v5] (for macOS, refer [macos setup](#macos-additional-prerequisites))
 - GNU make
