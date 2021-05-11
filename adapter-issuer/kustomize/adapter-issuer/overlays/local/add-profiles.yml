@@ -26,7 +26,7 @@ spec:
             - "-c"
             - |
               while [[ "$(curl -o /dev/null -s -w '%{http_code}' --insecure --connect-timeout 5 http://${ADAPTER_ISSUER_SERVICE_HOST}/healthcheck)" != "200" ]];
-              do echo "waiting for adapter endopint";
+              do echo "waiting for adapter endpoint";
               sleep 5;
               done;
         - name: trustbloc-ready
@@ -37,7 +37,7 @@ spec:
             - "-c"
             - |
               while [[ "$(curl -o /dev/null -s -w '%{http_code}' --insecure --connect-timeout 5 https://||BLOC_DOMAIN||/.well-known/did-orb)" != "200" ]];
-              do echo "waiting for BLOC endopint";
+              do echo "waiting for BLOC endpoint";
               sleep 5;
               done;
       containers:
