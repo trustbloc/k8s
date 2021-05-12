@@ -4,25 +4,11 @@ The repo contains the scripts to deploy the core TrustBloc components.
 
 ## Prerequisites
 - docker (running)
-- [minikube](#minikube) [minimum version: v1.20]
+- [minikube](https://minikube.sigs.k8s.io/docs/start/) [minimum version: v1.20]
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)  [minimum version: v1.20]
 - GNU bash [minimum version: v5] (for macOS, refer [macos setup](#macos-additional-prerequisites))
 - GNU make
 - GNU sed
-
-### Minikube 
-Currently, the [deployment fails](https://github.com/trustbloc/k8s/issues/9) with minikube v1.19. Follow the 
-instructions to install v1.18 for TrustBloc k8s deployment.
-
-```
-# macOS amd64
-curl -LO https://github.com/kubernetes/minikube/releases/download/v1.18.0/minikube-darwin-amd64
-sudo install minikube-darwin-amd64 /usr/local/bin/minikube
-
-# linux
-curl -LO https://github.com/kubernetes/minikube/releases/download/v1.18.0/minikube-linux-amd64
-sudo install minikube-linux-amd64 /usr/local/bin/minikube
-```
 
 ### MacOS additional prerequisites
 - [HyperKit](https://minikube.sigs.k8s.io/docs/drivers/hyperkit/) installed
