@@ -46,7 +46,9 @@ Minikube cluster re-create:
 
 ## Kubernetes Dashboard
 
-To access the dashboard run `kubectl port-forward svc/kubernetes-dashboard -n kubernetes-dashboard 8888:80` and browse to the port-forwarded URL: http://localhost:8888
+Open the dashboard in a browser:
+
+`minikube dashboard`
 
 ## Contributing
 Thank you for your interest in contributing. Please see our [community contribution guidelines](https://github.com/trustbloc/community/blob/main/CONTRIBUTING.md) for more information.

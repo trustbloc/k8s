@@ -15,14 +15,14 @@ export DEPLOYMENT_ENV	?= local
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN		?= testnet.${DOMAIN}
-export RP_ADAPTER_REST_DSN								?= mysql://rpadapter:rpadapter-secret-pw@tcp(mysql:3306)/
+export RP_ADAPTER_REST_DSN								?= mysql://rpadapter:rpadapter-secret-pw@tcp(mysql:3306)/?interpolateParams=true&multiStatements=true
 export HYDRA_MYSQL_DSN								?= mysql://rpadapterhydra:secret@tcp(mysql:3306)/rpadapter_hydra?max_conns=20&max_idle_conns=4
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-RP_ADAPTER_IMG						?= ghcr.io/trustbloc-cicd/rp-adapter:0.1.7-snapshot-4c102ba
+RP_ADAPTER_IMG						?= ghcr.io/trustbloc-cicd/rp-adapter:0.1.7-snapshot-e86a91f
 HYDRA_IMG			?= oryd/hydra:v1.3.2-alpine
 
 # do not modify

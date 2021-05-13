@@ -15,15 +15,15 @@ export DEPLOYMENT_ENV	?= local
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN		?= testnet.${DOMAIN}
-export ARIESD_DATABASE_URL								?= edgeagent:edgeagent-secret-pw@tcp(mysql:3306)/
-export HUB_ROUTER_DSN_PERSISTENT			?= mysql://hubrouter:hubrouter-secret-pw@tcp(mysql:3306)/
-export HUB_ROUTER_DSN_TRANSIENT				?= mysql://hubrouter:hubrouter-secret-pw@tcp(mysql:3306)/
+export ARIESD_DATABASE_URL								?= edgeagent:edgeagent-secret-pw@tcp(mysql:3306)/?interpolateParams=true&multiStatements=true
+export HUB_ROUTER_DSN_PERSISTENT			?= mysql://hubrouter:hubrouter-secret-pw@tcp(mysql:3306)/?interpolateParams=true&multiStatements=true
+export HUB_ROUTER_DSN_TRANSIENT				?= mysql://hubrouter:hubrouter-secret-pw@tcp(mysql:3306)/?interpolateParams=true&multiStatements=true
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-HUB_ROUTER_IMG				?= ghcr.io/trustbloc-cicd/hub-router:0.1.7-snapshot-3a56649
+HUB_ROUTER_IMG				?= ghcr.io/trustbloc-cicd/hub-router:0.1.7-snapshot-d7ef35f
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/hub-router
