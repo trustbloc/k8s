@@ -44,3 +44,10 @@ spec:
           - containerPort: 8083
             protocol: TCP
             name: api-port
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: http-port
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 5
