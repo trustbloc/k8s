@@ -12,16 +12,18 @@ CONTAINER_CMD_RUN_OPTS         ?= $(if $(findstring docker,$(CONTAINER_CMD)),$(D
 
 export DEPLOYMENT_ENV	?= local
 # space delimited of Key:Value pairs
-COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
-export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
+COMMON_LABELS		            := instance:${DEPLOYMENT_ENV}
+export DOMAIN      		        ?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN      		?= testnet.${DOMAIN}
-export COUCHDB_URL								?= cdbadmin:secret@couchdb:5984
+export COUCHDB_URL				?= cdbadmin:secret@couchdb:5984
+export ORB_AUTH_TOKENS			?= admin=ADMIN_TOKEN
+
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.0-snapshot-1ba519e
+ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.0-snapshot-9057409
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/orb
