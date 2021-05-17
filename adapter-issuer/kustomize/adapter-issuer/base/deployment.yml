@@ -35,3 +35,10 @@ spec:
           - containerPort: 8082
             protocol: TCP
             name: didcomm-port
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: http-port
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 5

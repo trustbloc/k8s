@@ -42,3 +42,10 @@ spec:
         volumeMounts:
           - name: config
             mountPath: /etc/rp-adapter/config
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: http-port
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 5

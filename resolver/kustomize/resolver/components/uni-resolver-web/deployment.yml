@@ -34,6 +34,13 @@ spec:
           - containerPort: 8080
             protocol: TCP
             name: http-port
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http-port
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 5
         volumeMounts:
           - name: config
             mountPath: /opt/uni-resolver-java/uni-resolver-web/config.json
