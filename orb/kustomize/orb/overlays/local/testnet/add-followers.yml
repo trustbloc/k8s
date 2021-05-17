@@ -16,6 +16,9 @@ spec:
         - name: script
           configMap:
             name: orb-add-followers-script
+        - name: ca-cert
+          configMap:
+            name: orb-add-followers-ca-cert
       restartPolicy: Never
       initContainers:
         - name: wait
@@ -32,3 +35,5 @@ spec:
         volumeMounts:
           - name: script
             mountPath: /opt
+          - name: ca-cert
+            mountPath: /etc/orb-add-followers/tls
