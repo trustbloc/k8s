@@ -34,4 +34,4 @@ kind: Kustomization
 images:
 - name: kms
   newName: ghcr.io/trustbloc-cicd/kms
-  newTag: 0.1.7-snapshot-4d90976
+  newTag: 0.1.7-snapshot-f68b29f
