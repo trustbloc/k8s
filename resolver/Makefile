@@ -14,6 +14,8 @@ export DEPLOYMENT_ENV	?= local
 # space delimited of Key:Value pairs
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
+export BLOC_DOMAIN      		?= testnet.${DOMAIN}
+
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
