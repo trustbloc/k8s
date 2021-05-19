@@ -47,7 +47,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /healthcheck
-            port: http-port
+            port: api-port
           initialDelaySeconds: 30
           periodSeconds: 10
           failureThreshold: 5
