@@ -8,7 +8,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: orb
+  name: orb-1
 spec:
   tls:
   - hosts:
@@ -22,6 +22,6 @@ spec:
         path: "/"
         backend:
           service:
-            name: orb
+            name: orb-1
             port:
               name: http

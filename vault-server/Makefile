@@ -27,7 +27,6 @@ COUCHDB_IMG			?= docker.io/library/couchdb:3.1
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/vault-server
 CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
-REGISTRY_DIRECTORY           	= ${KUSTOMIZE_DIR}/base/registry
 PREFIX							?=
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
 export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
@@ -57,7 +56,7 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-vault-server
+deploy: prechecks kustomize kubectl set-images set-labels deploy-vault-server
 
 .PHONY: prechecks
 prechecks:
@@ -79,20 +78,19 @@ set-images: kustomize
 	popd
 
 .PHONY: deploy-vault-server
-deploy-vault-server: prechecks kustomize
-
+deploy-vault-server: prechecks kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-vault-server
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-vault-server
 
 .PHONY: undeploy-vault-server
-undeploy-vault-server: prechecks kustomize
+undeploy-vault-server: prechecks kustomize kubectl
 	@docker pull $(VAULT_SERVER_IMG)
 	@minikube image load $(VAULT_SERVER_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:
@@ -105,6 +103,20 @@ ifeq (, $(shell which kustomize 2>/dev/null))
 KUSTOMIZE=$(realpath ./bin/kustomize)
 else
 KUSTOMIZE=$(shell which kustomize)
+endif
+
+.PHONY: kubectl
+kubectl:
+ifeq (, $(shell which kubectl 2>/dev/null))
+	@{ \
+	set -e ;\
+	mkdir -p bin ;\
+	curl -sSL https://storage.googleapis.com/kubernetes-release/release/v1.19.6/bin/$(OS)/$(ARCH)/kubectl -o bin/kubectl ;\
+  chmod u+x bin/kubectl ;\
+	}
+KUBECTL=$(realpath ./bin/kubectl)
+else
+KUBECTL=$(shell which kubectl)
 endif
 
 .PHONY: clean

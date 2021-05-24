@@ -11,8 +11,6 @@ metadata:
   name: wallet-web
   labels:
     app: web
-    group: wallet
-    component: wallet-web
 spec:
   tls:
   - hosts:

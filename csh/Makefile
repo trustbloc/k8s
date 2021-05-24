@@ -26,7 +26,6 @@ CSH_IMAGE				?= ghcr.io/trustbloc-cicd/hub-confidential-storage:0.1.7-snapshot-8
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/csh
 CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
-REGISTRY_DIRECTORY           	= ${KUSTOMIZE_DIR}/base/registry
 PREFIX							?=
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
 export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
@@ -56,7 +55,7 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-csh
+deploy: prechecks kustomize kubectl set-images set-labels deploy-csh
 
 .PHONY: prechecks
 prechecks:
@@ -78,19 +77,19 @@ set-images: kustomize
 	popd
 
 .PHONY: deploy-csh
-deploy-csh: prechecks kustomize
+deploy-csh: prechecks kustomize kubectl
 	@docker pull $(CSH_IMAGE)
 	@minikube image load $(CSH_IMAGE)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/csh | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/csh | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-csh
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-csh
 
 .PHONY: undeploy-csh
-undeploy-csh: prechecks kustomize
+undeploy-csh: prechecks kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/csh | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/csh | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:
@@ -103,6 +102,20 @@ ifeq (, $(shell which kustomize 2>/dev/null))
 KUSTOMIZE=$(realpath ./bin/kustomize)
 else
 KUSTOMIZE=$(shell which kustomize)
+endif
+
+.PHONY: kubectl
+kubectl:
+ifeq (, $(shell which kubectl 2>/dev/null))
+	@{ \
+	set -e ;\
+	mkdir -p bin ;\
+	curl -sSL https://storage.googleapis.com/kubernetes-release/release/v1.19.6/bin/$(OS)/$(ARCH)/kubectl -o bin/kubectl ;\
+  chmod u+x bin/kubectl ;\
+	}
+KUBECTL=$(realpath ./bin/kubectl)
+else
+KUBECTL=$(shell which kubectl)
 endif
 
 .PHONY: clean

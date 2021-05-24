@@ -31,9 +31,6 @@ vars:
 
 configMapGenerator:
 - files:
-  - ./create_follow_activity.sh
-  name: orb-add-followers-script
-- files:
     - ../certs/ca.crt
   name: orb-add-followers-ca-cert
 
@@ -48,6 +45,8 @@ transformers:
 - sedtransform.yml
 
 resources:
+- ../../common/testnet
 - ingress.yml
-- service.yml
-- add-followers.yml
+
+patchesStrategicMerge:
+- add-ca.yml

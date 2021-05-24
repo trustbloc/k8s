@@ -13,10 +13,10 @@
 # Note that it should also match with the prefix (text before '-') of the namespace
 # field above.
 commonLabels:
-  group: services
   instance: local
+  group: services
   project: trustbloc
-
+  component: csh
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -40,10 +40,6 @@ configMapGenerator:
   name: csh-ca-cert
 
 secretGenerator:
-- behavior: merge
-  envs:
-  - csh/secret.env
-  name: csh-env-secret
 - files:
   - ../certs/tls.crt
   - ../certs/tls.key
@@ -51,7 +47,7 @@ secretGenerator:
   type: kubernetes.io/tls
 
 resources:
-- ../../csh
+- ../../common
 - csh/ingress.yml
 
 transformers:

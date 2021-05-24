@@ -15,7 +15,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-nameSuffix: "-1"
 commonLabels:
   component: orb-1
   group: core
@@ -29,35 +28,25 @@ vars:
   objref:
     apiVersion: v1
     kind: Secret
-    name: orb-wildcard-cert
+    name: orb-wildcard-cert-1
 - fieldref:
     fieldPath: metadata.name
   name: SERVICE_NAME
   objref:
     apiVersion: v1
     kind: Service
-    name: orb
-
-configMapGenerator:
-- behavior: merge
-  envs:
-  - orb/config.env
-  name: orb-env
+    name: orb-1
 
 
 secretGenerator:
 - files:
   - ../certs/tls.crt
   - ../certs/tls.key
-  name: orb-wildcard-cert
+  name: orb-wildcard-cert-1
   type: kubernetes.io/tls
-- behavior: merge
-  envs:
-  - orb/secret.env
-  name: orb-env-secret
 
 resources:
-- ../../../base
+- ../../common/orb1
 - orb/ingress.yml
 
 

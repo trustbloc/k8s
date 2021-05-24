@@ -23,18 +23,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ../../base
+- ../common
 - resolver/ingress.yml
 - uni-resolver-web/ingress.yml
 
 transformers:
 - sedtransform.yml
-
-#- ../../components/driver-did-sov
-components:
-- ../../components/uni-resolver-did-v1-driver
-- ../../components/uni-resolver-driver-did-uport
-- ../../components/uni-resolver-web
 
 vars:
 - fieldref:
@@ -53,18 +47,10 @@ secretGenerator:
   type: kubernetes.io/tls
 
 configMapGenerator:
-- behavior: replace
-  files:
-  - resolver/config.json
-  name: did-resolver-config
 - behavior: merge
   envs:
   - resolver/config.env
   name: did-resolver-env
-- behavior: replace
-  files:
-  - uni-resolver-web/config.json
-  name: uni-resolver-web-config
 - files:
   - certs/ca.crt
   name: resolver-ca-cert

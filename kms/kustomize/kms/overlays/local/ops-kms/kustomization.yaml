@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 # Adds namespace to all resources.
 #namespace: edge-sandbox-system
@@ -12,7 +12,6 @@
 # "wordpress" becomes "alices-wordpress".
 # Note that it should also match with the prefix (text before '-') of the namespace
 # field above.
-namePrefix: ops-
 commonLabels:
   component: ops-kms
   group: core
@@ -23,20 +22,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ../../../base
+- ../../common/ops-kms
 - oathkeeper/ingress.yml
 
 transformers:
 - sedtransform.yml
 - sedb64transform.yml
 
-components:
-- ../../../components/oathkeeper
-
 vars:
 - fieldref:
     fieldPath: metadata.name
-  name: INGRESS_TLS_SECRET
+  name: OPS_INGRESS_TLS_SECRET
   objref:
     apiVersion: v1
     kind: Secret
@@ -48,33 +44,21 @@ secretGenerator:
   - ../certs/tls.key
   name: ops-kms-wildcard-cert
   type: kubernetes.io/tls
-- behavior: merge
-  envs:
-  - kms/secret.env
-  name: kms-env-secret
-- files:
+- behavior: replace
+  files:
   - secret-lock.key=../keys/ops-kms-secret-lock.key
-  name: kms-lock-key
+  name: ops-kms-lock-key
 
 
 configMapGenerator:
 - behavior: merge
   envs:
   - kms/config.env
-  name: kms-env
-- behavior: replace
-  files:
-  - oathkeeper/config.yml
-  name: oathkeeper-config
-- behavior: replace
-  files:
-  - oathkeeper/access-rules.json
-  name: oathkeeper-rules
+  name: ops-kms-env
 - files:
   - ../certs/ca.crt
-  name: kms-ca-cert
+  name: ops-kms-ca-cert
 
 patchesStrategicMerge:
 - kms/add-ca.yml
-- kms/add-key.yml
 - oathkeeper/update-local-cert-store.yml

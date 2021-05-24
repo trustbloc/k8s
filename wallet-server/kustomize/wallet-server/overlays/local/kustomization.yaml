@@ -27,13 +27,9 @@ vars:
   objref:
     apiVersion: v1
     kind: Secret
-    name: wallet-wildcard-cert
+    name: wallet-server-wildcard-cert
 
 secretGenerator:
-- behavior: merge
-  envs:
-  - secret.env
-  name: server-env-secret
 - behavior: replace
   files:
   - keys/auth.key
@@ -42,7 +38,7 @@ secretGenerator:
 - files:
   - certs/tls.crt
   - certs/tls.key
-  name: wallet-wildcard-cert
+  name: wallet-server-wildcard-cert
   type: kubernetes.io/tls
 
 configMapGenerator:
@@ -52,10 +48,10 @@ configMapGenerator:
   name: server-env
 - files:
   - certs/ca.crt
-  name: wallet-ca-cert
+  name: wallet-server-ca-cert
 
 resources:
-- ../../base
+- ../common
 - ingress.yml
 
 transformers:

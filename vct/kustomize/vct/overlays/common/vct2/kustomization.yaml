@@ -1,0 +1,62 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+nameSuffix: "-2"
+commonLabels:
+  component: vct-2
+  group: core
+  project: trustbloc
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: vct
+
+configMapGenerator:
+- behavior: merge
+  envs:
+  - vct/config.env
+  name: vct-env
+
+secretGenerator:
+- behavior: merge
+  envs:
+  - vct/secret.env
+  name: vct-env-secret
+- behavior: merge
+  envs:
+  - trillian-log-server/secret.env
+  name: trillian-log-server-env-secret
+- behavior: merge
+  envs:
+  - trillian-log-signer/secret.env
+  name: trillian-log-signer-env-secret
+
+resources:
+- ../../../base
+
+components:
+- ../../../components/trillian-log-server
+- ../../../components/trillian-log-signer
+
+transformers:
+- sedtransform.yml
+- sedb64transform.yml

@@ -31,7 +31,6 @@ export TRILLIAN3_LOG_MYSQL		?= orb3vct:orb3vct-secret-pw@tcp(mysql:3306)/orb3vct
 # do not modify
 KUSTOMIZE_DIR       			= kustomize/vct
 CERTS_OUTPUT_DIR      	 	    = ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
-REGISTRY_DIRECTORY           	= ${KUSTOMIZE_DIR}/base/registry
 PREFIX							?=
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
 export KUSTOMIZE_PLUGIN_HOME	= $(abspath .)/kustomize/plugin
@@ -48,7 +47,7 @@ setup-no-certs:
 	@echo setup-no-certs
 
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-vct1 deploy-vct2 deploy-vct3
+deploy: prechecks kustomize kubectl set-images set-labels deploy-vct1 deploy-vct2 deploy-vct3
 
 .PHONY: generate-test-certs
 generate-test-certs: clean-certs
@@ -98,44 +97,44 @@ set-images: kustomize
 	popd
 
 .PHONY: deploy-vct1
-deploy-vct1: prechecks set-images set-labels-vct1 kustomize
+deploy-vct1: prechecks set-images set-labels-vct1 kustomize kubectl
 	@docker pull $(VCT_IMG)
 	@minikube image load $(VCT_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct1 | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct1 | $(KUBECTL) apply -f -
 
 .PHONY: deploy-vct2
-deploy-vct2: prechecks set-images set-labels-vct2 kustomize
+deploy-vct2: prechecks set-images set-labels-vct2 kustomize kubectl
 	@docker pull $(VCT_IMG)
 	@minikube image load $(VCT_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct2 | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct2 | $(KUBECTL) apply -f -
 
 .PHONY: deploy-vct3
-deploy-vct3: prechecks set-images set-labels-vct3 kustomize
+deploy-vct3: prechecks set-images set-labels-vct3 kustomize kubectl
 	@docker pull $(VCT_IMG)
 	@minikube image load $(VCT_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct3 | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct3 | $(KUBECTL) apply -f -
 
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-vct1 undeploy-vct2 undeploy-vct3
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-vct1 undeploy-vct2 undeploy-vct3
 
 .PHONY: undeploy-vct1
-undeploy-vct1: prechecks set-images set-labels-vct1 kustomize
+undeploy-vct1: prechecks set-images set-labels-vct1 kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct1 | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct1 | $(KUBECTL) delete -f -
 
 .PHONY: undeploy-vct2
-undeploy-vct2: prechecks set-images set-labels-vct2 kustomize
+undeploy-vct2: prechecks set-images set-labels-vct2 kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct2 | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct2 | $(KUBECTL) delete -f -
 
 .PHONY: undeploy-vct3
-undeploy-vct3: prechecks set-images set-labels-vct3 kustomize
+undeploy-vct3: prechecks set-images set-labels-vct3 kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct3 | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct3 | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:
@@ -148,6 +147,20 @@ ifeq (, $(shell which kustomize 2>/dev/null))
 KUSTOMIZE=$(realpath ./bin/kustomize)
 else
 KUSTOMIZE=$(shell which kustomize)
+endif
+
+.PHONY: kubectl
+kubectl:
+ifeq (, $(shell which kubectl 2>/dev/null))
+	@{ \
+	set -e ;\
+	mkdir -p bin ;\
+	curl -sSL https://storage.googleapis.com/kubernetes-release/release/v1.19.6/bin/$(OS)/$(ARCH)/kubectl -o bin/kubectl ;\
+  chmod u+x bin/kubectl ;\
+	}
+KUBECTL=$(realpath ./bin/kubectl)
+else
+KUBECTL=$(shell which kubectl)
 endif
 
 .PHONY: clean

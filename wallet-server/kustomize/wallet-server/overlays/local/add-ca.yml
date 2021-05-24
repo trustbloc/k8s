@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 apiVersion: apps/v1
 kind: Deployment
@@ -14,7 +14,7 @@ spec:
       volumes:
         - name: ca-cert
           configMap:
-            name: wallet-ca-cert
+            name: wallet-server-ca-cert
       containers:
         - name: server
           volumeMounts:

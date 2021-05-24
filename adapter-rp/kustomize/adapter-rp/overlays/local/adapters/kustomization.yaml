@@ -12,7 +12,6 @@
 # "wordpress" becomes "alices-wordpress".
 # Note that it should also match with the prefix (text before '-') of the namespace
 # field above.
-namePrefix: adapter-
 commonLabels:
   component: adapter
   group: services
@@ -33,14 +32,6 @@ vars:
     name: adapters-wildcard-cert
 
 secretGenerator:
-- behavior: merge
-  envs:
-  - rp/secret.env
-  name: rp-env-secret
-- behavior: merge
-  envs:
-  - hydra/hydra-secret.env
-  name: hydra-secret
 - files:
   - ../certs/tls.crt
   - ../certs/tls.key
@@ -52,30 +43,19 @@ configMapGenerator:
 - behavior: merge
   envs:
   - rp/config.env
-  name: rp-env
-- behavior: replace
-  files:
-  - rp/config.json
-  name: rp-config
-- behavior: merge
-  envs:
-  - hydra/hydra-env.env
-  name: hydra-env
+  name: adapter-rp-env
 - files:
   - ../certs/ca.crt
-  name: ca-cert
+  name: adapter-ca-cert
 
 resources:
-- ../../../base
+- ../../common
 - rp/ingress.yml
 - hydra/ingress.yml
 
 transformers:
 - sedtransform.yml
 - sedb64transform.yml
-
-components:
-- ../../../components/hydra
 
 patchesStrategicMerge:
 - rp/add-ca.yml

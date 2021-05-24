@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 # Adds namespace to all resources.
 #namespace: edge-sandbox-system
@@ -37,23 +37,11 @@ configMapGenerator:
   envs:
   - edv/config.env
   name: edv-env
-- behavior: replace
-  files:
-  - oathkeeper/config.yml
-  name: edv-oathkeeper-config
-- behavior: replace
-  files:
-  - oathkeeper/access-rules.json
-  name: edv-oathkeeper-rules
 - files:
   - certs/ca.crt
   name: edv-ca-cert
 
 secretGenerator:
-- behavior: merge
-  envs:
-  - edv/secret.env
-  name: edv-env-secret
 - files:
   - certs/tls.crt
   - certs/tls.key
@@ -65,8 +53,7 @@ transformers:
 - sedb64transform.yml
 
 resources:
-- ../../base
-- ../oathkeeper
+- ../common
 - edv/ingress.yml
 - oathkeeper/ingress.yml
 

@@ -7,14 +7,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vct
+  name: vct-3
 spec:
   template:
     spec:
       volumes:
         - name: ca-cert
           configMap:
-            name: vct-ca-cert
+            name: vct-ca-cert-3
       containers:
         - name: vct
           volumeMounts:
