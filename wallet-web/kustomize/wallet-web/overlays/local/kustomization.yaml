@@ -14,8 +14,9 @@
 # field above.
 commonLabels:
   instance: local
+  group: wallet
+  component: wallet-web
   project: trustbloc
-
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -36,19 +37,9 @@ secretGenerator:
   name: wallet-wildcard-cert
   type: kubernetes.io/tls
 
-configMapGenerator:
-- behavior: merge
-  envs:
-  - config.env
-  name: web-env
-- files:
-  - certs/ca.crt
-  name: wallet-ca-cert
-
 resources:
-- ../../base
+- ../common
 - ingress.yml
 
 transformers:
 - sedtransform.yml
-- sedb64transform.yml

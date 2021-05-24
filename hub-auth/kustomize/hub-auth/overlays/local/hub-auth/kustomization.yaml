@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 # Adds namespace to all resources.
 #namespace: edge-sandbox-system
@@ -12,7 +12,6 @@
 # "wordpress" becomes "alices-wordpress".
 # Note that it should also match with the prefix (text before '-') of the namespace
 # field above.
-namePrefix: hub-
 commonLabels:
   component: hub-auth
   group: core
@@ -30,58 +29,38 @@ vars:
   objref:
     apiVersion: v1
     kind: Secret
-    name: auth-wildcard-cert
+    name: hub-auth-wildcard-cert
 
 secretGenerator:
-- behavior: merge
-  envs:
-  - hydra/hydra-secret.env
-  name: hydra-secret
-- behavior: merge
-  envs:
-  - auth-secret.env
-  name: auth-env-secret
 - files:
   - ../certs/tls.crt
   - ../certs/tls.key
-  name: auth-wildcard-cert
+  name: hub-auth-wildcard-cert
   type: kubernetes.io/tls
 - behavior: replace
   files:
   - ../keys/auth.key
   - ../keys/enc.key
-  name: auth-keys
+  name: hub-auth-keys
 
 configMapGenerator:
 - behavior: merge
   envs:
   - auth.env
-  name: auth-env
-- behavior: replace
-  files:
-  - providers.yml=auth-config.yml
-  name: auth-config
-- behavior: merge
-  envs:
-  - hydra/hydra-env.env
-  name: hydra-env
+  name: hub-auth-env
 - files:
   - ../certs/ca.crt
-  name: auth-ca-cert
+  name: hub-auth-ca-cert
 
 
 
 resources:
-- ../../../base
+- ../../common
 - ingress.yml
-- hydra/hydra-create-client.yml
 
 transformers:
 - sedtransform.yml
 - sedb64transform.yml
-
-components:
-- ../../../components/hydra
 
 patchesStrategicMerge:
 - add-ca.yml

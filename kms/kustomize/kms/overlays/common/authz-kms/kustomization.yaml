@@ -1,0 +1,58 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Adds namespace to all resources.
+#namespace: edge-sandbox-system
+
+# Value of this field is prepended to the
+# names of all resources, e.g. a deployment named
+# "wordpress" becomes "alices-wordpress".
+# Note that it should also match with the prefix (text before '-') of the namespace
+# field above.
+namePrefix: authz-
+commonLabels:
+  component: authz-kms
+  group: core
+  project: trustbloc
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../../base
+
+transformers:
+- sedtransform.yml
+- sedb64transform.yml
+
+components:
+- ../../../components/oathkeeper
+
+secretGenerator:
+- behavior: merge
+  envs:
+  - kms/secret.env
+  name: kms-env-secret
+- literals:
+  - secret-lock.key=1234567891011121314151617181920212223242526272829303132
+  name: kms-lock-key
+
+configMapGenerator:
+- behavior: merge
+  envs:
+  - kms/config.env
+  name: kms-env
+- behavior: replace
+  files:
+  - oathkeeper/config.yml
+  name: oathkeeper-config
+- behavior: replace
+  files:
+  - oathkeeper/access-rules.json
+  name: oathkeeper-rules
+
+patchesStrategicMerge:
+- kms/add-key.yml

@@ -27,7 +27,6 @@ OATHKEEPER_IMG			?= oryd/oathkeeper:v0.38.4-alpine
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/edv
 CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
-REGISTRY_DIRECTORY           	= ${KUSTOMIZE_DIR}/base/registry
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
 export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
 
@@ -55,7 +54,7 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-edv
+deploy: prechecks kustomize kubectl set-images set-labels deploy-edv
 
 .PHONY: prechecks
 prechecks:
@@ -79,21 +78,21 @@ set-images: kustomize
 	popd
 
 .PHONY: deploy-edv
-deploy-edv: prechecks kustomize
+deploy-edv: prechecks kustomize kubectl
 	@docker pull $(EDV_IMG)
 	@minikube image load $(EDV_IMG)
 	@docker pull $(OATHKEEPER_IMG)
 	@minikube image load $(OATHKEEPER_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-edv
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-edv
 
 .PHONY: undeploy-edv
-undeploy-edv: prechecks kustomize
+undeploy-edv: prechecks kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:
@@ -108,11 +107,25 @@ else
 KUSTOMIZE=$(shell which kustomize)
 endif
 
+.PHONY: kubectl
+kubectl:
+ifeq (, $(shell which kubectl 2>/dev/null))
+	@{ \
+	set -e ;\
+	mkdir -p bin ;\
+	curl -sSL https://storage.googleapis.com/kubernetes-release/release/v1.19.6/bin/$(OS)/$(ARCH)/kubectl -o bin/kubectl ;\
+  chmod u+x bin/kubectl ;\
+	}
+KUBECTL=$(realpath ./bin/kubectl)
+else
+KUBECTL=$(shell which kubectl)
+endif
+
 .PHONY: clean
 clean: clean-all
 
 .PHONY: clean-all
-clean-all: clean-certs clean-registry
+clean-all: clean-certs
 
 .PHONY: clean-no-registry
 clean-no-registry: clean-certs
@@ -120,7 +133,3 @@ clean-no-registry: clean-certs
 .PHONY: clean-certs
 clean-certs:
 	@rm -Rf ${CERTS_OUTPUT_DIR}
-
-.PHONY: clean-registry
-clean-registry:
-	@rm -Rf ${REGISTRY_DIRECTORY}

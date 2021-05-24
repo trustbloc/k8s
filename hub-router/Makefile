@@ -27,9 +27,7 @@ HUB_ROUTER_IMG				?= ghcr.io/trustbloc-cicd/hub-router:0.1.7-snapshot-639a463
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/hub-router
-KEYS_OUTPUT_DIR        	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/keys
 CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
-REGISTRY_DIRECTORY           	= ${KUSTOMIZE_DIR}/base/registry
 PREFIX							?=
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
 export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
@@ -38,11 +36,11 @@ export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
 all: setup
 
 .PHONY: setup
-setup: generate-test-certs generate-test-keys
+setup: generate-test-certs
 	@echo setup
 
 .PHONY: setup-no-certs
-setup-no-certs: generate-test-keys
+setup-no-certs:
 	@echo setup-no-certs
 
 .PHONY: generate-test-certs
@@ -58,17 +56,8 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.key tls.key
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
-.PHONY: generate-test-keys
-generate-test-keys: clean-keys
-	@echo $(abspath .)
-	@$(CONTAINER_CMD) run ${CONTAINER_CMD_RUN_OPTS} -i --rm \
-		-v $(abspath .):/opt/workspace:Z \
-		-e KEYS_OUTPUT_DIR=${KEYS_OUTPUT_DIR} \
-		--entrypoint "/opt/workspace/scripts/generate_test_keys.sh" \
-		docker.io/frapsoft/openssl:latest
-
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-hub-router
+deploy: prechecks kustomize kubectl set-images set-labels deploy-hub-router
 
 .PHONY: prechecks
 prechecks:
@@ -90,19 +79,19 @@ set-images: kustomize
 	popd
 
 .PHONY: deploy-hub-router
-deploy-hub-router: prechecks kustomize
+deploy-hub-router: prechecks kustomize kubectl
 	@docker pull $(HUB_ROUTER_IMG)
 	@minikube image load $(HUB_ROUTER_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-hub-router
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-hub-router
 
 .PHONY: undeploy-hub-router
-undeploy-hub-router: prechecks kustomize
+undeploy-hub-router: prechecks kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:
@@ -117,23 +106,29 @@ else
 KUSTOMIZE=$(shell which kustomize)
 endif
 
+.PHONY: kubectl
+kubectl:
+ifeq (, $(shell which kubectl 2>/dev/null))
+	@{ \
+	set -e ;\
+	mkdir -p bin ;\
+	curl -sSL https://storage.googleapis.com/kubernetes-release/release/v1.19.6/bin/$(OS)/$(ARCH)/kubectl -o bin/kubectl ;\
+  chmod u+x bin/kubectl ;\
+	}
+KUBECTL=$(realpath ./bin/kubectl)
+else
+KUBECTL=$(shell which kubectl)
+endif
+
 .PHONY: clean
 clean: clean-all
 
 .PHONY: clean-all
-clean-all: clean-certs clean-keys clean-registry
+clean-all: clean-certs
 
 .PHONY: clean-no-registry
-clean-no-registry: clean-certs clean-keys
-
-.PHONY: clean-keys
-clean-keys:
-	@rm -Rf ${KEYS_OUTPUT_DIR}
+clean-no-registry: clean-certs
 
 .PHONY: clean-certs
 clean-certs:
 	@rm -Rf ${CERTS_OUTPUT_DIR}
-
-.PHONY: clean-registry
-clean-registry:
-	@rm -Rf ${REGISTRY_DIRECTORY}

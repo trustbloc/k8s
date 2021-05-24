@@ -30,7 +30,7 @@ PREFIX							?=
 all: deploy
 
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-dbs
+deploy: prechecks kustomize kubectl set-images set-labels deploy-dbs
 
 .PHONY: prechecks
 prechecks:
@@ -55,7 +55,7 @@ set-images: kustomize
 	popd
 
 .PHONY: deploy-dbs
-deploy-dbs: prechecks kustomize
+deploy-dbs: prechecks kustomize kubectl
 	@docker pull $(COUCH_IMG)
 	@minikube image load $(COUCH_IMG)
 	@docker pull $(MYSQL_IMG)
@@ -63,15 +63,15 @@ deploy-dbs: prechecks kustomize
 	@docker pull ipfs/go-ipfs:master-2021-04-22-eea198f
 	@minikube image load ipfs/go-ipfs:master-2021-04-22-eea198f
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-dbs
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-dbs
 
 .PHONY: undeploy-dbs
-undeploy-dbs: prechecks kustomize
+undeploy-dbs: prechecks kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:
@@ -84,4 +84,18 @@ ifeq (, $(shell which kustomize 2>/dev/null))
 KUSTOMIZE=$(realpath ./bin/kustomize)
 else
 KUSTOMIZE=$(shell which kustomize)
+endif
+
+.PHONY: kubectl
+kubectl:
+ifeq (, $(shell which kubectl 2>/dev/null))
+	@{ \
+	set -e ;\
+	mkdir -p bin ;\
+	curl -sSL https://storage.googleapis.com/kubernetes-release/release/v1.19.6/bin/$(OS)/$(ARCH)/kubectl -o bin/kubectl ;\
+  chmod u+x bin/kubectl ;\
+	}
+KUBECTL=$(realpath ./bin/kubectl)
+else
+KUBECTL=$(shell which kubectl)
 endif

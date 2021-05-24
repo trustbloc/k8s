@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 apiVersion: apps/v1
 kind: Deployment
@@ -14,7 +14,7 @@ spec:
       volumes:
         - name: ca-cert
           configMap:
-            name: auth-ca-cert
+            name: hub-auth-ca-cert
       containers:
         - name: auth
           volumeMounts:

@@ -8,7 +8,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hydra
+  name: adapter-hydra
   labels:
     app: hydra
 spec:
@@ -31,7 +31,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hydra-admin
+  name: adapter-hydra-admin
   labels:
     app: hydra
 spec:

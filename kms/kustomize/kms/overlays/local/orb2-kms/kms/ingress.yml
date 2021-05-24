@@ -1,29 +1,29 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: kms
+  name: orb-2-kms
   labels:
     app: kms
 spec:
   tls:
   - hosts:
-      - $(SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+      - $(ORB2_SERVICE_NAME).||DOMAIN||
+    secretName: $(ORB2_INGRESS_TLS_SECRET)
   rules:
-  - host: $(SERVICE_NAME).||DOMAIN||
+  - host: $(ORB2_SERVICE_NAME).||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: kms
+            name: orb-2-kms
             port:
               name: http

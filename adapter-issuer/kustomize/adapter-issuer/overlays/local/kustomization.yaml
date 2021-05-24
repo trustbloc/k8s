@@ -12,7 +12,6 @@
 # "wordpress" becomes "alices-wordpress".
 # Note that it should also match with the prefix (text before '-') of the namespace
 # field above.
-namePrefix: adapter-
 commonLabels:
   component: adapter
   group: services
@@ -33,41 +32,32 @@ vars:
     name: adapters-wildcard-cert
 
 secretGenerator:
-- behavior: merge
-  envs:
-  - secret.env
-  name: issuer-env-secret
 - files:
   - certs/tls.crt
   - certs/tls.key
   name: adapters-wildcard-cert
   type: kubernetes.io/tls
-- files:
+- behavior: replace
+  files:
   - keys/oidc-enc.key
-  name: issuer-oidc-key
+  name: adapter-issuer-oidc-key
 
 
 configMapGenerator:
 - behavior: merge
   envs:
   - config.env
-  name: issuer-env
-- files:
-  - issuer_adapter_configure.sh
-  name: issuer-add-profiles-config
+  name: adapter-issuer-env
 - files:
   - certs/ca.crt
-  name: ca-cert
+  name: adapter-ca-cert
 
 resources:
-- ../../base
+- ../common
 - ingress.yml
-- add-profiles.yml
 
 transformers:
 - sedtransform.yml
-- sedb64transform.yml
 
 patchesStrategicMerge:
 - add-ca.yml
-- add-key.yml

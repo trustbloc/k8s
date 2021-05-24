@@ -1,21 +1,21 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: oathkeeper-proxy
+  name: authz-oathkeeper-proxy
   labels:
     app: oathkeeper
 spec:
   tls:
   - hosts:
       - $(PROXY_SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+    secretName: $(AUTHZ_INGRESS_TLS_SECRET)
   rules:
   - host: $(PROXY_SERVICE_NAME).||DOMAIN||
     http:
@@ -24,6 +24,6 @@ spec:
         path: "/"
         backend:
           service:
-            name: oathkeeper-proxy
+            name: authz-oathkeeper-proxy
             port:
               name: http

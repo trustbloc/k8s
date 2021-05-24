@@ -28,8 +28,6 @@ HYDRA_IMG			?= oryd/hydra:v1.3.2-alpine
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/adapter-rp
 CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
-KEYS_OUTPUT_DIR						= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/keys
-REGISTRY_DIRECTORY           	= ${KUSTOMIZE_DIR}/base/registry
 PREFIX							?=
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
 export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
@@ -38,11 +36,11 @@ export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
 all: setup
 
 .PHONY: setup
-setup: generate-test-certs generate-test-keys
+setup: generate-test-certs
 	@echo setup
 
 .PHONY: setup-no-certs
-setup-no-certs: generate-test-keys
+setup-no-certs:
 	@echo setup-no-certs
 
 .PHONY: generate-test-certs
@@ -58,17 +56,8 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.key tls.key
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
-.PHONY: generate-test-keys
-generate-test-keys: clean-keys
-	@echo $(abspath .)
-	@$(CONTAINER_CMD) run ${CONTAINER_CMD_RUN_OPTS} -i --rm \
-		-v $(abspath .):/opt/workspace:Z \
-		-e KEYS_OUTPUT_DIR=${KEYS_OUTPUT_DIR} \
-		--entrypoint "/opt/workspace/scripts/generate_issuer_test_key.sh" \
-		docker.io/frapsoft/openssl:latest
-
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-adapter-rp
+deploy: prechecks kustomize kubectl set-images set-labels deploy-adapter-rp
 
 .PHONY: prechecks
 prechecks:
@@ -93,21 +82,21 @@ set-images: kustomize
 	popd
 
 .PHONY: deploy-adapter-rp
-deploy-adapter-rp: prechecks kustomize
+deploy-adapter-rp: prechecks kustomize kubectl
 	@docker pull $(RP_ADAPTER_IMG)
 	@minikube image load $(RP_ADAPTER_IMG)
 	@docker pull $(HYDRA_IMG)
 	@minikube image load $(HYDRA_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/adapters | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/adapters | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-adapter-rp
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-adapter-rp
 
 .PHONY: undeploy-adapter-rp
-undeploy-adapter-rp: prechecks kustomize
+undeploy-adapter-rp: prechecks kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/adapters | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/adapters | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:
@@ -122,23 +111,29 @@ else
 KUSTOMIZE=$(shell which kustomize)
 endif
 
+.PHONY: kubectl
+kubectl:
+ifeq (, $(shell which kubectl 2>/dev/null))
+	@{ \
+	set -e ;\
+	mkdir -p bin ;\
+	curl -sSL https://storage.googleapis.com/kubernetes-release/release/v1.19.6/bin/$(OS)/$(ARCH)/kubectl -o bin/kubectl ;\
+  chmod u+x bin/kubectl ;\
+	}
+KUBECTL=$(realpath ./bin/kubectl)
+else
+KUBECTL=$(shell which kubectl)
+endif
+
 .PHONY: clean
 clean: clean-all
 
 .PHONY: clean-all
-clean-all: clean-certs clean-keys clean-registry
+clean-all: clean-certs
 
 .PHONY: clean-no-registry
-clean-no-registry: clean-certs clean-keys
-
-.PHONY: clean-keys
-clean-keys:
-	@rm -Rf ${KEYS_OUTPUT_DIR}
+clean-no-registry: clean-certs
 
 .PHONY: clean-certs
 clean-certs:
 	@rm -Rf ${CERTS_OUTPUT_DIR}
-
-.PHONY: clean-registry
-clean-registry:
-	@rm -Rf ${REGISTRY_DIRECTORY}

@@ -1,20 +1,20 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kms
+  name: orb-3-kms
 spec:
   template:
     spec:
       volumes:
         - name: ca-cert
           configMap:
-            name: kms-ca-cert
+            name: orb-3-kms-ca-cert
       containers:
         - name: kms
           volumeMounts:

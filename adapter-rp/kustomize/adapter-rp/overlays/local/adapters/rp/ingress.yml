@@ -8,7 +8,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: rp
+  name: adapter-rp
   labels:
     app: rp
 spec:
@@ -31,7 +31,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: rp-didcomm
+  name: adapter-rp-didcomm
   labels:
     app: rp
 spec:

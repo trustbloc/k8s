@@ -27,7 +27,6 @@ ISSUER_ADAPTER_IMG				?= ghcr.io/trustbloc-cicd/issuer-adapter:0.1.7-snapshot-64
 KUSTOMIZE_DIR       	= kustomize/adapter-issuer
 CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
 KEYS_OUTPUT_DIR						= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/keys
-REGISTRY_DIRECTORY           	= ${KUSTOMIZE_DIR}/base/registry
 PREFIX							?=
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
 export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
@@ -66,7 +65,7 @@ generate-test-keys: clean-keys
 		docker.io/frapsoft/openssl:latest
 
 .PHONY: deploy
-deploy: prechecks kustomize set-images set-labels deploy-adapter-issuer
+deploy: prechecks kustomize kubectl set-images set-labels deploy-adapter-issuer
 
 .PHONY: prechecks
 prechecks:
@@ -88,19 +87,19 @@ set-images: kustomize
 	popd
 
 .PHONY: deploy-adapter-issuer
-deploy-adapter-issuer: prechecks kustomize
+deploy-adapter-issuer: prechecks kustomize kubectl
 	@docker pull $(ISSUER_ADAPTER_IMG)
 	@minikube image load $(ISSUER_ADAPTER_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize set-images set-labels undeploy-adapter-issuer
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-adapter-issuer
 
 .PHONY: undeploy-adapter-issuer
-undeploy-adapter-issuer: prechecks kustomize
+undeploy-adapter-issuer: prechecks kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:
@@ -113,6 +112,20 @@ ifeq (, $(shell which kustomize 2>/dev/null))
 KUSTOMIZE=$(realpath ./bin/kustomize)
 else
 KUSTOMIZE=$(shell which kustomize)
+endif
+
+.PHONY: kubectl
+kubectl:
+ifeq (, $(shell which kubectl 2>/dev/null))
+	@{ \
+	set -e ;\
+	mkdir -p bin ;\
+	curl -sSL https://storage.googleapis.com/kubernetes-release/release/v1.19.6/bin/$(OS)/$(ARCH)/kubectl -o bin/kubectl ;\
+  chmod u+x bin/kubectl ;\
+	}
+KUBECTL=$(realpath ./bin/kubectl)
+else
+KUBECTL=$(shell which kubectl)
 endif
 
 .PHONY: clean

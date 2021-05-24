@@ -15,7 +15,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-nameSuffix: "-2"
 commonLabels:
   component: vct-2
   group: core
@@ -29,14 +28,7 @@ vars:
   objref:
     apiVersion: v1
     kind: Secret
-    name: vct-wildcard-cert
-- fieldref:
-    fieldPath: metadata.name
-  name: SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: vct
+    name: vct-wildcard-cert-2
 
 configMapGenerator:
 - behavior: merge
@@ -45,38 +37,22 @@ configMapGenerator:
   name: vct-env
 - files:
   - ../certs/ca.crt
-  name: vct-ca-cert
+  name: vct-ca-cert-2
 
 
 secretGenerator:
 - files:
   - ../certs/tls.crt
   - ../certs/tls.key
-  name: vct-wildcard-cert
+  name: vct-wildcard-cert-2
   type: kubernetes.io/tls
-- behavior: merge
-  envs:
-  - vct/secret.env
-  name: vct-env-secret
-- behavior: merge
-  envs:
-  - trillian-log-server/secret.env
-  name: trillian-log-server-env-secret
-- behavior: merge
-  envs:
-  - trillian-log-signer/secret.env
-  name: trillian-log-signer-env-secret
 
 resources:
-- ../../../base
+- ../../common/vct2
 - vct/ingress.yml
 
 patchesStrategicMerge:
 - vct/add-ca.yml
-
-components:
-- ../../../components/trillian-log-server
-- ../../../components/trillian-log-signer
 
 transformers:
 - sedtransform.yml

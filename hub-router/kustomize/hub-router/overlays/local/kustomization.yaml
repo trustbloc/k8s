@@ -13,6 +13,8 @@
 # Note that it should also match with the prefix (text before '-') of the namespace
 # field above.
 commonLabels:
+  component: hub-router
+  group: core
   instance: local
   project: trustbloc
 
@@ -27,17 +29,13 @@ vars:
   objref:
     apiVersion: v1
     kind: Secret
-    name: wallet-wildcard-cert
+    name: router-wildcard-cert
 
 secretGenerator:
-- behavior: merge
-  envs:
-  - secret.env
-  name: router-env-secret
 - files:
   - certs/tls.crt
   - certs/tls.key
-  name: wallet-wildcard-cert
+  name: router-wildcard-cert
   type: kubernetes.io/tls
 
 configMapGenerator:
@@ -47,10 +45,10 @@ configMapGenerator:
   name: router-env
 - files:
   - certs/ca.crt
-  name: wallet-ca-cert
+  name: router-ca-cert
 
 resources:
-- ../../base
+- ../common
 - ingress.yml
 
 transformers:

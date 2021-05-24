@@ -7,14 +7,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rp
+  name: adapter-rp
 spec:
   template:
     spec:
       volumes:
         - name: ca-cert
           configMap:
-            name: ca-cert
+            name: adapter-ca-cert
       containers:
         - name: rp
           volumeMounts:

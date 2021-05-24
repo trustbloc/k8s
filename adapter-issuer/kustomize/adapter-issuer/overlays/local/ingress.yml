@@ -8,7 +8,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: issuer
+  name: adapter-issuer
   labels:
     app: issuer
 spec:
@@ -31,7 +31,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: issuer-didcomm
+  name: adapter-issuer-didcomm
   labels:
     app: issuer
 spec:

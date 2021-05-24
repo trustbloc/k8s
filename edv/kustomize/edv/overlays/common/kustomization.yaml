@@ -1,0 +1,51 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Adds namespace to all resources.
+#namespace: edge-sandbox-system
+
+# Value of this field is prepended to the
+# names of all resources, e.g. a deployment named
+# "wordpress" becomes "alices-wordpress".
+# Note that it should also match with the prefix (text before '-') of the namespace
+# field above.
+#namePrefix: edge-sandbox-
+
+commonLabels:
+  component: edv
+  group: core
+  project: trustbloc
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configMapGenerator:
+- behavior: merge
+  envs:
+  - edv/config.env
+  name: edv-env
+- behavior: replace
+  files:
+  - oathkeeper/config.yml
+  name: edv-oathkeeper-config
+- behavior: replace
+  files:
+  - oathkeeper/access-rules.json
+  name: edv-oathkeeper-rules
+
+secretGenerator:
+- behavior: merge
+  envs:
+  - edv/secret.env
+  name: edv-env-secret
+
+transformers:
+- sedtransform.yml
+- sedb64transform.yml
+
+resources:
+- ../../base
+- ../oathkeeper
