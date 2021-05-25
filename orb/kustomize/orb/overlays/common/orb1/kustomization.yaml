@@ -27,12 +27,20 @@ configMapGenerator:
   - orb/config.env
   name: orb-env
 
-
 secretGenerator:
 - behavior: merge
   envs:
   - orb/secret.env
   name: orb-env-secret
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: orb
 
 resources:
 - ../../../base
