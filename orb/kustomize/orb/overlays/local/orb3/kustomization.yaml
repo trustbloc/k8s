@@ -29,13 +29,6 @@ vars:
     apiVersion: v1
     kind: Secret
     name: orb-wildcard-cert-3
-- fieldref:
-    fieldPath: metadata.name
-  name: SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: orb-3
 
 secretGenerator:
 - files:
