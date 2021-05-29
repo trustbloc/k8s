@@ -36,13 +36,9 @@ configMapGenerator:
   envs:
   - config.env
   name: issuer-env
-- files:
-  - issuer_adapter_configure.sh
-  name: issuer-add-profiles-config
 
 resources:
 - ../../base
-- add-profiles.yml
 
 transformers:
 - sedtransform.yml

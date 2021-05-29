@@ -175,10 +175,7 @@ endif
 clean: clean-all
 
 .PHONY: clean-all
-clean-all: clean-certsclean-registry
-
-.PHONY: clean-no-registry
-clean-no-registry: clean-certs
+clean-all: clean-certs
 
 .PHONY: clean-certs
 clean-certs:
