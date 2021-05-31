@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-CSH_IMAGE				?= ghcr.io/trustbloc-cicd/hub-confidential-storage:0.1.7-snapshot-8773e88
+CSH_IMAGE				?= ghcr.io/trustbloc-cicd/hub-confidential-storage:0.1.7-snapshot-3dea3e5
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/csh

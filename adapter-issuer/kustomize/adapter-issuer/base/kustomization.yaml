@@ -50,4 +50,4 @@ kind: Kustomization
 images:
 - name: issuer-adapter
   newName: ghcr.io/trustbloc-cicd/issuer-adapter
-  newTag: 0.1.7-snapshot-6478ad9
+  newTag: 0.1.7-snapshot-22bfdfa
