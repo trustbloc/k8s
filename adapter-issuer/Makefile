@@ -132,10 +132,7 @@ endif
 clean: clean-all
 
 .PHONY: clean-all
-clean-all: clean-certs clean-keys clean-registry
-
-.PHONY: clean-no-registry
-clean-no-registry: clean-certs clean-keys
+clean-all: clean-certs clean-keys
 
 .PHONY: clean-keys
 clean-keys:
@@ -144,7 +141,3 @@ clean-keys:
 .PHONY: clean-certs
 clean-certs:
 	@rm -Rf ${CERTS_OUTPUT_DIR}
-
-.PHONY: clean-registry
-clean-registry:
-	@rm -Rf ${REGISTRY_DIRECTORY}

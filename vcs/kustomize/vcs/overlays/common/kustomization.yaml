@@ -25,23 +25,14 @@ configMapGenerator:
   envs:
   - issuer/config.env
   name: issuer-vcs-env
-- files:
-  - issuer/vcs_issuer_configure.sh
-  name: issuer-vcs-add-profiles-script
 - behavior: merge
   envs:
   - verifier/config.env
   name: verifier-vcs-env
-- files:
-  - verifier/vcs_verifier_configure.sh
-  name: verifier-vcs-add-profiles-script
 - behavior: merge
   envs:
   - holder/config.env
   name: holder-vcs-env
-- files:
-  - holder/vcs_holder_configure.sh
-  name: holder-vcs-add-profiles-script
 - behavior: merge
   envs:
   - governance/config.env
@@ -49,9 +40,6 @@ configMapGenerator:
 - files:
   - governance/config.json
   name: governance-config
-- files:
-  - governance/vcs_governance_configure.sh
-  name: governance-vcs-add-profiles-script
 
 secretGenerator:
 - behavior: merge
@@ -76,10 +64,6 @@ resources:
 - ../verifier
 - ../holder
 - ../governance
-- issuer/add-profiles.yml
-- verifier/add-profiles.yml
-- holder/add-profiles.yml
-- governance/add-profiles.yml
 
 transformers:
 - sedtransform.yml

@@ -48,7 +48,6 @@ configMapGenerator:
 
 resources:
 - ../../base
-- hydra/hydra-create-client.yml
 
 transformers:
 - sedtransform.yml

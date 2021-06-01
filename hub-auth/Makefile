@@ -140,9 +140,6 @@ clean: clean-all
 .PHONY: clean-all
 clean-all: clean-certs clean-keys
 
-.PHONY: clean-no-registry
-clean-no-registry: clean-certs clean-keys
-
 .PHONY: clean-keys
 clean-keys:
 	@rm -Rf ${KEYS_OUTPUT_DIR}
