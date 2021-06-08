@@ -26,6 +26,10 @@ spec:
         - name: run
           configMap:
             name: uni-resolver-web-run
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       containers:
       - name: uni-resolver-web
         image: uni-resolver-web:latest

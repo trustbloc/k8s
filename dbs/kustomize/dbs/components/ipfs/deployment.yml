@@ -29,6 +29,10 @@ spec:
 #          configMap:
 #            name: ifps-data
       hostname: ipfs
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       containers:
       - image: ipfs:latest
         imagePullPolicy: IfNotPresent

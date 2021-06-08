@@ -28,6 +28,10 @@ spec:
           secret:
             secretName: server-keys
       hostname: server
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       containers:
       - name: server
         envFrom:

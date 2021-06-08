@@ -23,6 +23,10 @@ spec:
         - name: config
           configMap:
             name: uni-registrar-web-config
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       containers:
       - name: uni-registrar-web
         image: uni-registrar-web:latest

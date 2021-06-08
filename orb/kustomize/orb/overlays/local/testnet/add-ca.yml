@@ -16,6 +16,10 @@ spec:
         - name: ca-cert
           configMap:
             name: orb-add-followers-ca-cert
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       containers:
       - name: orb-add-followers
         volumeMounts:
