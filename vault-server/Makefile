@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-VAULT_SERVER_IMG				?= ghcr.io/trustbloc-cicd/vault-server:0.1.7-snapshot-3dea3e5
+VAULT_SERVER_IMG				?= ghcr.io/trustbloc-cicd/vault-server:0.1.7-snapshot-5b3b912
 COUCHDB_IMG			?= docker.io/library/couchdb:3.1
 
 # do not modify
