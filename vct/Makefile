@@ -23,10 +23,9 @@ ARCH  							= $(shell uname -m | sed 's/x86_64/amd64/')
 #IMAGES
 VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.0-snapshot-f1185c0
 
-export TRILLIAN1_LOG_MYSQL		?= orb1vct:orb1vct-secret-pw@tcp(mysql:3306)/orb1vct
-export TRILLIAN2_LOG_MYSQL		?= orb2vct:orb2vct-secret-pw@tcp(mysql:3306)/orb2vct
-export TRILLIAN3_LOG_MYSQL		?= orb3vct:orb3vct-secret-pw@tcp(mysql:3306)/orb3vct
-
+export TRILLIAN1_LOG_POSTGRES		?= user=orb1vct host=postgres password=orb1vct-secret-pw dbname=orb1vct port=5432 sslmode=disable
+export TRILLIAN2_LOG_POSTGRES		?= user=orb2vct host=postgres password=orb2vct-secret-pw dbname=orb2vct port=5432 sslmode=disable
+export TRILLIAN3_LOG_POSTGRES		?= user=orb3vct host=postgres password=orb3vct-secret-pw dbname=orb3vct port=5432 sslmode=disable
 
 # do not modify
 KUSTOMIZE_DIR       			= kustomize/vct

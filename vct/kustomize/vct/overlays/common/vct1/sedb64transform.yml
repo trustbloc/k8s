@@ -8,4 +8,4 @@ apiVersion: svceng
 kind: SedB64Transformer
 metadata:
   name: sedb64transformer
-argsOneLiner: s^||COUCHDB_URL||^${COUCHDB_URL}^ s^||TRILLIAN1_LOG_MYSQL||^${TRILLIAN1_LOG_MYSQL}^
+argsOneLiner: s^||COUCHDB_URL||^${COUCHDB_URL}^ s^||TRILLIAN1_LOG_POSTGRES||^${TRILLIAN1_LOG_POSTGRES}^

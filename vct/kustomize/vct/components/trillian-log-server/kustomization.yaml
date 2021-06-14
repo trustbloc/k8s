@@ -18,8 +18,8 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 images:
 - name: trillian-log-server
-  newName: gcr.io/trillian-opensource-ci/log_server
-  newTag: eacf01ddf6503e04cda3ee941d94820f139c7737
+  newName: ghcr.io/trustbloc-cicd/vct-log-server
+  newTag: v0.1.0-snapshot-f1185c0
 
 
 apiVersion: kustomize.config.k8s.io/v1alpha1
