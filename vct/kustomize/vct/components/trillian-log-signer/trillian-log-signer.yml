@@ -22,10 +22,12 @@ spec:
       containers:
         - name: trillian-log-signer
           args: [
-              "--mysql_uri=$(MYSQL_URI)",
+              "--quota_system=noop",
+              "--storage_system=postgres",
+              "--pg_conn_str=$(POSTGRES_URI)",
               "--http_endpoint=$(HTTP_ENDPOINT)",
               "--force_master=true",
-              "--alsologtostderr"
+              "--logtostderr"
           ]
           envFrom:
             - configMapRef:

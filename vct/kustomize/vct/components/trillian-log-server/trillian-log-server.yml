@@ -22,9 +22,11 @@ spec:
       containers:
         - name: trillian-log-server
           args: [
-              "--mysql_uri=$(MYSQL_URI)",
+              "--quota_system=noop",
+              "--storage_system=postgres",
+              "--pg_conn_str=$(POSTGRES_URI)",
               "--rpc_endpoint=$(RPC_ENDPOINT)",
-              "--alsologtostderr"
+              "--logtostderr"
           ]
           envFrom:
             - configMapRef:

@@ -20,6 +20,8 @@ ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 #IMAGES
 MYSQL_IMG		?= docker.io/mysql:8.0.20
 COUCH_IMG		?= docker.io/couchdb:3.1
+POSTGRES_IMG		?= docker.io/postgres:13
+
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/dbs
 PREFIX							?=
@@ -50,6 +52,9 @@ set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/components/couch &&\
 	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
 	popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/postgres &&\
+    ${KUSTOMIZE} edit set image postgres=${POSTGRES_IMG} &&\
+    popd &&\
 	pushd ${KUSTOMIZE_DIR}/components/mysql &&\
 	${KUSTOMIZE} edit set image mysql=${MYSQL_IMG} &&\
 	popd
@@ -60,6 +65,8 @@ deploy-dbs: prechecks kustomize kubectl
 	@minikube image load $(COUCH_IMG)
 	@docker pull $(MYSQL_IMG)
 	@minikube image load $(MYSQL_IMG)
+	@docker pull $(POSTGRES_IMG)
+	@minikube image load $(POSTGRES_IMG)
 	@docker pull ipfs/go-ipfs:master-2021-04-22-eea198f
 	@minikube image load ipfs/go-ipfs:master-2021-04-22-eea198f
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
