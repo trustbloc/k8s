@@ -19,8 +19,10 @@ export BLOC_DOMAIN		?= testnet.${DOMAIN}
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
+
+
 #IMAGES
-WALLET_WEB_IMG				?= ghcr.io/trustbloc-cicd/wallet-web:0.1.7-snapshot-561143c
+WALLET_WEB_IMG				?= ghcr.io/trustbloc-cicd/wallet-web:0.1.7-snapshot-d69310e
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/wallet-web
@@ -78,8 +80,6 @@ set-images: kustomize
 
 .PHONY: deploy-wallet-web
 deploy-wallet-web: prechecks kustomize kubectl
-	@docker pull $(WALLET_WEB_IMG)
-	@minikube image load $(WALLET_WEB_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
