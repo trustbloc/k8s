@@ -14,19 +14,16 @@ export DEPLOYMENT_ENV	?= local
 # space delimited of Key:Value pairs
 COMMON_LABELS		            := instance:${DEPLOYMENT_ENV}
 export DOMAIN      		        ?= ${DEPLOYMENT_ENV}.trustbloc.dev
-export BLOC_DOMAIN      		?= testnet.${DOMAIN}
-export COUCHDB_URL				?= cdbadmin:secret@couchdb:5984
-export ORB_AUTH_TOKENS			?= admin=ADMIN_TOKEN
 
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.0-snapshot-0cc267d
+ORB_DRIVER_IMG	 	?= ghcr.io/trustbloc-cicd/orb-did-driver:v0.1.0-snapshot-0cc267d
 
 # do not modify
-KUSTOMIZE_DIR       	= kustomize/orb
+KUSTOMIZE_DIR       	= kustomize/orb-driver
 CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
 PREFIX							?=
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
@@ -57,7 +54,7 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
 .PHONY: deploy
-deploy: prechecks kustomize kubectl set-images set-labels deploy-orb1 deploy-orb2 deploy-orb3 deploy-testnet
+deploy: prechecks kustomize kubectl set-images set-labels deploy-orb-driver
 
 .PHONY: prechecks
 prechecks:
@@ -67,82 +64,35 @@ ifeq (, $(shell stat ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} 2>/dev/null))
 endif
 
 .PHONY: set-labels
-set-labels: kustomize set-labels-orb1 set-labels-orb2 set-labels-orb3
+set-labels: kustomize set-labels-orb-driver
 
-.PHONY: set-labels-orb1
-set-labels-orb1: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1 &&\
-		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
-		popd
-
-.PHONY: set-labels-orb2
-set-labels-orb2: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 &&\
-		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
-		popd
-
-.PHONY: set-labels-orb3
-set-labels-orb3: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 &&\
+.PHONY: set-labels-orb-driver
+set-labels-orb-driver: kustomize
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb-driver &&\
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
 .PHONY: set-images
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
-	${KUSTOMIZE} edit set image orb=${ORB_IMG} &&\
+	${KUSTOMIZE} edit set image orb-driver=${ORB_DRIVER_IMG} &&\
 	popd
 
-.PHONY: deploy-orb1
-deploy-orb1: prechecks set-images set-labels-orb1 kustomize kubectl
-	@docker pull $(ORB_IMG)
-	@minikube image load $(ORB_IMG)
+.PHONY: deploy-orb-driver
+deploy-orb-driver: prechecks set-images set-labels-orb-driver kustomize kubectl
+	@docker pull $(ORB_DRIVER_IMG)
+	@minikube image load $(ORB_DRIVER_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1 | $(KUBECTL) apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb-driver | $(KUBECTL) apply -f -
 
-.PHONY: deploy-orb2
-deploy-orb2: prechecks set-images set-labels-orb2 kustomize kubectl
-	@docker pull $(ORB_IMG)
-	@minikube image load $(ORB_IMG)
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 | $(KUBECTL) apply -f -
-
-.PHONY: deploy-orb3
-deploy-orb3: prechecks set-images set-labels-orb3 kustomize kubectl
-	@docker pull $(ORB_IMG)
-	@minikube image load $(ORB_IMG)
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 | $(KUBECTL) apply -f -
-
-
-.PHONY: deploy-testnet
-deploy-testnet: prechecks set-images kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/testnet | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize kubectl set-images set-labels undeploy-orb1 undeploy-orb2 undeploy-orb3 undeploy-testnet
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-orb-driver
 
-.PHONY: undeploy-orb1
-undeploy-orb1: prechecks set-images set-labels-orb1 kustomize kubectl
+.PHONY: undeploy-orb-driver
+undeploy-orb-driver: prechecks set-images set-labels-orb-driver kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1 | kubectl delete -f -
-
-.PHONY: undeploy-orb2
-undeploy-orb2: prechecks set-images set-labels-orb2 kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 | kubectl delete -f -
-
-.PHONY: undeploy-orb3
-undeploy-orb3: prechecks set-images set-labels-orb3 kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 | kubectl delete -f -
-
-.PHONY: undeploy-testnet
-undeploy-testnet: prechecks set-images kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/testnet | kubectl delete -f -
-
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb-driver | kubectl delete -f -
 
 .PHONY: kustomize
 kustomize:

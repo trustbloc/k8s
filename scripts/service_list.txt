@@ -23,6 +23,7 @@ ops-oathkeeper-proxy
 router-api
 router
 router-ws
+orb-driver
 orb-1
 orb-1-kms
 vct-1
