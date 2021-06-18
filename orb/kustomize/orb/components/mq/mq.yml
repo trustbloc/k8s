@@ -1,0 +1,52 @@
+
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mq
+  template:
+    metadata:
+      labels:
+        app: mq
+    spec:
+      volumes:
+        - name: mq-config
+          configMap:
+            name: mq-config
+      containers:
+        - name: mq
+          image: rabbitmq:3-management-alpine
+          ports:
+            - containerPort: 5672
+              protocol: TCP
+              name: http-port
+          volumeMounts:
+            - name: mq-config
+              mountPath: /etc/rabbitmq/rabbitmq.conf
+              subPath: rabbitmq.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: mq
+spec:
+  ports:
+    - name: http-port
+      port: 5672
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    app: mq
+status:
+  loadBalancer: {}

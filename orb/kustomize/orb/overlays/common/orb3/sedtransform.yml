@@ -8,4 +8,4 @@ apiVersion: svceng
 kind: SedTransformer
 metadata:
   name: sedtransformer
-argsOneLiner: s^||DOMAIN||^${DOMAIN}^g s^||BLOC_DOMAIN||^${BLOC_DOMAIN}^
+argsOneLiner: s^||DOMAIN||^${DOMAIN}^g s^||BLOC_DOMAIN||^${BLOC_DOMAIN}^ s^||MQ_USER||^${MQ_USER}^ s^||MQ_PASSWORD||^${MQ_PASSWORD}^

@@ -1,0 +1,20 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+images:
+- name: mq
+  newName: rabbitmq
+  newTag: 3-management-alpine
+
+configMapGenerator:
+  - files:
+      - rabbitmq.conf
+    name: mq-config
+
+resources:
+- mq.yml

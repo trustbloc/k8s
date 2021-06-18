@@ -42,6 +42,9 @@ vars:
     kind: Service
     name: orb
 
+components:
+  - ../../../components/mq
+
 resources:
 - ../../../base
 
