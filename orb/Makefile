@@ -17,13 +17,14 @@ export DOMAIN      		        ?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN      		?= testnet.${DOMAIN}
 export COUCHDB_URL				?= cdbadmin:secret@couchdb:5984
 export ORB_AUTH_TOKENS			?= admin=ADMIN_TOKEN
-
+export MQ_USER					?= admin
+export MQ_PASSWORD				?= password
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.0-snapshot-0cc267d
+ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.0-snapshot-bd4b7d9
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/orb
