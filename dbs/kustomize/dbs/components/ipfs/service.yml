@@ -20,3 +20,36 @@ spec:
     app: ipfs
 status:
   loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: ipfs-p2p-tcp
+spec:
+  ports:
+  - name: ipfs-p2p-tcp
+    port: 4001
+    protocol: TCP
+    targetPort: ipfs-p2p-tcp
+  selector:
+    app: ipfs
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: ipfs-p2p-udp
+spec:
+  ports:
+  - name: ipfs-p2p-udp
+    port: 4001
+    protocol: UDP
+    targetPort: ipfs-p2p-udp
+  selector:
+    app: ipfs
+status:
+  loadBalancer: {}
