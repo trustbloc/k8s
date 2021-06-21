@@ -20,37 +20,3 @@ spec:
     app: ipfs
 status:
   loadBalancer: {}
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  creationTimestamp: null
-  name: ipfs-swarm-tcp
-spec:
-  ports:
-  - name: ipfs-swarm-port-tcp
-    port: 4001
-    protocol: TCP
-    targetPort: ipfs-swarm-port-tcp
-  selector:
-    app: ipfs
-status:
-  loadBalancer: {}
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  creationTimestamp: null
-  name: ipfs-swarm-udp
-spec:
-  ports:
-  - name: ipfs-swarm-port-udp
-    port: 4001
-    protocol: UDP
-    targetPort: ipfs-swarm-port-udp
-  selector:
-    app: ipfs
-status:
-  loadBalancer: {}

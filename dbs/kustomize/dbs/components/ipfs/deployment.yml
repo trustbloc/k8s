@@ -36,12 +36,6 @@ spec:
           - name: ipfs-port
             protocol: TCP
             containerPort: 5001
-          - name: ipfs-swarm-port-tcp
-            protocol: TCP
-            containerPort: 4001
-          - name: ipfs-swarm-port-udp
-            protocol: UDP
-            containerPort: 4001
         name: ipfs
 #        env:
 #        - name: IPFS_PATH
