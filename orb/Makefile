@@ -19,6 +19,9 @@ export COUCHDB_URL				?= cdbadmin:secret@couchdb:5984
 export ORB_AUTH_TOKENS			?= admin=ADMIN_TOKEN
 export MQ_USER					?= admin
 export MQ_PASSWORD				?= password
+export MQ_URL_1						?= amqp://admin:password@mq-1:5672/
+export MQ_URL_2						?= amqp://admin:password@mq-2:5672/
+export MQ_URL_3						?= amqp://admin:password@mq-3:5672/
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
