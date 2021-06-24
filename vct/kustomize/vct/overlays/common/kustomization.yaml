@@ -15,11 +15,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-nameSuffix: "-3"
 commonLabels:
-  component: vct-3
+  component: vct
   group: core
-  instance: local
   project: trustbloc
 
 vars:
@@ -52,11 +50,11 @@ secretGenerator:
   name: trillian-log-signer-env-secret
 
 resources:
-- ../../../base
+- ../../base
 
 components:
-- ../../../components/trillian-log-server
-- ../../../components/trillian-log-signer
+- ../../components/trillian-log-server
+- ../../components/trillian-log-signer
 
 transformers:
 - sedtransform.yml

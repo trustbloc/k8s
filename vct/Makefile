@@ -21,11 +21,9 @@ OS 								= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  							= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.0-snapshot-f1185c0
+VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.0-snapshot-eca8d26
 
-export TRILLIAN1_LOG_POSTGRES		?= user=orb1vct host=postgres password=orb1vct-secret-pw dbname=orb1vct port=5432 sslmode=disable
-export TRILLIAN2_LOG_POSTGRES		?= user=orb2vct host=postgres password=orb2vct-secret-pw dbname=orb2vct port=5432 sslmode=disable
-export TRILLIAN3_LOG_POSTGRES		?= user=orb3vct host=postgres password=orb3vct-secret-pw dbname=orb3vct port=5432 sslmode=disable
+export TRILLIAN_LOG_POSTGRES		?= user=orbvct host=postgres password=orbvct-secret-pw dbname=orbvct port=5432 sslmode=disable
 
 # do not modify
 KUSTOMIZE_DIR       			= kustomize/vct
@@ -46,7 +44,7 @@ setup-no-certs:
 	@echo setup-no-certs
 
 .PHONY: deploy
-deploy: prechecks kustomize kubectl set-images set-labels deploy-vct1 deploy-vct2 deploy-vct3
+deploy: prechecks kustomize kubectl set-images set-labels deploy-vct
 
 .PHONY: generate-test-certs
 generate-test-certs: clean-certs
@@ -69,23 +67,11 @@ ifeq (, $(shell stat ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} 2>/dev/null))
 endif
 
 .PHONY: set-labels
-set-labels: kustomize set-labels-vct1 set-labels-vct2 set-labels-vct3
+set-labels: kustomize set-labels-vct
 
-.PHONY: set-labels-vct1
-set-labels-vct1: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct1 &&\
-		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
-		popd
-
-.PHONY: set-labels-vct2
-set-labels-vct2: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct2 &&\
-		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
-		popd
-
-.PHONY: set-labels-vct3
-set-labels-vct3: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct3 &&\
+.PHONY: set-labels-vct
+set-labels-vct: kustomize
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} &&\
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
@@ -95,45 +81,20 @@ set-images: kustomize
 	${KUSTOMIZE} edit set image vct=${VCT_IMG} &&\
 	popd
 
-.PHONY: deploy-vct1
-deploy-vct1: prechecks set-images set-labels-vct1 kustomize kubectl
+.PHONY: deploy-vct
+deploy-vct: prechecks set-images set-labels-vct kustomize kubectl
 	@docker pull $(VCT_IMG)
 	@minikube image load $(VCT_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct1 | $(KUBECTL) apply -f -
-
-.PHONY: deploy-vct2
-deploy-vct2: prechecks set-images set-labels-vct2 kustomize kubectl
-	@docker pull $(VCT_IMG)
-	@minikube image load $(VCT_IMG)
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct2 | $(KUBECTL) apply -f -
-
-.PHONY: deploy-vct3
-deploy-vct3: prechecks set-images set-labels-vct3 kustomize kubectl
-	@docker pull $(VCT_IMG)
-	@minikube image load $(VCT_IMG)
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct3 | $(KUBECTL) apply -f -
-
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize kubectl set-images set-labels undeploy-vct1 undeploy-vct2 undeploy-vct3
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-vct
 
-.PHONY: undeploy-vct1
-undeploy-vct1: prechecks set-images set-labels-vct1 kustomize kubectl
+.PHONY: undeploy-vct
+undeploy-vct: prechecks set-images set-labels-vct kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct1 | $(KUBECTL) delete -f -
-
-.PHONY: undeploy-vct2
-undeploy-vct2: prechecks set-images set-labels-vct2 kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct2 | $(KUBECTL) delete -f -
-
-.PHONY: undeploy-vct3
-undeploy-vct3: prechecks set-images set-labels-vct3 kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vct3 | $(KUBECTL) delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:
