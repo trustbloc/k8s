@@ -15,47 +15,44 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-nameSuffix: "-2"
 commonLabels:
-  component: vct-2
+  component: vct
   group: core
+  instance: local
   project: trustbloc
 
 vars:
 - fieldref:
     fieldPath: metadata.name
-  name: SERVICE_NAME
+  name: INGRESS_TLS_SECRET
   objref:
     apiVersion: v1
-    kind: Service
-    name: vct
+    kind: Secret
+    name: vct-wildcard-cert-1
 
 configMapGenerator:
 - behavior: merge
   envs:
   - vct/config.env
   name: vct-env
+- files:
+  - certs/ca.crt
+  name: vct-ca-cert
 
 secretGenerator:
-- behavior: merge
-  envs:
-  - vct/secret.env
-  name: vct-env-secret
-- behavior: merge
-  envs:
-  - trillian-log-server/secret.env
-  name: trillian-log-server-env-secret
-- behavior: merge
-  envs:
-  - trillian-log-signer/secret.env
-  name: trillian-log-signer-env-secret
+- files:
+  - certs/tls.crt
+  - certs/tls.key
+  name: vct-wildcard-cert-1
+  type: kubernetes.io/tls
 
 resources:
-- ../../../base
+- ../common
+- vct/ingress.yml
 
-components:
-- ../../../components/trillian-log-server
-- ../../../components/trillian-log-signer
+patchesStrategicMerge:
+- vct/add-ca.yml
+
 
 transformers:
 - sedtransform.yml
