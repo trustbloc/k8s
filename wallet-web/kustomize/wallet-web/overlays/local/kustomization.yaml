@@ -13,9 +13,9 @@
 # Note that it should also match with the prefix (text before '-') of the namespace
 # field above.
 commonLabels:
-  instance: local
-  group: wallet
   component: wallet-web
+  group: wallet
+  instance: local
   project: trustbloc
 
 apiVersion: kustomize.config.k8s.io/v1beta1

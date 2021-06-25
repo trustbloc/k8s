@@ -24,8 +24,15 @@ configMapGenerator:
   - config.env
   name: web-env
 
+secretGenerator:
+- behavior: merge
+  envs:
+    - secret.env
+  name: web-env-secret
+
 resources:
 - ../../base
 
 transformers:
 - sedtransform.yml
+- sedb64transform.yml

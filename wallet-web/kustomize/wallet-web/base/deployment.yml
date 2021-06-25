@@ -32,6 +32,8 @@ spec:
         envFrom:
           - configMapRef:
               name: web-env
+          - secretRef:
+              name: web-env-secret
         image: wallet-web:latest
         ports:
           - containerPort: 80

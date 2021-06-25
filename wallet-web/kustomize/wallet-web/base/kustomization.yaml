@@ -32,6 +32,10 @@ configMapGenerator:
   - default.conf.template
   name: nginx-config-template
 
+secretGenerator:
+- envs:
+  - secret.env
+  name: web-env-secret
 
 resources:
 - deployment.yml

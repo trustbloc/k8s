@@ -31,6 +31,7 @@ CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
 PREFIX							?=
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
 export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
+export SIDETREE_TOKEN ?= ADMIN_TOKEN
 
 .PHONY: all
 all: setup
