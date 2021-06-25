@@ -8,4 +8,4 @@ apiVersion: svceng
 kind: SedB64Transformer
 metadata:
   name: sedb64transformer
-argsOneLiner: s^||COUCHDB_URL||^${COUCHDB_URL}^ s^||CHS_REQUEST_TOKENS||^${CHS_REQUEST_TOKENS}^
+argsOneLiner: s^||COUCHDB_URL||^${COUCHDB_URL}^ s^||VC_REST_REQUEST_TOKENS||^${VC_REST_REQUEST_TOKENS}^
