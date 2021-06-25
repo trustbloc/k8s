@@ -17,6 +17,7 @@ export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN		?= testnet.${DOMAIN}
 export RP_ADAPTER_REST_DSN								?= mysql://rpadapter:rpadapter-secret-pw@tcp(mysql:3306)/?interpolateParams=true&multiStatements=true
 export HYDRA_MYSQL_DSN								?= mysql://rpadapterhydra:secret@tcp(mysql:3306)/rpadapter_hydra?max_conns=20&max_idle_conns=4
+export ADAPTER_REST_REQUEST_TOKENS ?= sidetreeToken=ADMIN_TOKEN
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')

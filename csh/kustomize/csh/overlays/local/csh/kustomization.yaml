@@ -13,10 +13,10 @@
 # Note that it should also match with the prefix (text before '-') of the namespace
 # field above.
 commonLabels:
-  instance: local
-  group: services
-  project: trustbloc
   component: csh
+  group: services
+  instance: local
+  project: trustbloc
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
