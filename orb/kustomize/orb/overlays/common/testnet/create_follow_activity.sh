@@ -4,8 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-echo "Adding curl"
-apk --no-cache add wget
+echo "Adding wget"
+type wget || apk --no-cache add wget
 
 rm -rf .build
 mkdir -p .build
