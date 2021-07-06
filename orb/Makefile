@@ -22,6 +22,8 @@ export MQ_PASSWORD				?= password
 export MQ_URL_1						?= amqp://admin:password@mq-1:5672/
 export MQ_URL_2						?= amqp://admin:password@mq-2:5672/
 export MQ_URL_3						?= amqp://admin:password@mq-3:5672/
+export MQ_URL_4						?= amqp://admin:password@mq-4:5672/
+
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
@@ -61,7 +63,7 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
 .PHONY: deploy
-deploy: prechecks kustomize kubectl set-images set-labels deploy-orb1 deploy-orb2 deploy-orb3 deploy-testnet
+deploy: prechecks kustomize kubectl set-images set-labels deploy-orb1 deploy-orb2 deploy-orb3 deploy-orb4 deploy-testnet
 
 .PHONY: prechecks
 prechecks:
@@ -71,7 +73,7 @@ ifeq (, $(shell stat ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} 2>/dev/null))
 endif
 
 .PHONY: set-labels
-set-labels: kustomize set-labels-orb1 set-labels-orb2 set-labels-orb3
+set-labels: kustomize set-labels-orb1 set-labels-orb2 set-labels-orb3 set-labels-orb4
 
 .PHONY: set-labels-orb1
 set-labels-orb1: kustomize
@@ -88,6 +90,12 @@ set-labels-orb2: kustomize
 .PHONY: set-labels-orb3
 set-labels-orb3: kustomize
 	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 &&\
+		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
+		popd
+
+.PHONY: set-labels-orb4
+set-labels-orb4: kustomize
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb4 &&\
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
@@ -118,6 +126,13 @@ deploy-orb3: prechecks set-images set-labels-orb3 kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 | $(KUBECTL) apply -f -
 
+.PHONY: deploy-orb4
+deploy-orb4: prechecks set-images set-labels-orb4 kustomize kubectl
+	@docker pull $(ORB_IMG)
+	@minikube image load $(ORB_IMG)
+	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb4 | $(KUBECTL) apply -f -
+
 
 .PHONY: deploy-testnet
 deploy-testnet: prechecks set-images kustomize kubectl
@@ -141,6 +156,11 @@ undeploy-orb2: prechecks set-images set-labels-orb2 kustomize kubectl
 undeploy-orb3: prechecks set-images set-labels-orb3 kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 | kubectl delete -f -
+
+.PHONY: undeploy-orb4
+undeploy-orb4: prechecks set-images set-labels-orb4 kustomize kubectl
+	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb4 | kubectl delete -f -
 
 .PHONY: undeploy-testnet
 undeploy-testnet: prechecks set-images kustomize kubectl

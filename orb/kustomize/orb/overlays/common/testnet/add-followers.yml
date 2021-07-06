@@ -51,6 +51,17 @@ spec:
               do echo "waiting for orb-3 endpoint";
               sleep 5;
               done;
+        - name: healthcheck-orb4-ready
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command: [ "/bin/sh" ]
+          args:
+            - "-c"
+            - |
+              while [[ "$(wget -T 5 -S --spider http://orb-4/healthcheck 2>&1 | grep '200 OK')" == "" ]];
+              do echo "waiting for orb-4 endpoint";
+              sleep 5;
+              done;
       containers:
       - name: orb-add-followers
         image: "alpine:latest"

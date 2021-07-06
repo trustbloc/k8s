@@ -1,0 +1,27 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: orb-4
+spec:
+  tls:
+  - hosts:
+      - $(SERVICE_NAME).||DOMAIN||
+    secretName: $(INGRESS_TLS_SECRET)
+  rules:
+  - host: $(SERVICE_NAME).||DOMAIN||
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: orb-4
+            port:
+              name: http
