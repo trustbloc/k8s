@@ -1,0 +1,47 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+  component: orb-4
+  group: core
+  instance: local
+  project: trustbloc
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: INGRESS_TLS_SECRET
+  objref:
+    apiVersion: v1
+    kind: Secret
+    name: orb-wildcard-cert-4
+
+secretGenerator:
+- files:
+  - ../certs/tls.crt
+  - ../certs/tls.key
+  name: orb-wildcard-cert-4
+  type: kubernetes.io/tls
+
+resources:
+- ../../common/orb4
+- orb/ingress.yml
+
+
+transformers:
+- sedtransform.yml
+- sedb64transform.yml

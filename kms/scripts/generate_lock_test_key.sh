@@ -32,5 +32,7 @@ openssl rand 32 | base64 | sed 's/+/-/g; s/\//_/g' > ${KEYS_OUTPUT_DIR}/orb1-kms
 openssl rand 32 | base64 | sed 's/+/-/g; s/\//_/g' > ${KEYS_OUTPUT_DIR}/orb2-kms-secret-lock.key
 # orb3-kms create secret lock key
 openssl rand 32 | base64 | sed 's/+/-/g; s/\//_/g' > ${KEYS_OUTPUT_DIR}/orb3-kms-secret-lock.key
+# orb4-kms create secret lock key
+openssl rand 32 | base64 | sed 's/+/-/g; s/\//_/g' > ${KEYS_OUTPUT_DIR}/orb4-kms-secret-lock.key
 
 echo "... Done generating test keys"
