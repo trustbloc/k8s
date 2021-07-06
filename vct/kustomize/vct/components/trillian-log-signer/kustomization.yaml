@@ -19,7 +19,7 @@ kind: Component
 images:
 - name: trillian-log-signer
   newName: ghcr.io/trustbloc-cicd/vct-log-signer
-  newTag: v0.1.0-snapshot-eca8d26
+  newTag: v0.1.0-snapshot-7056b87
 
 
 apiVersion: kustomize.config.k8s.io/v1alpha1
