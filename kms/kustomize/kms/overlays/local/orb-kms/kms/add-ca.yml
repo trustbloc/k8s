@@ -7,14 +7,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: orb-2-kms
+  name: orb-kms
 spec:
   template:
     spec:
       volumes:
         - name: ca-cert
           configMap:
-            name: orb-2-kms-ca-cert
+            name: orb-kms-ca-cert
       containers:
         - name: kms
           volumeMounts:

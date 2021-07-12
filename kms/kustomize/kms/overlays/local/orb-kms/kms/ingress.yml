@@ -8,22 +8,22 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: orb-1-kms
+  name: orb-kms
   labels:
     app: kms
 spec:
   tls:
   - hosts:
-      - $(ORB1_SERVICE_NAME).||DOMAIN||
-    secretName: $(ORB1_INGRESS_TLS_SECRET)
+      - $(ORB_SERVICE_NAME).||DOMAIN||
+    secretName: $(ORB_INGRESS_TLS_SECRET)
   rules:
-  - host: $(ORB1_SERVICE_NAME).||DOMAIN||
+  - host: $(ORB_SERVICE_NAME).||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: orb-1-kms
+            name: orb-kms
             port:
               name: http

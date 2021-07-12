@@ -12,18 +12,17 @@
 # "wordpress" becomes "alices-wordpress".
 # Note that it should also match with the prefix (text before '-') of the namespace
 # field above.
+namePrefix: orb-
 commonLabels:
-  component: orb1-kms
+  component: orb-kms
   group: core
-  instance: local
   project: trustbloc
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ../../common/orb1-kms
-- kms/ingress.yml
+- ../../../base
 
 transformers:
 - sedtransform.yml
@@ -32,42 +31,26 @@ transformers:
 vars:
 - fieldref:
     fieldPath: metadata.name
-  name: ORB1_INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
-    kind: Secret
-    name: orb-1-kms-wildcard-cert
-- fieldref:
-    fieldPath: metadata.name
-  name: ORB1_SERVICE_NAME
+  name: SERVICE_NAME
   objref:
     apiVersion: v1
     kind: Service
-    name: orb-1-kms
-
-replicas:
-  - name: orb-1-kms
-    count: 1
+    name: kms
 
 secretGenerator:
-- files:
-  - ../certs/tls.crt
-  - ../certs/tls.key
-  name: orb-1-kms-wildcard-cert
-  type: kubernetes.io/tls
-- behavior: replace
-  files:
-  - secret-lock.key=../keys/orb1-kms-secret-lock.key
-  name: orb-1-kms-lock-key
+- behavior: merge
+  envs:
+  - kms/secret.env
+  name: kms-env-secret
+- literals:
+  - secret-lock.key=1234567891011121314151617181920212223242526272829303132
+  name: kms-lock-key
 
 configMapGenerator:
 - behavior: merge
   envs:
   - kms/config.env
-  name: orb-1-kms-env
-- files:
-  - ../certs/ca.crt
-  name: orb-1-kms-ca-cert
+  name: kms-env
 
 patchesStrategicMerge:
-- kms/add-ca.yml
+- kms/add-key.yml

@@ -24,6 +24,10 @@ commonLabels:
 replicas:
 - count: 1
   name: vct
+- count: 1
+  name: trillian-log-server
+- count: 1
+  name: trillian-log-signer
 
 vars:
 - fieldref:
