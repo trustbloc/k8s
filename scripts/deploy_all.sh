@@ -130,8 +130,8 @@ for component in ${DEPLOY_LIST[@]}; do
     if [[ ${component} = "orb-min" ]]; then
         pushd orb
            make setup-no-certs
-           mkdir -p kustomize/$component/overlays/${DEPLOYMENT_ENV}/certs
-           cp ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs/* kustomize/$component/overlays/${DEPLOYMENT_ENV}/certs
+           mkdir -p kustomize/orb/overlays/${DEPLOYMENT_ENV}/certs
+           cp ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs/* kustomize/orb/overlays/${DEPLOYMENT_ENV}/certs
            make deploy-orb1 deploy-orb2 deploy-orb-setup
         popd
     else
