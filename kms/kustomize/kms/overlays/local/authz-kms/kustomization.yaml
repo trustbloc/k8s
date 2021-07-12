@@ -39,8 +39,8 @@ vars:
     name: authz-kms-wildcard-cert
 
 replicas:
-  - name: authz-kms
-    count: 1
+- count: 1
+  name: authz-kms
 
 secretGenerator:
 - files:

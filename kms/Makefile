@@ -66,7 +66,7 @@ generate-test-keys: clean-keys
 		docker.io/frapsoft/openssl:latest
 
 .PHONY: deploy
-deploy: prechecks kustomize kubectl set-images set-labels deploy-authz-kms deploy-ops-kms deploy-vault-kms deploy-orb1-kms deploy-orb2-kms deploy-orb3-kms deploy-orb4-kms
+deploy: prechecks kustomize kubectl set-images set-labels deploy-authz-kms deploy-ops-kms deploy-vault-kms deploy-orb-kms
 
 .PHONY: prechecks
 prechecks:
@@ -76,7 +76,7 @@ ifeq (, $(shell stat ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} 2>/dev/null))
 endif
 
 .PHONY: set-labels
-set-labels: kustomize set-labels-authz-kms set-labels-ops-kms set-labels-vault-kms set-labels-orb1-kms set-labels-orb2-kms set-labels-orb3-kms set-labels-orb4-kms
+set-labels: kustomize set-labels-authz-kms set-labels-ops-kms set-labels-vault-kms set-labels-orb-kms
 
 .PHONY: set-labels-authz-kms
 set-labels-authz-kms: kustomize
@@ -95,27 +95,9 @@ set-labels-vault-kms: kustomize
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
-.PHONY: set-labels-orb1-kms
-set-labels-orb1-kms: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1-kms &&\
-		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
-		popd
-
-.PHONY: set-labels-orb2-kms
-set-labels-orb2-kms: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2-kms &&\
-		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
-		popd
-
-.PHONY: set-labels-orb3-kms
-set-labels-orb3-kms: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3-kms &&\
-		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
-		popd
-
-.PHONY: set-labels-orb4-kms
-set-labels-orb4-kms: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb4-kms &&\
+.PHONY: set-labels-orb-kms
+set-labels-orb-kms: kustomize
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb-kms &&\
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
@@ -150,38 +132,15 @@ deploy-vault-kms: prechecks set-images set-labels-vault-kms kustomize kubectl
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vault-kms | $(KUBECTL) apply -f -
 
 
-.PHONY: deploy-orb1-kms
-deploy-orb1-kms: prechecks set-images set-labels-orb1-kms kustomize kubectl
+.PHONY: deploy-orb-kms
+deploy-orb-kms: prechecks set-images set-labels-orb-kms kustomize kubectl
 	@docker pull $(KMS_IMG)
 	@minikube image load $(KMS_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1-kms | $(KUBECTL) apply -f -
-
-
-.PHONY: deploy-orb2-kms
-deploy-orb2-kms: prechecks set-images set-labels-orb2-kms kustomize kubectl
-	@docker pull $(KMS_IMG)
-	@minikube image load $(KMS_IMG)
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2-kms | $(KUBECTL) apply -f -
-
-.PHONY: deploy-orb3-kms
-deploy-orb3-kms: prechecks set-images set-labels-orb3-kms kustomize kubectl
-	@docker pull $(KMS_IMG)
-	@minikube image load $(KMS_IMG)
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3-kms | $(KUBECTL) apply -f -
-
-.PHONY: deploy-orb4-kms
-deploy-orb4-kms: prechecks set-images set-labels-orb4-kms kustomize kubectl
-	@docker pull $(KMS_IMG)
-	@minikube image load $(KMS_IMG)
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb4-kms | $(KUBECTL) apply -f -
-
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb-kms | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize kubectl set-images set-labels undeploy-authz-kms undeploy-ops-kms undeploy-vault-kms undeploy-orb1-kms undeploy-orb2-kms undeploy-orb3-kms undeploy-orb4-kms
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-authz-kms undeploy-ops-kms undeploy-vault-kms undeploy-orb-kms
 
 .PHONY: undeploy-authz-kms
 undeploy-authz-kms: prechecks set-images set-labels-authz-kms kustomize kubectl
@@ -198,26 +157,10 @@ undeploy-vault-kms: prechecks set-images set-labels-vault-kms kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vault-kms | $(KUBECTL) delete -f -
 
-.PHONY: undeploy-orb1-kms
-undeploy-orb1-kms: prechecks set-images set-labels-orb1-kms kustomize kubectl
+.PHONY: undeploy-orb-kms
+undeploy-orb-kms: prechecks set-images set-labels-orb-kms kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1-kms | $(KUBECTL) delete -f -
-
-.PHONY: undeploy-orb2-kms
-undeploy-orb2-kms: prechecks set-images set-labels-orb2-kms kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2-kms | $(KUBECTL) delete -f -
-
-.PHONY: undeploy-orb3-kms
-undeploy-orb3-kms: prechecks set-images set-labels-orb3-kms kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3-kms | $(KUBECTL) delete -f -
-
-.PHONY: undeploy-orb4-kms
-undeploy-orb4-kms: prechecks set-images set-labels-orb4-kms kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb4-kms | $(KUBECTL) delete -f -
-
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb-kms | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:

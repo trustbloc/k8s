@@ -39,8 +39,8 @@ vars:
     name: ops-kms-wildcard-cert
 
 replicas:
-  - name: ops-kms
-    count: 1
+- count: 1
+  name: ops-kms
 
 secretGenerator:
 - files:

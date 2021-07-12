@@ -46,8 +46,8 @@ vars:
     name: vault-kms
 
 replicas:
-  - name: vault-kms
-    count: 1
+- count: 1
+  name: vault-kms
 
 secretGenerator:
 - files:
