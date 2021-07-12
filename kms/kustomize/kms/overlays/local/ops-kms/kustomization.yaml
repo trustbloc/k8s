@@ -38,6 +38,10 @@ vars:
     kind: Secret
     name: ops-kms-wildcard-cert
 
+replicas:
+  - name: ops-kms
+    count: 1
+
 secretGenerator:
 - files:
   - ../certs/tls.crt

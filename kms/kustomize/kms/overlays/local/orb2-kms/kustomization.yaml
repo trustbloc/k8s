@@ -45,6 +45,10 @@ vars:
     kind: Service
     name: orb-2-kms
 
+replicas:
+  - name: orb-2-kms
+    count: 1
+
 secretGenerator:
 - files:
   - ../certs/tls.crt
