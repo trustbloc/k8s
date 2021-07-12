@@ -10,7 +10,7 @@ apiVersion: apps/v1
 metadata:
   name: vct
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: vct
