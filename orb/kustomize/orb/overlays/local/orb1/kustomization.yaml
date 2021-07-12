@@ -30,6 +30,10 @@ vars:
     kind: Secret
     name: orb-wildcard-cert-1
 
+replicas:
+  - name: orb-1
+    count: 1
+
 secretGenerator:
 - files:
   - ../certs/tls.crt
