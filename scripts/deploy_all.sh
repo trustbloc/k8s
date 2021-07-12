@@ -13,13 +13,22 @@ set -e
 ## Default values, will be overriden by the existing env variable value
 : ${DOMAIN:=trustbloc.dev}
 : ${DEPLOYMENT_ENV:=local}
+
+
+: ${ORB_DEPLOY:=orb orb-driver}
+
+if [[ ${ORB_MIN} = "true" ]]; then
+ORB_DEPLOY=orb-min
+fi
+
 ## Should be deployed in the listed order
-: ${COMPONENTS=edv kms vct orb orb-driver resolver registrar csh vcs vault-server hub-auth hub-router wallet-server wallet-web adapter-issuer adapter-rp}
+: ${COMPONENTS=edv kms vct ${ORB_DEPLOY} resolver registrar csh vcs vault-server hub-auth hub-router wallet-server wallet-web adapter-issuer adapter-rp}
 DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)
 declare -A HEALTCHECK_URL=(
     [orb]="https://orb-1.$DOMAIN/healthcheck https://orb-2.$DOMAIN/healthcheck https://orb-3.$DOMAIN/healthcheck https://orb-4.$DOMAIN/healthcheck"
+    [orb-min]="https://orb-1.$DOMAIN/healthcheck https://orb-2.$DOMAIN/healthcheck"
     [orb-driver]="https://orb-driver.$DOMAIN/healthcheck"
     [vct]="https://vct.$DOMAIN/healthcheck"
     [edv]="https://edv-oathkeeper-proxy.$DOMAIN/healthcheck"
@@ -118,12 +127,21 @@ fi
 
 for component in ${DEPLOY_LIST[@]}; do
     echo "${AQUA} === component: $component ${NONE}"
-    pushd $component
-        make setup-no-certs
-        mkdir -p kustomize/$component/overlays/${DEPLOYMENT_ENV}/certs
-        cp ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs/* kustomize/$component/overlays/${DEPLOYMENT_ENV}/certs
-        make deploy
-    popd
+    if [[ ${component} = "orb-min" ]]; then
+        pushd orb
+           make setup-no-certs
+           mkdir -p kustomize/$component/overlays/${DEPLOYMENT_ENV}/certs
+           cp ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs/* kustomize/$component/overlays/${DEPLOYMENT_ENV}/certs
+           make deploy-orb1 deploy-orb2 deploy-orb-setup
+        popd
+    else
+        pushd $component
+            make setup-no-certs
+            mkdir -p kustomize/$component/overlays/${DEPLOYMENT_ENV}/certs
+            cp ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs/* kustomize/$component/overlays/${DEPLOYMENT_ENV}/certs
+            make deploy
+        popd
+    fi
     ## run all health checks for a given component
     for url in ${HEALTCHECK_URL[$component]}; do
         healthCheck $component "$url" ${HEALTHCHECK_CODE["$url"]}

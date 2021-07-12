@@ -1,0 +1,51 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: orb-add-followers
+spec:
+  template:
+    spec:
+      volumes:
+        - name: script
+          configMap:
+            name: orb-add-followers-script
+      restartPolicy: Never
+      initContainers:
+        - name: healthcheck-orb1-ready
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh"]
+          args:
+            - "-c"
+            - |
+              while [[ "$(wget -T 5 -S --spider http://orb-1/healthcheck 2>&1 | grep '200 OK')" == "" ]];
+              do echo "waiting for orb-1 endpoint";
+              sleep 5;
+              done;
+        - name: healthcheck-orb2-ready
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command: [ "/bin/sh" ]
+          args:
+            - "-c"
+            - |
+              while [[ "$(wget -T 5 -S --spider http://orb-2/healthcheck 2>&1 | grep '200 OK')" == "" ]];
+              do echo "waiting for orb-2 endpoint";
+              sleep 5;
+              done;
+      containers:
+      - name: orb-add-followers
+        image: "alpine:latest"
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh"]
+        args: ["/opt/create_follow_activity.sh"]
+        volumeMounts:
+          - name: script
+            mountPath: /opt
