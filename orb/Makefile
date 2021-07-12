@@ -14,7 +14,7 @@ export DEPLOYMENT_ENV	?= local
 # space delimited of Key:Value pairs
 COMMON_LABELS		            := instance:${DEPLOYMENT_ENV}
 export DOMAIN      		        ?= ${DEPLOYMENT_ENV}.trustbloc.dev
-export BLOC_DOMAIN      		?= testnet.${DOMAIN}
+export BLOC_DOMAIN      		?= orb-1.${DOMAIN}
 export COUCHDB_URL				?= cdbadmin:secret@couchdb:5984
 export ORB_AUTH_TOKENS			?= admin=ADMIN_TOKEN
 export MQ_USER					?= admin
@@ -63,7 +63,7 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
 .PHONY: deploy
-deploy: prechecks kustomize kubectl set-images set-labels deploy-orb1 deploy-orb2 deploy-orb3 deploy-orb4 deploy-testnet
+deploy: prechecks kustomize kubectl set-images set-labels deploy-orb1 deploy-orb2 deploy-orb3 deploy-orb4 deploy-orb-setup
 
 .PHONY: prechecks
 prechecks:
@@ -134,13 +134,13 @@ deploy-orb4: prechecks set-images set-labels-orb4 kustomize kubectl
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb4 | $(KUBECTL) apply -f -
 
 
-.PHONY: deploy-testnet
-deploy-testnet: prechecks set-images kustomize kubectl
+.PHONY: deploy-orb-setup
+deploy-orb-setup: prechecks set-images kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/testnet | $(KUBECTL) apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/setup | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize kubectl set-images set-labels undeploy-orb1 undeploy-orb2 undeploy-orb3 undeploy-testnet
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-orb1 undeploy-orb2 undeploy-orb3 undeploy-orb-setup
 
 .PHONY: undeploy-orb1
 undeploy-orb1: prechecks set-images set-labels-orb1 kustomize kubectl
@@ -162,10 +162,10 @@ undeploy-orb4: prechecks set-images set-labels-orb4 kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb4 | kubectl delete -f -
 
-.PHONY: undeploy-testnet
-undeploy-testnet: prechecks set-images kustomize kubectl
+.PHONY: undeploy-orb-setup
+undeploy-orb-setup: prechecks set-images kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/testnet | kubectl delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/setup | kubectl delete -f -
 
 
 .PHONY: kustomize

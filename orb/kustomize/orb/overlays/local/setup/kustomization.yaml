@@ -20,33 +20,16 @@ commonLabels:
   instance: local
   project: trustbloc
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
-    kind: Secret
-    name: orb-wildcard-cert
-
 configMapGenerator:
 - files:
     - ../certs/ca.crt
   name: orb-add-followers-ca-cert
 
-secretGenerator:
-- files:
-  - ../certs/tls.crt
-  - ../certs/tls.key
-  name: orb-wildcard-cert
-  type: kubernetes.io/tls
-
 transformers:
 - sedtransform.yml
 
 resources:
-- ../../common/testnet
-- ingress.yml
+- ../../common/setup
 
 patchesStrategicMerge:
 - add-ca.yml

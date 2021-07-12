@@ -22,8 +22,8 @@ commonLabels:
   project: trustbloc
 
 replicas:
-  - name: orb-2
-    count: 1
+- count: 1
+  name: orb-2
 
 vars:
 - fieldref:

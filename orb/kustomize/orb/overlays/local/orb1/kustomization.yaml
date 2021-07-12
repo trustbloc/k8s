@@ -31,8 +31,8 @@ vars:
     name: orb-wildcard-cert-1
 
 replicas:
-  - name: orb-1
-    count: 1
+- count: 1
+  name: orb-1
 
 secretGenerator:
 - files:
