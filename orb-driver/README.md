@@ -16,8 +16,7 @@
 ## options and features
 * By default dns domain is `local.trustboc.dev`. To run with different domain (See next), run with: `make DOMAIN=ali.trustbloc.dev`
 * When running with unregistered dns domains, create records (/etc/hosts) for:
-	- testnet.DOMAIN
-	- orb.DOMAIN
+	- orb-1.DOMAIN
 * When running `podman` pass `CONTAINER_CMD=podman` as option to make.
 * Running with none self-signed certificates: place certs into kustomize/orb/overlays/sandbox/certs, then run with: `make setup-no-certs`
 >files:

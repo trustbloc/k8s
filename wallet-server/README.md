@@ -16,7 +16,7 @@
 
 ## options and features
 * By default dns domain is `local.trustboc.dev`. To run with different domain (See next), run with: `make DOMAIN=ali.trustbloc.dev`
-* By default Bloc domain is `testnet.trustboc.dev`. To run with different domain (See next), run with: `make BLOC_DOMAIN=testnet.ali.trustbloc.dev`
+* By default Bloc domain is `orb-1.trustboc.dev`. To run with different domain (See next), run with: `make BLOC_DOMAIN=orb-1.ali.trustbloc.dev`
 * Will create an Ingress for external access. When running with unregistered dns domains, create records (/etc/hosts) for:
 	- `wallet-support.DOMAIN`
 * if running `podman` pass `CONTAINER_CMD=podman` as option to make

@@ -22,8 +22,8 @@ commonLabels:
   project: trustbloc
 
 replicas:
-  - name: vct
-    count: 1
+- count: 1
+  name: vct
 
 vars:
 - fieldref:

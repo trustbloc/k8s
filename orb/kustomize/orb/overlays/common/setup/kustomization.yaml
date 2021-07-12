@@ -24,10 +24,8 @@ configMapGenerator:
   - ./create_follow_activity.sh
   name: orb-add-followers-script
 
-
 transformers:
 - sedtransform.yml
 
 resources:
-- service.yml
 - add-followers.yml

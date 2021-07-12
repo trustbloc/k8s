@@ -19,7 +19,7 @@ DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)
 declare -A HEALTCHECK_URL=(
-    [orb]="https://orb-1.$DOMAIN/healthcheck https://orb-2.$DOMAIN/healthcheck https://orb-3.$DOMAIN/healthcheck https://orb-4.$DOMAIN/healthcheck https://testnet.$DOMAIN/.well-known/did-orb"
+    [orb]="https://orb-1.$DOMAIN/healthcheck https://orb-2.$DOMAIN/healthcheck https://orb-3.$DOMAIN/healthcheck https://orb-4.$DOMAIN/healthcheck"
     [orb-driver]="https://orb-driver.$DOMAIN/healthcheck"
     [vct]="https://vct.$DOMAIN/healthcheck"
     [edv]="https://edv-oathkeeper-proxy.$DOMAIN/healthcheck"
@@ -38,7 +38,6 @@ declare -A HEALTCHECK_URL=(
 )
 ## Map: healthckeck --> http-code
 declare -A HEALTHCHECK_CODE=(
-    [https://testnet.$DOMAIN/.well-known/did-orb]=200
     [https://vct.$DOMAIN/healthcheck]=200
     [https://orb-1.$DOMAIN/healthcheck]=200
     [https://orb-2.$DOMAIN/healthcheck]=200

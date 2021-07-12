@@ -33,7 +33,6 @@ orb-3
 orb-3-kms
 orb-4
 orb-4-kms
-testnet
 uni-registrar-web
 uni-resolver-web
 vault-kms
