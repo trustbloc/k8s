@@ -25,7 +25,11 @@ deploy-components:
 
 setup-and-deploy: minikube-reset
 	@echo "Apply/verify the required changes to /etc/hosts. Once done, press ENTER" && read L
-	./scripts/deploy_all.sh
+	ORB_MIN=false ./scripts/deploy_all.sh
+
+setup-and-deploy-orb-min: minikube-reset
+	@echo "Apply/verify the required changes to /etc/hosts. Once done, press ENTER" && read L
+	ORB_MIN=true ./scripts/deploy_all.sh
 
 minikube-setup:
 	cd scripts && ./minikube_setup.sh

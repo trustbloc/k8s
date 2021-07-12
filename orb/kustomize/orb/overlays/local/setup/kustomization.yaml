@@ -24,12 +24,18 @@ configMapGenerator:
 - files:
     - ../certs/ca.crt
   name: orb-add-followers-ca-cert
+- files:
+    - ./create_follow_activity.sh
+  name: orb-add-followers-script
+- name: orb-add-followers-env
+  literals:
+    - ORB_MIN=||ORB_MIN||
 
 transformers:
 - sedtransform.yml
 
 resources:
-- ../../common/setup
+- add-followers.yml
 
 patchesStrategicMerge:
 - add-ca.yml
