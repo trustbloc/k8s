@@ -21,6 +21,10 @@ commonLabels:
   instance: local
   project: trustbloc
 
+replicas:
+  - name: vct
+    count: 1
+
 vars:
 - fieldref:
     fieldPath: metadata.name
