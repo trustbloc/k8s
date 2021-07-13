@@ -32,6 +32,10 @@ vars:
     kind: Secret
     name: edv-wildcard-cert
 
+replicas:
+  - count: 1
+    name: edv
+
 configMapGenerator:
 - behavior: merge
   envs:
