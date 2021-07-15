@@ -22,7 +22,7 @@ ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 
 #IMAGES
-WALLET_WEB_IMG				?= ghcr.io/trustbloc-cicd/wallet-web:0.1.7-snapshot-e3981d9
+WALLET_WEB_IMG				?= ghcr.io/trustbloc-cicd/wallet-web:0.1.7-snapshot-6d5d4d7
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/wallet-web
@@ -81,6 +81,7 @@ set-images: kustomize
 
 .PHONY: deploy-wallet-web
 deploy-wallet-web: prechecks kustomize kubectl
+	@minikube image load $(WALLET_WEB_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
