@@ -21,7 +21,7 @@ OS 								= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  							= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.0-snapshot-ff750b2
+VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.0-snapshot-f56a9eb
 
 export TRILLIAN_LOG_POSTGRES		?= user=orbvct host=postgres password=orbvct-secret-pw dbname=orbvct port=5432 sslmode=disable
 
