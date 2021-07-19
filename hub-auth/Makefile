@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-HUB_AUTH_IMG				?= ghcr.io/trustbloc-cicd/hub-auth:0.1.7-snapshot-12b0aa0
+HUB_AUTH_IMG		?= ghcr.io/trustbloc-cicd/hub-auth:0.1.7-snapshot-f9b282e
 HYDRA_IMG			?= oryd/hydra:v1.3.2-alpine
 
 # do not modify
@@ -92,10 +92,6 @@ set-images: kustomize
 
 .PHONY: deploy-hub-auth
 deploy-hub-auth: prechecks kustomize kubectl
-	@docker pull $(HUB_AUTH_IMG)
-	@minikube image load $(HUB_AUTH_IMG)
-	@docker pull $(HYDRA_IMG)
-	@minikube image load $(HYDRA_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/hub-auth | $(KUBECTL) apply -f -
 
