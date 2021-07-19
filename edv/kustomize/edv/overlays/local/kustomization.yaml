@@ -33,8 +33,8 @@ vars:
     name: edv-wildcard-cert
 
 replicas:
-  - count: 1
-    name: edv
+- count: 1
+  name: edv
 
 configMapGenerator:
 - behavior: merge
