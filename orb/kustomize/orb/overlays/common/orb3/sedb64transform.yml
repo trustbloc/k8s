@@ -8,4 +8,4 @@ apiVersion: svceng
 kind: SedB64Transformer
 metadata:
   name: sedb64transformer
-argsOneLiner: s^||COUCHDB_URL||^${COUCHDB_URL}^ s^||ORB_AUTH_TOKENS||^${ORB_AUTH_TOKENS}^ s^||MQ_URL_3||^${MQ_URL_3}^
+argsOneLiner: s^||ORB_3_COUCHDB_URL||^${ORB_3_COUCHDB_URL}^ s^||ORB_AUTH_TOKENS||^${ORB_AUTH_TOKENS}^ s^||MQ_URL_3||^${MQ_URL_3}^

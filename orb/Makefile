@@ -15,7 +15,10 @@ export DEPLOYMENT_ENV	?= local
 COMMON_LABELS		            := instance:${DEPLOYMENT_ENV}
 export DOMAIN      		        ?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN      		?= orb-1.${DOMAIN}
-export COUCHDB_URL				?= cdbadmin:secret@couchdb:5984
+export ORB_1_COUCHDB_URL				?= cdbadmin:secret@couchdb-orb-1:5984
+export ORB_2_COUCHDB_URL				?= cdbadmin:secret@couchdb-orb-2:5984
+export ORB_3_COUCHDB_URL				?= cdbadmin:secret@couchdb-orb-3:5984
+export ORB_4_COUCHDB_URL				?= cdbadmin:secret@couchdb-orb-4:5984
 export ORB_AUTH_TOKENS			?= admin=ADMIN_TOKEN
 export MQ_USER					?= admin
 export MQ_PASSWORD				?= password
