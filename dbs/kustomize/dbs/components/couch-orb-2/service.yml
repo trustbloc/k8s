@@ -1,0 +1,22 @@
+# 
+# Copyright SecureKey Technologies Inc. All Rights Reserved. 
+# 
+# SPDX-License-Identifier: Apache-2.0 
+# 
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: couchdb-orb-2
+spec:
+  ports:
+  - name: couchdb-port
+    port: 5984
+    protocol: TCP
+    targetPort: couchdb-port
+  selector:
+    app: couchdb-orb-2
+status:
+  loadBalancer: {}
