@@ -11,6 +11,7 @@ metadata:
   creationTimestamp: null
   labels:
     app: couchdb-orb-1
+    app-group: couchdbs
   name: couchdb-orb-1
 spec:
   replicas: 1
@@ -23,6 +24,7 @@ spec:
       creationTimestamp: null
       labels:
         app: couchdb-orb-1
+        app-group: couchdbs
     spec:
       volumes:
         - name: couchdb-config
