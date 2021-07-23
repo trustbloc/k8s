@@ -27,6 +27,9 @@ spec:
         - name: nginx-config-template
           configMap:
             name: nginx-config-template
+        - name: wallet-static-images
+          configMap:
+            name: wallet-static-images
       containers:
       - name: web
         envFrom:
@@ -49,4 +52,7 @@ spec:
         volumeMounts:
           - name: nginx-config-template
             mountPath: /etc/nginx/templates
+            readOnly: true
+          - name: wallet-static-images
+            mountPath: /etc/static/images
             readOnly: true
