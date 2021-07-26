@@ -23,6 +23,9 @@ configMapGenerator:
   envs:
   - config.env
   name: web-env
+- files:
+    - ./static/images/logo.svg
+  name: wallet-static-images
 
 secretGenerator:
 - behavior: merge
