@@ -45,6 +45,9 @@ configMapGenerator:
   envs:
   - hydra/hydra-env.env
   name: hydra-env
+- files:
+    - ./static/images/demo_provider.svg
+  name: auth-static-images
 
 resources:
 - ../../base
