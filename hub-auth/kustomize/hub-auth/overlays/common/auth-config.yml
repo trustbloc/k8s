@@ -12,5 +12,4 @@ providers:
     name: Demo OIDC
     signUpText: Demo Sign-Up Partner
     signInText: Demo Sign-In Partner
-#    logoURL: https://hub-auth.||DOMAIN||/static/images/demo_provider.svg
-    logoURL: https://upload.wikimedia.org/wikipedia/en/a/a4/Universal_Bank.svg
+    logoURL: https://hub-auth.||DOMAIN||/static/images/demo_provider.svg
