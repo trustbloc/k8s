@@ -30,6 +30,10 @@ spec:
             - containerPort: 5672
               protocol: TCP
               name: http-port
+          ports:
+            - containerPort: 15692
+              protocol: TCP
+              name: prometheus
           volumeMounts:
             - name: mq-config
               mountPath: /etc/rabbitmq/rabbitmq.conf
@@ -40,13 +44,18 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: mq
+  labels:
+    app: mq
 spec:
   ports:
     - name: http-port
       port: 5672
       protocol: TCP
       targetPort: http-port
+  ports:
+    - name: prometheus
+      port: 15962
+      protocol: TCP
+      targetPort: prometheus
   selector:
     app: mq
-status:
-  loadBalancer: {}

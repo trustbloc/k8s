@@ -10,6 +10,8 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: orb
+  labels:
+    app: orb
 spec:
   ports:
   - name: http
