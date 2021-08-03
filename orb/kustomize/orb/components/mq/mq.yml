@@ -30,7 +30,6 @@ spec:
             - containerPort: 5672
               protocol: TCP
               name: http-port
-          ports:
             - containerPort: 15692
               protocol: TCP
               name: prometheus
@@ -52,7 +51,6 @@ spec:
       port: 5672
       protocol: TCP
       targetPort: http-port
-  ports:
     - name: prometheus
       port: 15962
       protocol: TCP
