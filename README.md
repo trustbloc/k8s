@@ -26,12 +26,18 @@ The repo contains the scripts to deploy the core TrustBloc components.
 
 #### v.1.20.0
 ##### macOS
+```
 curl -LO https://github.com/kubernetes/minikube/releases/download/v1.20.0/minikube-darwin-amd64
+
 sudo install minikube-darwin-amd64 /usr/local/bin/minikube
+```
 
 ##### linux
+```
 curl -LO https://storage.googleapis.com/minikube/releases/download/v1.20.0/minikube-linux-amd64
+
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
+```
 
 ## Running
 
