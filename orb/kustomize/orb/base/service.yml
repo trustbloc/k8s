@@ -18,6 +18,10 @@ spec:
     port: 80
     protocol: TCP
     targetPort: http-port
+  - name: prometheus
+    port: 15962
+    protocol: TCP
+    targetPort: prometheus
   selector:
     app: orb
 status:
