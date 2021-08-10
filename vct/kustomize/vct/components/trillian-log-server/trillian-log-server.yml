@@ -26,6 +26,7 @@ spec:
               "--storage_system=postgres",
               "--pg_conn_str=$(POSTGRES_URI)",
               "--rpc_endpoint=$(RPC_ENDPOINT)",
+              "--http_endpoint=$(HTTP_ENDPOINT)",
               "--logtostderr"
           ]
           envFrom:
@@ -38,6 +39,9 @@ spec:
             - containerPort: 9081
               protocol: TCP
               name: http-port
+            - containerPort: 8181
+              protocol: TCP
+              name: prometheus
 ---
 apiVersion: v1
 kind: Service
