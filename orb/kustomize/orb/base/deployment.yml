@@ -32,6 +32,9 @@ spec:
             - containerPort: 8081
               protocol: TCP
               name: http-port
+            - containerPort: 8091
+              protocol: TCP
+              name: prometheus
           livenessProbe:
             httpGet:
               path: /healthcheck
