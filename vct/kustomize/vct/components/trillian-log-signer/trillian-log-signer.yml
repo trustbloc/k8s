@@ -45,6 +45,8 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: trillian-log-signer
+  labels:
+    app: trillian-log-signer
 spec:
   ports:
     - name: prometheus

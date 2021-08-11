@@ -48,6 +48,8 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: trillian-log-server
+  labels:
+    app: trillian-log-server
 spec:
   ports:
     - name: http-port
