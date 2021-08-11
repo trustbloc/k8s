@@ -54,6 +54,10 @@ spec:
       port: 9081
       protocol: TCP
       targetPort: http-port
+    - name: prometheus
+      port: 9100
+      protocol: TCP
+      targetPort: prometheus
   selector:
     app: trillian-log-server
 status:

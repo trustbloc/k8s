@@ -39,3 +39,19 @@ spec:
             - containerPort: 8081
               protocol: TCP
               name: http-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: trillian-log-signer
+spec:
+  ports:
+    - name: prometheus
+      port: 9100
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    app: trillian-log-signer
+status:
+  loadBalancer: {}

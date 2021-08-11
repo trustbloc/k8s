@@ -16,6 +16,10 @@ spec:
     port: 80
     protocol: TCP
     targetPort: http-port
+  - name: prometheus
+    port: 9100
+    protocol: TCP
+    targetPort: prometheus
   selector:
     app: vct
 status:
