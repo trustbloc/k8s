@@ -10,6 +10,8 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: vct
+  labels:
+    app: vct
 spec:
   ports:
   - name: http
