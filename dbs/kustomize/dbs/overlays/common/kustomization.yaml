@@ -28,6 +28,12 @@ components:
 - ../../components/couch-orb-3
 - ../../components/couch-orb-4
 - ../../components/couch-orb-kms
+- ../../components/mongodb
+- ../../components/mongodb-orb-1
+- ../../components/mongodb-orb-2
+- ../../components/mongodb-orb-3
+- ../../components/mongodb-orb-4
+- ../../components/mongodb-orb-kms
 - ../../components/mysql
 - ../../components/postgres
 - ../../components/ipfs
