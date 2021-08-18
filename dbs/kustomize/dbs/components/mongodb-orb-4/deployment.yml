@@ -34,9 +34,9 @@ spec:
             containerPort: 27017
         name: mongodb-orb-4
         env:
-        - name: MONGODB_USER
-          value: 'mongoadmin'
-        - name: MONGODB_PASSWORD
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: 'mongoroot'
+        - name: MONGO_INITDB_ROOT_PASSWORD
           value: 'secret'
         resources: {}
 status: {}
