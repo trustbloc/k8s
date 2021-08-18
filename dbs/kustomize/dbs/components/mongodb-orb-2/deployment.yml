@@ -1,0 +1,42 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mongodb-orb-2
+  name: mongodb-orb-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb-orb-2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mongodb-orb-2
+    spec:
+      hostname: mongodb-orb-2
+      containers:
+      - image: mongo:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+          - name: mongodb-port
+            protocol: TCP
+            containerPort: 27017
+        name: mongodb-orb-2
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: 'mongoroot'
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: 'secret'
+        resources: {}
+status: {}

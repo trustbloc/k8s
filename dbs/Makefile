@@ -21,6 +21,7 @@ ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 MYSQL_IMG		?= docker.io/mysql:8.0.20
 COUCH_IMG		?= docker.io/couchdb:3.1
 POSTGRES_IMG		?= docker.io/postgres:13
+MONGODB_IMG		?= docker.io/mongo:4.0
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/dbs
@@ -51,12 +52,45 @@ set-labels: kustomize
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/components/couch &&\
 	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
-	popd &&\
+    popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/couch-orb-1 &&\
+	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
+    popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/couch-orb-2 &&\
+	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
+    popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/couch-orb-3 &&\
+	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
+    popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/couch-orb-4 &&\
+	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
+    popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/couch-orb-kms &&\
+	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
+    popd &&\
 	pushd ${KUSTOMIZE_DIR}/components/postgres &&\
-    ${KUSTOMIZE} edit set image postgres=${POSTGRES_IMG} &&\
+	${KUSTOMIZE} edit set image postgres=${POSTGRES_IMG} &&\
     popd &&\
 	pushd ${KUSTOMIZE_DIR}/components/mysql &&\
 	${KUSTOMIZE} edit set image mysql=${MYSQL_IMG} &&\
+    popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/mongodb &&\
+	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
+    popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/mongodb-orb-1 &&\
+	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
+    popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/mongodb-orb-2 &&\
+	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
+    popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/mongodb-orb-3 &&\
+	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
+    popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/mongodb-orb-4 &&\
+	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
+    popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/mongodb-orb-kms &&\
+	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
 	popd
 
 .PHONY: deploy-dbs
@@ -67,6 +101,8 @@ deploy-dbs: prechecks kustomize kubectl
 	@minikube image load $(MYSQL_IMG)
 	@docker pull $(POSTGRES_IMG)
 	@minikube image load $(POSTGRES_IMG)
+	@docker pull $(MONGODB_IMG)
+	@minikube image load $(MONGODB_IMG)
 	@docker pull ipfs/go-ipfs:master-2021-04-22-eea198f
 	@minikube image load ipfs/go-ipfs:master-2021-04-22-eea198f
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
