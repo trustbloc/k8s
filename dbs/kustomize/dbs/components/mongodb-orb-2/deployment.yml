@@ -32,7 +32,7 @@ spec:
           - name: mongodb-port
             protocol: TCP
             containerPort: 27017
-        name: mongodb-orb-2
+        name: mongodb
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           value: 'mongoroot'
