@@ -23,10 +23,6 @@ kind: Kustomization
 
 components:
 - ../../components/couch
-- ../../components/couch-orb-1
-- ../../components/couch-orb-2
-- ../../components/couch-orb-3
-- ../../components/couch-orb-4
 - ../../components/couch-orb-kms
 - ../../components/mongodb
 - ../../components/mongodb-orb-1

@@ -53,18 +53,6 @@ set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/components/couch &&\
 	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
     popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/couch-orb-1 &&\
-	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
-    popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/couch-orb-2 &&\
-	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
-    popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/couch-orb-3 &&\
-	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
-    popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/couch-orb-4 &&\
-	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
-    popd &&\
 	pushd ${KUSTOMIZE_DIR}/components/couch-orb-kms &&\
 	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
     popd &&\
