@@ -7,6 +7,9 @@
 echo "Adding wget"
 type wget || apk --no-cache add wget
 
+echo "Adding curl"
+type curl || apk --no-cache add curl
+
 rm -rf .build
 mkdir -p .build
 # TODO use orb tag url
@@ -55,6 +58,6 @@ fi
 ./orb-cli-linux-amd64 witness --outbox-url=https://orb-3.||DOMAIN||/services/orb/outbox --actor=$domain3IRI --to=$domain2IRI --action=InviteWitness $CA_CERT_OPT --auth-token=ADMIN_TOKEN
 
 
-curl -X POST -H "Content-Type: text/plain" --data "OutOf(2,system) AND OutOf(2,batch)" https://orb-1.||DOMAIN||/policy -i
-curl -X POST -H "Content-Type: text/plain" --data "OutOf(2,system) AND OutOf(2,batch)" https://orb-2.||DOMAIN||/policy -i
-curl -X POST -H "Content-Type: text/plain" --data "OutOf(2,system) AND OutOf(2,batch)" https://orb-3.||DOMAIN||/policy -i
+curl --insecure -X POST -H "Content-Type: text/plain" --data "OutOf(2,system) AND OutOf(2,batch)" https://orb-1.||DOMAIN||/policy -i
+curl --insecure -X POST -H "Content-Type: text/plain" --data "OutOf(2,system) AND OutOf(2,batch)" https://orb-2.||DOMAIN||/policy -i
+curl --insecure -X POST -H "Content-Type: text/plain" --data "OutOf(2,system) AND OutOf(2,batch)" https://orb-3.||DOMAIN||/policy -i
