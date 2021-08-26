@@ -1,0 +1,33 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: static-file-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: static-file-server
+  template:
+    metadata:
+      labels:
+        app: static-file-server
+    spec:
+      volumes:
+      - name: static-file-server-data
+        configMap:
+          name: static-file-server-data
+      containers:
+      - name: static-file-server
+        envFrom:
+          - configMapRef:
+              name: static-file-server-env
+        image: "static-file-server:latest"
+        ports:
+          - name: http-port
+            protocol: TCP
+            containerPort: 8081
+        volumeMounts:
+          - name: static-file-server-data
+            mountPath: /data
+            subPath: ld-contexts.json

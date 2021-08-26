@@ -24,3 +24,23 @@ kind: Kustomization
 
 resources:
 - ../common
+- static-file-server/ingress.yml
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: INGRESS_TLS_SECRET
+  objref:
+    apiVersion: v1
+    kind: Secret
+    name: static-file-server-wildcard-cert
+
+secretGenerator:
+- files:
+  - certs/tls.crt
+  - certs/tls.key
+  name: static-file-server-wildcard-cert
+  type: kubernetes.io/tls
+
+transformers:
+- sedtransform.yml

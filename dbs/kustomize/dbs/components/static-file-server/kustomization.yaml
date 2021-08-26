@@ -1,0 +1,40 @@
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+
+generatorOptions: {}
+
+configMapGenerator:
+- envs:
+  - config.env
+  name: static-file-server-env
+- files:
+  - ld-contexts.json
+  name: static-file-server-data
+
+vars:
+- fieldref:
+    fieldPath: metadata.name
+  name: STATIC_FILE_SERVER_SERVICE_NAME
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: static-file-server
+
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+resources:
+- deployment.yml
+- service.yml
+
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+images:
+- name: static-file-server
+  newName: halverneus/static-file-server
+  newTag: v1.8.4
