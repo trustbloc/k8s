@@ -58,4 +58,4 @@ kind: Kustomization
 images:
 - name: hub-router
   newName: ghcr.io/trustbloc-cicd/hub-router
-  newTag: 0.1.7-snapshot-8f85875
+  newTag: 0.1.7-snapshot-c421290

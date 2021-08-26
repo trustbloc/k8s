@@ -30,4 +30,3 @@ spec:
         volumeMounts:
           - name: static-file-server-data
             mountPath: /data
-            subPath: ld-contexts.json
