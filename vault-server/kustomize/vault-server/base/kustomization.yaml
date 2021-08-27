@@ -42,4 +42,4 @@ kind: Kustomization
 images:
 - name: vault-server
   newName: ghcr.io/trustbloc-cicd/vault-server
-  newTag: 0.1.7-snapshot-5b3b912
+  newTag: 0.1.7-snapshot-cea6bb9
