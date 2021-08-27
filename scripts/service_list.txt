@@ -37,3 +37,4 @@ vault-server
 verifier-vcs
 wallet-support
 wallet
+static-file-server

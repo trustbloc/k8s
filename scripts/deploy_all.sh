@@ -102,9 +102,20 @@ healthCheck() {
 	done
 }
 
+## generate certificate for all components, skip if already exists
+if ! [[ -d ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs ]]; then
+pushd dbs
+    make generate-test-certs
+    mkdir -p ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs
+    mv kustomize/dbs/overlays/${DEPLOYMENT_ENV}/certs ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/
+    mkdir -p kustomize/dbs/overlays/${DEPLOYMENT_ENV}/certs
+    cp ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs/* kustomize/dbs/overlays/${DEPLOYMENT_ENV}/certs
+popd
+fi
+
 ## deploy the DBs dependency first
 pushd dbs
-    make
+    make deploy
 popd
 ### TODO: set up proper mysql, couchDB healthchecks
 echo wait for DBs to start up
@@ -115,15 +126,6 @@ done
 # checkMYSQLDB rpadapter_hydra
 # checkMYSQLDB authresthydra
 # checkMYSQLDB edgeagent_aries
-
-## generate certificate for all components, skip if already exists
-if ! [[ -d ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs ]]; then
-pushd edv
-    make generate-test-certs
-    mkdir -p ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs
-    mv kustomize/edv/overlays/${DEPLOYMENT_ENV}/certs ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/
-popd
-fi
 
 for component in ${DEPLOY_LIST[@]}; do
     echo "${AQUA} === component: $component ${NONE}"
