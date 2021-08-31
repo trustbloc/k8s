@@ -53,4 +53,4 @@ kind: Kustomization
 images:
 - name: rp-adapter
   newName: ghcr.io/trustbloc-cicd/rp-adapter
-  newTag: 0.1.7-snapshot-0357611
+  newTag: 0.1.7-snapshot-92f916a
