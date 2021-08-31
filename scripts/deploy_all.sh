@@ -108,10 +108,12 @@ pushd dbs
     make generate-test-certs
     mkdir -p ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs
     mv kustomize/dbs/overlays/${DEPLOYMENT_ENV}/certs ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/
-    mkdir -p kustomize/dbs/overlays/${DEPLOYMENT_ENV}/certs
-    cp ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs/* kustomize/dbs/overlays/${DEPLOYMENT_ENV}/certs
 popd
 fi
+
+# ensure dbs have up-to-date keys
+rm -rf dbs/kustomize/dbs/overlays/${DEPLOYMENT_ENV}/certs
+cp -r ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs dbs/kustomize/dbs/overlays/${DEPLOYMENT_ENV}/certs
 
 ## deploy the DBs dependency first
 pushd dbs

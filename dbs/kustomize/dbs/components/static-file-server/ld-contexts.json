@@ -1,6 +1,49 @@
 {
   "documents": [
     {
+      "url": "https://trustbloc.github.io/context/vc/authorization-credential-v1.jsonld",
+      "content": {
+        "@context":{
+          "@version":1.1,
+          "@protected":true,
+          "name":"http://schema.org/name",
+          "ex":"https://example.org/examples#",
+          "xsd":"http://www.w3.org/2001/XMLSchema#",
+
+          "AuthorizationCredential":"ex:AuthorizationCredential",
+          "DIDDoc":{
+            "@id":"ex:DIDDoc",
+            "@context":{
+              "@version":1.1,
+              "@protected":true,
+              "id":"@id",
+              "type":"@type",
+              "doc":{
+                "@id":"ex:doc",
+                "@type":"@json"
+              }
+            }
+          },
+          "subjectDIDDoc":{
+            "@id":"ex:subjectDIDDoc",
+            "@type":"DIDDoc"
+          },
+          "issuerDIDDoc":{
+            "@id":"ex:issuerDIDDoc",
+            "@type":"DIDDoc"
+          },
+          "requestingPartyDIDDoc":{
+            "@id":"ex:requestingPartyDIDDoc",
+            "@type":"DIDDoc"
+          },
+          "subjectDID":{
+            "@id":"ex:subjectDID",
+            "@type":"xsd:string"
+          }
+        }
+      }
+    },
+    {
       "url": "https://w3id.org/citizenship/v1",
       "documentURL": "https://w3c-ccg.github.io/citizenship-vocab/contexts/citizenship-v1.jsonld",
       "content": {
