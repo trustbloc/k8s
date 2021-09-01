@@ -47,4 +47,4 @@ kind: Kustomization
 images:
 - name: wallet-server
   newName: ghcr.io/trustbloc-cicd/wallet-server
-  newTag: v0.1.7-snapshot-db25185
+  newTag: v0.1.7-snapshot-7cb61aa
