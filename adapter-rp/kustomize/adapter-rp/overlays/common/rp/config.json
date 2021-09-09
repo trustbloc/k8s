@@ -35,7 +35,7 @@
     "purpose": "Verify your identity.",
     "schema": [
       {
-        "uri": "https://trustbloc.github.io/context/vc/examples/mdl-v1.jsonld#mDL"
+        "uri": "https://example.org/examples#mDL"
       }
     ]
   },
