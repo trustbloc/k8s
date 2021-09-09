@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-WALLET_SERVER_IMG			?= ghcr.io/trustbloc-cicd/wallet-server:v0.1.7-snapshot-715530e
+WALLET_SERVER_IMG			?= ghcr.io/trustbloc-cicd/wallet-server:v0.1.7-snapshot-8cbc8b9
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/wallet-server
