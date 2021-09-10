@@ -32,7 +32,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.3-snapshot-3dd15f3
+ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.3-snapshot-f9e6008
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/orb
