@@ -29,14 +29,31 @@ replicas:
 - count: 1
   name: trillian-log-signer
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
+replacements:
+- source:
+    kind: Service
+    name: vct
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.hosts.0
+    - spec.rules.0.host
+    options:
+      delimiter: .
+    select:
+      kind: Ingress
+      name: vct
+- source:
     kind: Secret
-    name: vct-wildcard-cert-1
+    name: vct-wildcard-cert
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: vct
+
 
 configMapGenerator:
 - behavior: merge
@@ -51,7 +68,7 @@ secretGenerator:
 - files:
   - certs/tls.crt
   - certs/tls.key
-  name: vct-wildcard-cert-1
+  name: vct-wildcard-cert
   type: kubernetes.io/tls
 
 resources:

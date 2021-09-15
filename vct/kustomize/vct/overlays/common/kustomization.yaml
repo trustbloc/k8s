@@ -20,15 +20,6 @@ commonLabels:
   group: core
   project: trustbloc
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: vct
-
 configMapGenerator:
 - behavior: merge
   envs:
