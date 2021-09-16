@@ -48,5 +48,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: hub-auth
-  newName: ghcr.io/trustbloc-cicd/hub-auth
-  newTag: 0.1.7-snapshot-9c0f0cd
+  newName: ghcr.io/trustbloc/hub-auth
+  newTag: 0.1.7

@@ -40,5 +40,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: did-resolver
-  newName: ghcr.io/trustbloc-cicd/did-resolver
-  newTag: 0.1.7-snapshot-cea6bb9
+  newName: ghcr.io/trustbloc/did-resolver
+  newTag: 0.1.7
