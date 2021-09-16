@@ -33,5 +33,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: kms
-  newName: ghcr.io/trustbloc-cicd/kms
-  newTag: 0.1.7-snapshot-4dafa05
+  newName: ghcr.io/trustbloc/kms
+  newTag: 0.1.7
