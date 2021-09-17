@@ -57,5 +57,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: hub-router
-  newName: ghcr.io/trustbloc-cicd/hub-router
-  newTag: 0.1.7-snapshot-5ed617f
+  newName: ghcr.io/trustbloc/hub-router
+  newTag: 0.1.7
