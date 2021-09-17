@@ -119,12 +119,11 @@ cp -r ~/.trustbloc-k8s/${DEPLOYMENT_ENV}/certs dbs/kustomize/dbs/overlays/${DEPL
 pushd dbs
     make deploy
 popd
-### TODO: set up proper mysql, couchDB healthchecks
+### TODO: set up proper MySQL, PostgreSQL, MongoDB, and IPFS healthchecks
 echo wait for DBs to start up
 while [[ `kubectl get po | grep Running |wc -l` -lt 2 ]]; do
     sleep 1
 done
-# healthCheck couchdb $couchdbHealthCheckURL 200
 # checkMYSQLDB rpadapter_hydra
 # checkMYSQLDB authresthydra
 # checkMYSQLDB edgeagent_aries

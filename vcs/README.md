@@ -22,8 +22,8 @@
 	- `verifier-vcs.DOMAIN`
 	- `holder-vcs.DOMAIN`
 	- `governance-vcs.DOMAIN`
-* Will deploy Sandbox VCS, pointing to an already provisioned COUCHDB specified with `COUCHDB_URL`
-	- `make deploy COUCHDB_URL=cdbadmin:secret@couchdb:5984`
+* Will deploy Sandbox VCS, pointing to an already provisioned MONGODB specified with `MONGODB_URL`
+	- `make deploy MONGODB_URL=mongodb://mongoroot:secret@mongodb:27017`
 * if running `podman` pass `CONTAINER_CMD=podman` as option to make
 * Running with none self-signed certificates: place certs into kustomize/vcs/overlays/sandbox/certs, then run with: `make setup-no-certs`.
 >files:

@@ -20,7 +20,6 @@ ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
 MYSQL_IMG		?= docker.io/mysql:8.0.20
-COUCH_IMG		?= docker.io/couchdb:3.1
 POSTGRES_IMG		?= docker.io/postgres:13
 MONGODB_IMG		?= docker.io/mongo:4.0
 STATIC_FILE_SERVER ?= halverneus/static-file-server:v1.8.4
@@ -73,13 +72,7 @@ set-labels: kustomize
 
 .PHONY: set-images
 set-images: kustomize
-	@pushd ${KUSTOMIZE_DIR}/components/couch &&\
-	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
-    popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/couch-orb-kms &&\
-	${KUSTOMIZE} edit set image couchdb=${COUCH_IMG} &&\
-    popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/postgres &&\
+	@pushd ${KUSTOMIZE_DIR}/components/postgres &&\
 	${KUSTOMIZE} edit set image postgres=${POSTGRES_IMG} &&\
     popd &&\
 	pushd ${KUSTOMIZE_DIR}/components/mysql &&\
@@ -110,8 +103,6 @@ set-images: kustomize
 
 .PHONY: deploy-dbs
 deploy-dbs: prechecks kustomize kubectl
-	@docker pull $(COUCH_IMG)
-	@minikube image load $(COUCH_IMG)
 	@docker pull $(MYSQL_IMG)
 	@minikube image load $(MYSQL_IMG)
 	@docker pull $(POSTGRES_IMG)

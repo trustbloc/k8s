@@ -14,7 +14,7 @@ export DEPLOYMENT_ENV	?= local
 # space delimited of Key:Value pairs
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
-export AUTH_MYSQL_URL								?= authrest:authrest-secret-pw@tcp(mysql:3306)/
+export AUTH_MONGODB_URL								?= mongodb://mongoroot:secret@mongodb:27017
 export HYDRA_MYSQL_DSN								?= mysql://authresthydra:authresthydra-secret-pw@tcp(mysql:3306)/authresthydra?max_conns=20&max_idle_conns=4
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')

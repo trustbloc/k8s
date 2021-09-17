@@ -18,8 +18,8 @@
 * By default dns domain is `local.trustboc.dev`. To run with different domain (See next), run with: `make DOMAIN=ali.trustbloc.dev`
 * Will create an Ingress for external access. When running with unregistered dns domains, create records (/etc/hosts) for:
 	- `csh.DOMAIN`
-* Will deploy Sandbox CSH, pointing to an already provisioned COUCHDB specified with `COUCHDB_DSN`
-	- `make deploy COUCHDB_DSN=couchdb://cdbadmin:secret@couchdb:5984`
+* Will deploy Sandbox CSH, pointing to an already provisioned MONGODB specified with `MONGODB_DSN`
+	- `make deploy MONGODB_DSN=mongodb://mongoroot:secret@mongodb:27017`
 * if running `podman` pass `CONTAINER_CMD=podman` as option to make
 * Running with none self-signed certificates: place certs into kustomize/csh/overlays/sandbox/certs, then run with: `make setup-no-certs`.
 >files:
