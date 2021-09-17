@@ -46,5 +46,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: wallet-web
-  newName: ghcr.io/trustbloc/wallet-web
-  newTag: v0.1.7
+  newName: ghcr.io/trustbloc-cicd/wallet-web
+  newTag: v0.1.8-snapshot-7d412e8b
