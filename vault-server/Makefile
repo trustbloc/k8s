@@ -15,7 +15,7 @@ export DEPLOYMENT_ENV	?= local
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN		?= orb-1.${DOMAIN}
-export COUCHDB_DSN								?= couchdb://cdbadmin:secret@couchdb:5984
+export MONGODB_DSN								?= mongodb://mongoroot:secret@mongodb:27017
 export VAULT_REQUEST_TOKENS ?= sidetreeToken=ADMIN_TOKEN
 
 
@@ -24,7 +24,6 @@ ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
 VAULT_SERVER_IMG				?= ghcr.io/trustbloc/vault-server:0.1.7
-COUCHDB_IMG			?= docker.io/library/couchdb:3.1
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/vault-server

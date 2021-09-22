@@ -18,10 +18,10 @@
 * Will create an Ingress for external access. When running with unregistered dns domains, create records (/etc/hosts) for:
 	- `edv.DOMAIN`
 	- `edv-oathkeeper-proxy.DOMAIN`
-*  CouchDB single instance.
+*  MongoDB single instance.
 * if running `podman` pass `CONTAINER_CMD=podman` as option to make
-* Will deploy Sandbox EDV with [oathkeeper](https://github.com/ory/oathkeeper) pointing to an existing CouchDB:
-	- `make deploy-sandbox COUCHDB_URL=user:pass@couchdb-address:port`
+* Will deploy Sandbox EDV with [oathkeeper](https://github.com/ory/oathkeeper) pointing to an existing MongoDB:
+	- `make deploy-sandbox MONGODB_URL=mongodb://user:pass@mongodb-address:27017`
 * Running with none self-signed certificates: place certs into kustomize/edv/overlays/sandbox/certs, then run with: `make setup-no-certs`.
 >files:
 	- ca.crt

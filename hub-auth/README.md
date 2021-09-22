@@ -20,8 +20,8 @@
 	- `hub-auth.DOMAIN`
 	- `hub-hydra.DOMAIN`
 	- `hub-hydra-admin.DOMAIN`
-* Will deploy Sandbox HUB-AUTH with [Hydra](https://github.com/ory/hydra), pointing to an already provisioned MySQL specified with `AUTH_MYSQL_URL` and `HYDRA_MYSQL_DSN`
-	- `make deploy AUTH_MYSQL_URL=user:pass@@tcp(address:3306) HYDRA_MYSQL_DSN=mysql://user:pass@@tcp(address:3306)`
+* Will deploy Sandbox HUB-AUTH with [Hydra](https://github.com/ory/hydra), pointing to an already provisioned MySQL specified with `AUTH_MONGODB_URL` and `HYDRA_MYSQL_DSN`
+	- `make deploy AUTH_MONGODB_URL=mongodb://user:pass@mongodb-address:27017 HYDRA_MYSQL_DSN=mysql://user:pass@@tcp(address:3306)`
 * if running `podman` pass `CONTAINER_CMD=podman` as option to make
 * Running with none self-signed certificates: place certs into kustomize/hub-auth/overlays/sandbox/certs, then run with: `make setup-no-certs`.
 >files:

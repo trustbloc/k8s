@@ -15,7 +15,7 @@ export DEPLOYMENT_ENV	?= local
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN		?= orb-1.${DOMAIN}
-export COUCHDB_URL								?= cdbadmin:secret@couchdb:5984
+export MONGODB_URL								?= mongodb://mongoroot:secret@mongodb:27017
 export VC_REST_REQUEST_TOKENS ?=sidetreeToken=ADMIN_TOKEN
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
