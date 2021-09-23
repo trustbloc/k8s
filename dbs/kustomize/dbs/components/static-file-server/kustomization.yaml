@@ -14,6 +14,7 @@ configMapGenerator:
   name: static-file-server-env
 - files:
   - ld-contexts.json
+  - orb-ld-contexts.json
   name: static-file-server-data
 
 vars:
