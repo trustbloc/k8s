@@ -14,4 +14,4 @@
 * `make clean`
 
 ## options and features
-* Will deploy MongoDB, MySQL, PostgreSQL, IPFS, and static-file-server.
+* Will deploy MongoDB, PostgreSQL, IPFS, and static-file-server.

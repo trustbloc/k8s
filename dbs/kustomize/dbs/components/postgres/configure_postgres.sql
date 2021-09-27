@@ -6,3 +6,9 @@ SPDX-License-Identifier: Apache-2.0
 
 CREATE USER orbvct with encrypted password 'orbvct-secret-pw';
 CREATE DATABASE orbvct;
+
+CREATE USER authresthydra with encrypted password 'authresthydra-secret-pw';
+CREATE DATABASE authresthydra;
+
+CREATE USER rpadapterhydra with encrypted password 'rpadapterhydra-secret-pw';
+CREATE DATABASE rpadapterhydra;

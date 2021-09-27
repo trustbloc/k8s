@@ -19,7 +19,6 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-MYSQL_IMG		?= docker.io/mysql:8.0.20
 POSTGRES_IMG		?= docker.io/postgres:13
 MONGODB_IMG		?= docker.io/mongo:4.0
 STATIC_FILE_SERVER ?= halverneus/static-file-server:v1.8.4
@@ -75,9 +74,6 @@ set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/components/postgres &&\
 	${KUSTOMIZE} edit set image postgres=${POSTGRES_IMG} &&\
     popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/mysql &&\
-	${KUSTOMIZE} edit set image mysql=${MYSQL_IMG} &&\
-    popd &&\
 	pushd ${KUSTOMIZE_DIR}/components/mongodb &&\
 	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
     popd &&\
@@ -103,8 +99,6 @@ set-images: kustomize
 
 .PHONY: deploy-dbs
 deploy-dbs: prechecks kustomize kubectl
-	@docker pull $(MYSQL_IMG)
-	@minikube image load $(MYSQL_IMG)
 	@docker pull $(POSTGRES_IMG)
 	@minikube image load $(POSTGRES_IMG)
 	@docker pull $(MONGODB_IMG)

@@ -27,7 +27,6 @@ components:
 - ../../components/mongodb-orb-3
 - ../../components/mongodb-orb-4
 - ../../components/mongodb-orb-kms
-- ../../components/mysql
 - ../../components/postgres
 - ../../components/ipfs
 - ../../components/static-file-server
