@@ -21,8 +21,8 @@
 	- `adapter-rp-didcomm.DOMAIN`
 	- `adapter-hydra.DOMAIN`
 	- `adapter-hydra-admin.DOMAIN`
-* Will deploy Sandbox adapters with [Hydra](https://github.com/ory/hydra), pointing to an already provisioned MySQL specified with `HYDRA_MYSQL_DSN`, `ISSUER_ADAPTER_REST_DSN`, and `RP_ADAPTER_REST_DSN`:
-	- `make deploy HYDRA_MYSQL_DSN=mysql://user:pass@@tcp(address:3306)`
+* Will deploy Sandbox adapters with [Hydra](https://github.com/ory/hydra), pointing to an already provisioned PostgreSQL specified with `HYDRA_POSTGRES_DSN`, `ISSUER_ADAPTER_REST_DSN`, and `RP_ADAPTER_REST_DSN`:
+	- `make deploy HYDRA_POSTGRES_DSN=postgres://user:pass@host:5432/rpadapterhydra`
 * if running `podman` pass `CONTAINER_CMD=podman` as option to make
 * Running with none self-signed certificates: place certs into kustomize/adapters/overlays/sandbox/certs, then run with: `make setup-no-certs`.
 >files:
