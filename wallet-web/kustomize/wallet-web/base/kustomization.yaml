@@ -14,16 +14,6 @@
 
 generatorOptions: {}
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: WEB_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: wallet
-
-
 configMapGenerator:
 - envs:
   - config.env

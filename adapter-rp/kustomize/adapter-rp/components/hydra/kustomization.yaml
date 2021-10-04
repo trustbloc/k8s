@@ -11,22 +11,6 @@ images:
   newName: oryd/hydra
   newTag: v1.3.2-alpine
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: HYDRA_PUBLIC_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: hydra
-- fieldref:
-    fieldPath: metadata.name
-  name: HYDRA_ADMIN_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: hydra-admin
-
 secretGenerator:
 - envs:
   - hydra-secret.env

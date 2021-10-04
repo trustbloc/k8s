@@ -14,15 +14,6 @@
 
 generatorOptions: {}
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: DID_RESOLVER_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: did-resolver
-
 configMapGenerator:
 - envs:
   - config.env

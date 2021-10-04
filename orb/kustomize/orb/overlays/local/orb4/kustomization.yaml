@@ -21,15 +21,6 @@ commonLabels:
   instance: local
   project: trustbloc
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
-    kind: Secret
-    name: orb-wildcard-cert-4
-
 replicas:
 - count: 1
   name: orb-4
@@ -40,6 +31,36 @@ secretGenerator:
   - ../certs/tls.key
   name: orb-wildcard-cert-4
   type: kubernetes.io/tls
+
+replacements:
+- source:
+    kind: Service
+    name: orb-4
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.hosts.0
+    - spec.rules.0.host
+    options:
+      delimiter: .
+    select:
+      kind: Ingress
+      name: orb-4
+  - fieldPaths:
+    - spec.rules.0.http.paths.0.backend.service.name
+    select:
+      kind: Ingress
+      name: orb-4
+- source:
+    kind: Secret
+    name: orb-wildcard-cert-4
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: orb-4
 
 resources:
 - ../../common/orb4

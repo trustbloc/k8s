@@ -29,14 +29,18 @@ transformers:
 - sedtransform.yml
 - sedb64transform.yml
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: OPS_INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
+replacements:
+- path: oathkeeper/replacements.yml
+- source:
     kind: Secret
     name: ops-kms-wildcard-cert
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: ops-oathkeeper-proxy
 
 replicas:
 - count: 1

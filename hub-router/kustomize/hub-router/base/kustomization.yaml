@@ -14,30 +14,6 @@
 
 generatorOptions: {}
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: ROUTER_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: router
-- fieldref:
-    fieldPath: metadata.name
-  name: ROUTER_WS_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: router-ws
-- fieldref:
-    fieldPath: metadata.name
-  name: ROUTER_API_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: router-api
-
-
 configMapGenerator:
 - envs:
   - config.env

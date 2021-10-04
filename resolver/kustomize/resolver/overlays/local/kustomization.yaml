@@ -22,6 +22,25 @@ commonLabels:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+replacements:
+- path: resolver/replacements.yml
+- path: uni-resolver-web/replacements.yml
+- source:
+    kind: Secret
+    name: resolver-wildcard-cert
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: did-resolver
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: uni-resolver-web
+
 resources:
 - ../common
 - resolver/ingress.yml
@@ -29,15 +48,6 @@ resources:
 
 transformers:
 - sedtransform.yml
-
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
-    kind: Secret
-    name: resolver-wildcard-cert
 
 secretGenerator:
 - files:

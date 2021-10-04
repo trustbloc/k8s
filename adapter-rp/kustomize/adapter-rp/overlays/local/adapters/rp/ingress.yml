@@ -14,17 +14,17 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(RP_ADAPTER_SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+      - RP_ADAPTER_SERVICE_NAME.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
   rules:
-  - host: $(RP_ADAPTER_SERVICE_NAME).||DOMAIN||
+  - host: RP_ADAPTER_SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: adapter-rp
+            name: RP_ADAPTER_SERVICE_NAME
             port:
               name: http
 ---
@@ -37,16 +37,16 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(RP_ADAPTER_DIDCOMM_SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+      - RP_ADAPTER_DIDCOMM_SERVICE_NAME.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
   rules:
-  - host: $(RP_ADAPTER_DIDCOMM_SERVICE_NAME).||DOMAIN||
+  - host: RP_ADAPTER_DIDCOMM_SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: adapter-rp-didcomm
+            name: RP_ADAPTER_DIDCOMM_SERVICE_NAME
             port:
               name: http

@@ -28,15 +28,6 @@ transformers:
 - sedtransform.yml
 - sedb64transform.yml
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: kms
-
 secretGenerator:
 - behavior: merge
   envs:

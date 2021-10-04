@@ -12,16 +12,16 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(STATIC_FILE_SERVER_SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+      - STATIC_FILE_SERVER_SERVICE_NAME.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
   rules:
-  - host: $(STATIC_FILE_SERVER_SERVICE_NAME).||DOMAIN||
+  - host: STATIC_FILE_SERVER_SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: static-file-server
+            name: STATIC_FILE_SERVER_SERVICE_NAME
             port:
-              number: 80
+              name: http

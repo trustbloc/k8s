@@ -14,23 +14,6 @@
 
 generatorOptions: {}
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: RP_ADAPTER_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: rp
-- fieldref:
-    fieldPath: metadata.name
-  name: RP_ADAPTER_DIDCOMM_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: rp-didcomm
-
-
 configMapGenerator:
 - envs:
   - rp/config.env

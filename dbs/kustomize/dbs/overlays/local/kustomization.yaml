@@ -26,14 +26,35 @@ resources:
 - ../common
 - static-file-server/ingress.yml
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
+replacements:
+- source:
+    kind: Service
+    name: static-file-server
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.hosts.0
+    - spec.rules.0.host
+    options:
+      delimiter: .
+    select:
+      kind: Ingress
+      name: static-file-server
+  - fieldPaths:
+    - spec.rules.0.http.paths.0.backend.service.name
+    select:
+      kind: Ingress
+      name: static-file-server
+- source:
     kind: Secret
     name: static-file-server-wildcard-cert
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: static-file-server
 
 secretGenerator:
 - files:

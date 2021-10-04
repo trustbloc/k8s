@@ -14,17 +14,17 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(ISSUER_ADAPTER_SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+      - ISSUER_ADAPTER_SERVICE_NAME.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
   rules:
-  - host: $(ISSUER_ADAPTER_SERVICE_NAME).||DOMAIN||
+  - host: ISSUER_ADAPTER_SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: adapter-issuer
+            name: ISSUER_ADAPTER_SERVICE_NAME
             port:
               name: http
 ---
@@ -37,16 +37,16 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(ISSUER_ADAPTER_DIDCOMM_SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+      - ISSUER_ADAPTER_DIDCOMM_SERVICE_NAME.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
   rules:
-  - host: $(ISSUER_ADAPTER_DIDCOMM_SERVICE_NAME).||DOMAIN||
+  - host: ISSUER_ADAPTER_DIDCOMM_SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: adapter-issuer-didcomm
+            name: ISSUER_ADAPTER_DIDCOMM_SERVICE_NAME
             port:
               name: http

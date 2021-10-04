@@ -23,14 +23,24 @@ commonLabels:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
+replacements:
+- path: edv/replacements.yml
+- path: oathkeeper/replacements.yml
+- source:
     kind: Secret
     name: edv-wildcard-cert
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: edv
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: edv-oathkeeper-proxy
 
 replicas:
 - count: 1

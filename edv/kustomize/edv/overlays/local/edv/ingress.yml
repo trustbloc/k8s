@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -12,16 +12,16 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(EDV_SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+      - EDV_SERVICE_NAME.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
   rules:
-  - host: $(EDV_SERVICE_NAME).||DOMAIN||
+  - host: EDV_SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: edv
+            name: EDV_SERVICE_NAME
             port:
-              number: 80
+              name: http

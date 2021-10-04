@@ -21,21 +21,42 @@ commonLabels:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
-    kind: Secret
-    name: wallet-wildcard-cert
-
 secretGenerator:
 - files:
   - certs/tls.crt
   - certs/tls.key
   name: wallet-wildcard-cert
   type: kubernetes.io/tls
+
+replacements:
+- source:
+    kind: Service
+    name: wallet
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.hosts.0
+    - spec.rules.0.host
+    options:
+      delimiter: .
+    select:
+      kind: Ingress
+      name: wallet-web
+  - fieldPaths:
+    - spec.rules.0.http.paths.0.backend.service.name
+    select:
+      kind: Ingress
+      name: wallet-web
+- source:
+    kind: Secret
+    name: wallet-wildcard-cert
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: wallet-web
 
 resources:
 - ../common

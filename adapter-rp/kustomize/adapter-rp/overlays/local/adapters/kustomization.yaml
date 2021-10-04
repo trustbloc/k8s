@@ -22,14 +22,36 @@ commonLabels:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
+replacements:
+- path: hydra/replacements.yml
+- path: hydra-admin/replacements.yml
+- path: rp/replacements/adapter-rp.yml
+- path: rp/replacements/adapter-rp-didcomm.yml
+- source:
     kind: Secret
     name: adapters-wildcard-cert
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: adapter-rp
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: adapter-rp-didcomm
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: adapter-hydra
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: adapter-hydra-admin
 
 secretGenerator:
 - files:
@@ -52,6 +74,7 @@ resources:
 - ../../common
 - rp/ingress.yml
 - hydra/ingress.yml
+- hydra-admin/ingress.yml
 
 transformers:
 - sedtransform.yml
