@@ -14,16 +14,16 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(VAULT_SERVICE_NAME).||DOMAIN||
-    secretName: $(VAULT_INGRESS_TLS_SECRET)
+      - VAULT_SERVICE_NAME.||DOMAIN||
+    secretName: VAULT_INGRESS_TLS_SECRET
   rules:
-  - host: $(VAULT_SERVICE_NAME).||DOMAIN||
+  - host: VAULT_SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: vault-kms
+            name: VAULT_SERVICE_NAME
             port:
               name: http

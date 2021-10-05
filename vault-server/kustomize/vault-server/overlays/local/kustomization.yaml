@@ -21,6 +21,36 @@ commonLabels:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+replacements:
+- source:
+    kind: Service
+    name: vault-server
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.hosts.0
+    - spec.rules.0.host
+    options:
+      delimiter: .
+    select:
+      kind: Ingress
+      name: vault-server
+  - fieldPaths:
+    - spec.rules.0.http.paths.0.backend.service.name
+    select:
+      kind: Ingress
+      name: vault-server
+- source:
+    kind: Secret
+    name: wildcard-cert
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: vault-server
+
 resources:
 - ../common
 - vault-server/ingress.yml
@@ -28,15 +58,6 @@ resources:
 transformers:
 - sedtransform.yml
 - sedb64transform.yml
-
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
-    kind: Secret
-    name: wildcard-cert
 
 secretGenerator:
 - files:

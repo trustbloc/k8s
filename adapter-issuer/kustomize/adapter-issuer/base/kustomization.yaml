@@ -14,23 +14,6 @@
 
 generatorOptions: {}
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: ISSUER_ADAPTER_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: issuer
-- fieldref:
-    fieldPath: metadata.name
-  name: ISSUER_ADAPTER_DIDCOMM_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: issuer-didcomm
-
-
 configMapGenerator:
 - envs:
   - config.env

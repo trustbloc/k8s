@@ -14,16 +14,16 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(CSH_SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+      - CSH_SERVICE_NAME.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
   rules:
-  - host: $(CSH_SERVICE_NAME).||DOMAIN||
+  - host: CSH_SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: csh
+            name: CSH_SERVICE_NAME
             port:
               name: http

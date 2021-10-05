@@ -28,15 +28,6 @@ resources:
 - deployment.yml
 - service.yml
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: vault-server
-
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:

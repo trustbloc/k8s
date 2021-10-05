@@ -10,15 +10,6 @@ kind: Kustomization
 commonLabels:
   component: verifier-vcs
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: VERIFIER_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: vcs
-
 configMapGenerator:
 - envs:
   - config.env

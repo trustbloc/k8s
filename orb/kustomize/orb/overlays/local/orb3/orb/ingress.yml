@@ -12,16 +12,16 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+      - SERVICE_NAME.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
   rules:
-  - host: $(SERVICE_NAME).||DOMAIN||
+  - host: SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: orb-3
+            name: SERVICE_NAME
             port:
               name: http

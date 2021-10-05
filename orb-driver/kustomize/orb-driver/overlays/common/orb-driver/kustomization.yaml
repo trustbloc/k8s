@@ -26,15 +26,6 @@ configMapGenerator:
   - config.env
   name: orb-driver-env
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: orb-driver
-
 resources:
 - ../../../base
 

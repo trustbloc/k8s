@@ -21,15 +21,6 @@ commonLabels:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: INGRESS_TLS_SECRET
-  objref:
-    apiVersion: v1
-    kind: Secret
-    name: vcs-wildcard-cert
-
 configMapGenerator:
 - behavior: merge
   envs:
@@ -58,6 +49,37 @@ secretGenerator:
   - ../certs/tls.key
   name: vcs-wildcard-cert
   type: kubernetes.io/tls
+
+replacements:
+- path: issuer/replacements.yml
+- path: verifier/replacements.yml
+- path: holder/replacements.yml
+- path: governance/replacements.yml
+- source:
+    kind: Secret
+    name: vcs-wildcard-cert
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: issuer-vcs
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: verifier-vcs
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: holder-vcs
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: governance-vcs
 
 resources:
 - ../../common

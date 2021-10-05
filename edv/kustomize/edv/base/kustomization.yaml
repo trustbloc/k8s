@@ -14,15 +14,6 @@
 
 generatorOptions: {}
 
-vars:
-- fieldref:
-    fieldPath: metadata.name
-  name: EDV_SERVICE_NAME
-  objref:
-    apiVersion: v1
-    kind: Service
-    name: edv
-
 configMapGenerator:
 - envs:
   - config.env

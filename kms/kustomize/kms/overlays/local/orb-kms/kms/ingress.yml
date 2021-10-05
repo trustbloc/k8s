@@ -14,16 +14,16 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(ORB_SERVICE_NAME).||DOMAIN||
-    secretName: $(ORB_INGRESS_TLS_SECRET)
+      - ORB_SERVICE_NAME.||DOMAIN||
+    secretName: ORB_INGRESS_TLS_SECRET
   rules:
-  - host: $(ORB_SERVICE_NAME).||DOMAIN||
+  - host: ORB_SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: orb-kms
+            name: ORB_SERVICE_NAME
             port:
               name: http

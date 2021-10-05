@@ -14,39 +14,16 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(HYDRA_PUBLIC_SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+      - HYDRA_PUBLIC_SERVICE_NAME.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
   rules:
-  - host: $(HYDRA_PUBLIC_SERVICE_NAME).||DOMAIN||
+  - host: HYDRA_PUBLIC_SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: adapter-hydra
-            port:
-              name: http
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: adapter-hydra-admin
-  labels:
-    app: hydra
-spec:
-  tls:
-  - hosts:
-      - $(HYDRA_ADMIN_SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
-  rules:
-  - host: $(HYDRA_ADMIN_SERVICE_NAME).||DOMAIN||
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: adapter-hydra-admin
+            name: HYDRA_PUBLIC_SERVICE_NAME
             port:
               name: http

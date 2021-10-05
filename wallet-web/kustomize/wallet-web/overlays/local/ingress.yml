@@ -14,16 +14,16 @@ metadata:
 spec:
   tls:
   - hosts:
-      - $(WEB_SERVICE_NAME).||DOMAIN||
-    secretName: $(INGRESS_TLS_SECRET)
+      - WEB_SERVICE_NAME.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
   rules:
-  - host: $(WEB_SERVICE_NAME).||DOMAIN||
+  - host: WEB_SERVICE_NAME.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: wallet
+            name: WEB_SERVICE_NAME
             port:
               name: http
