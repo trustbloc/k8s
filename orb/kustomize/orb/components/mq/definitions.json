@@ -1,0 +1,102 @@
+{
+  "bindings": [],
+  "exchanges": [],
+  "global_parameters": [],
+  "parameters": [],
+  "permissions": [
+    {
+      "configure": ".*",
+      "read": ".*",
+      "user": "admin",
+      "vhost": "/",
+      "write": ".*"
+    },
+    {
+      "configure": ".*",
+      "read": ".*",
+      "user": "admin",
+      "vhost": "orb1",
+      "write": ".*"
+    },
+    {
+      "configure": ".*",
+      "read": ".*",
+      "user": "admin",
+      "vhost": "orb2",
+      "write": ".*"
+    },
+    {
+      "configure": ".*",
+      "read": ".*",
+      "user": "admin",
+      "vhost": "orb3",
+      "write": ".*"
+    },
+    {
+      "configure": ".*",
+      "read": ".*",
+      "user": "admin",
+      "vhost": "orb4",
+      "write": ".*"
+    }
+
+  ],
+  "policies": [],
+  "queues": [],
+  "rabbit_version": "3.9.7",
+  "rabbitmq_version": "3.9.7",
+  "topic_permissions": [],
+  "users": [
+    {
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "limits": {},
+      "name": "admin",
+      "password_hash": "glG1NKrNV700Wa0xyNQ3vHOVc54QZwgB3VokQbCKqwgtY+/d",
+      "tags": [
+        "administrator"
+      ]
+    }
+  ],
+  "vhosts": [
+    {
+      "limits": [],
+      "metadata": {
+        "description": "Default virtual host",
+        "tags": []
+      },
+      "name": "/"
+    },
+    {
+      "limits": [],
+      "metadata": {
+        "description": "virtual host 1",
+        "tags": []
+      },
+      "name": "orb1"
+    },
+    {
+      "limits": [],
+      "metadata": {
+        "description": "virtual host 2",
+        "tags": []
+      },
+      "name": "orb2"
+    },
+    {
+      "limits": [],
+      "metadata": {
+        "description": "virtual host 3",
+        "tags": []
+      },
+      "name": "orb3"
+    },
+    {
+      "limits": [],
+      "metadata": {
+        "description": "virtual host 4",
+        "tags": []
+      },
+      "name": "orb4"
+    }
+  ]
+}

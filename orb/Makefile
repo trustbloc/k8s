@@ -15,17 +15,11 @@ export DEPLOYMENT_ENV	?= local
 COMMON_LABELS		            := instance:${DEPLOYMENT_ENV}
 export DOMAIN      		        ?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN      		?= orb-1.${DOMAIN}
-export ORB_1_MONGODB_URL				?= mongodb://mongoroot:secret@mongodb-orb-1:27017
-export ORB_2_MONGODB_URL				?= mongodb://mongoroot:secret@mongodb-orb-2:27017
-export ORB_3_MONGODB_URL				?= mongodb://mongoroot:secret@mongodb-orb-3:27017
-export ORB_4_MONGODB_URL				?= mongodb://mongoroot:secret@mongodb-orb-4:27017
+export MONGODB_URL				?= mongodb://mongoroot:secret@mongodb:27017
 export ORB_AUTH_TOKENS			?= admin=ADMIN_TOKEN
 export MQ_USER					?= admin
 export MQ_PASSWORD				?= password
-export MQ_URL_1						?= amqp://admin:password@mq-1:5672/
-export MQ_URL_2						?= amqp://admin:password@mq-2:5672/
-export MQ_URL_3						?= amqp://admin:password@mq-3:5672/
-export MQ_URL_4						?= amqp://admin:password@mq-4:5672/
+export MQ_BASE_URL						?= amqp://admin:password@mq:5672
 
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
@@ -33,6 +27,7 @@ ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
 ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.4-snapshot-9c0f557
+RABBITMQ_IMG		?= docker.io/rabbitmq:3-management-alpine
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/orb
@@ -66,7 +61,7 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
 .PHONY: deploy
-deploy: prechecks kustomize kubectl set-images set-labels deploy-orb1 deploy-orb2 deploy-orb3 deploy-orb4 deploy-orb-setup
+deploy: prechecks kustomize kubectl set-images set-labels deploy-orb
 
 .PHONY: prechecks
 prechecks:
@@ -76,29 +71,11 @@ ifeq (, $(shell stat ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} 2>/dev/null))
 endif
 
 .PHONY: set-labels
-set-labels: kustomize set-labels-orb1 set-labels-orb2 set-labels-orb3 set-labels-orb4
+set-labels: kustomize set-labels-orb
 
-.PHONY: set-labels-orb1
-set-labels-orb1: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1 &&\
-		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
-		popd
-
-.PHONY: set-labels-orb2
-set-labels-orb2: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 &&\
-		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
-		popd
-
-.PHONY: set-labels-orb3
-set-labels-orb3: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 &&\
-		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
-		popd
-
-.PHONY: set-labels-orb4
-set-labels-orb4: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb4 &&\
+.PHONY: set-labels-orb
+set-labels-orb: kustomize
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} &&\
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
@@ -106,70 +83,27 @@ set-labels-orb4: kustomize
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
 	${KUSTOMIZE} edit set image orb=${ORB_IMG} &&\
+		popd &&\
+	pushd ${KUSTOMIZE_DIR}/components/mq &&\
+	${KUSTOMIZE} edit set image rabbitmq=${RABBITMQ_IMG} &&\
 	popd
 
-.PHONY: deploy-orb1
-deploy-orb1: prechecks set-images set-labels-orb1 kustomize kubectl
+.PHONY: deploy-orb
+deploy-orb: prechecks set-images set-labels-orb kustomize kubectl
 	@docker pull $(ORB_IMG)
 	@minikube image load $(ORB_IMG)
+	@docker pull ${RABBITMQ_IMG}
+	@minikube image load ${RABBITMQ_IMG}
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1 | $(KUBECTL) apply -f -
-
-.PHONY: deploy-orb2
-deploy-orb2: prechecks set-images set-labels-orb2 kustomize kubectl
-	@docker pull $(ORB_IMG)
-	@minikube image load $(ORB_IMG)
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 | $(KUBECTL) apply -f -
-
-.PHONY: deploy-orb3
-deploy-orb3: prechecks set-images set-labels-orb3 kustomize kubectl
-	@docker pull $(ORB_IMG)
-	@minikube image load $(ORB_IMG)
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 | $(KUBECTL) apply -f -
-
-.PHONY: deploy-orb4
-deploy-orb4: prechecks set-images set-labels-orb4 kustomize kubectl
-	@docker pull $(ORB_IMG)
-	@minikube image load $(ORB_IMG)
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb4 | $(KUBECTL) apply -f -
-
-
-.PHONY: deploy-orb-setup
-deploy-orb-setup: prechecks set-images kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/setup | $(KUBECTL) apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
-undeploy: prechecks kustomize kubectl set-images set-labels undeploy-orb1 undeploy-orb2 undeploy-orb3 undeploy-orb-setup
+undeploy: prechecks kustomize kubectl set-images set-labels undeploy-orb
 
-.PHONY: undeploy-orb1
-undeploy-orb1: prechecks set-images set-labels-orb1 kustomize kubectl
+.PHONY: undeploy-orb
+undeploy-orb: prechecks set-images set-labels-orb kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb1 | kubectl delete -f -
-
-.PHONY: undeploy-orb2
-undeploy-orb2: prechecks set-images set-labels-orb2 kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb2 | kubectl delete -f -
-
-.PHONY: undeploy-orb3
-undeploy-orb3: prechecks set-images set-labels-orb3 kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb3 | kubectl delete -f -
-
-.PHONY: undeploy-orb4
-undeploy-orb4: prechecks set-images set-labels-orb4 kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/orb4 | kubectl delete -f -
-
-.PHONY: undeploy-orb-setup
-undeploy-orb-setup: prechecks set-images kustomize kubectl
-	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/setup | kubectl delete -f -
-
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | kubectl delete -f -
 
 .PHONY: kustomize
 kustomize:

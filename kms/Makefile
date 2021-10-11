@@ -16,7 +16,6 @@ COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN      		?= orb-1.${DOMAIN}
 export MONGODB_URL								?= mongodb://mongoroot:secret@mongodb:27017
-export ORB_KMS_MONGODB_URL								?= mongodb://mongoroot:secret@mongodb-orb-kms:27017
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')

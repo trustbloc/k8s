@@ -15,58 +15,39 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-commonLabels:
-  component: orb-2
-  group: core
-  instance: local
-  project: trustbloc
+nameSuffix: "-2"
 
 replicas:
 - count: 1
-  name: orb-2
+  name: orb
+
+configMapGenerator:
+- behavior: merge
+  envs:
+  - orb/config.env
+  name: orb-env
 
 secretGenerator:
 - files:
   - ../certs/tls.crt
   - ../certs/tls.key
-  name: orb-wildcard-cert-2
+  name: orb-wildcard-cert
   type: kubernetes.io/tls
+- behavior: merge
+  envs:
+  - orb/secret.env
+  name: orb-env-secret
 
 replacements:
-- source:
-    kind: Service
-    name: orb-2
-    version: v1
-  targets:
-  - fieldPaths:
-    - spec.tls.0.hosts.0
-    - spec.rules.0.host
-    options:
-      delimiter: .
-    select:
-      kind: Ingress
-      name: orb-2
-  - fieldPaths:
-    - spec.rules.0.http.paths.0.backend.service.name
-    select:
-      kind: Ingress
-      name: orb-2
-- source:
-    kind: Secret
-    name: orb-wildcard-cert-2
-    version: v1
-  targets:
-  - fieldPaths:
-    - spec.tls.0.secretName
-    select:
-      kind: Ingress
-      name: orb-2
+- path: ../replacements-service.yml
+- path: ../replacements-secret.yml
 
 resources:
-- ../../common/orb2
-- orb/ingress.yml
+- ../../common
+- ../ingress.yml
 
 
 transformers:
 - sedtransform.yml
 - sedb64transform.yml
+- labeltransformer.yml

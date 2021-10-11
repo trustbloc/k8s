@@ -77,21 +77,6 @@ set-images: kustomize
 	pushd ${KUSTOMIZE_DIR}/components/mongodb &&\
 	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
     popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/mongodb-orb-1 &&\
-	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
-    popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/mongodb-orb-2 &&\
-	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
-    popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/mongodb-orb-3 &&\
-	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
-    popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/mongodb-orb-4 &&\
-	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
-    popd &&\
-	pushd ${KUSTOMIZE_DIR}/components/mongodb-orb-kms &&\
-	${KUSTOMIZE} edit set image mongo=${MONGODB_IMG} &&\
-	popd &&\
 	pushd ${KUSTOMIZE_DIR}/components/static-file-server &&\
 	${KUSTOMIZE} edit set image static-file-server=${STATIC_FILE_SERVER} &&\
 	popd

@@ -9,15 +9,19 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: orb
+  labels:
+    group: core
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: orb
+      group: core
   template:
     metadata:
       labels:
         app: orb
+        group: core
     spec:
       containers:
         - name: orb
