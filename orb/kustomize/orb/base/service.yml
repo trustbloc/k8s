@@ -11,7 +11,7 @@ metadata:
   creationTimestamp: null
   name: orb
   labels:
-    app: orb
+    group: core
 spec:
   ports:
   - name: http
@@ -24,6 +24,7 @@ spec:
     targetPort: prometheus
   selector:
     app: orb
+    group: core
 status:
   loadBalancer: {}
 ---

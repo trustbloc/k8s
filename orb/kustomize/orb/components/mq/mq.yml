@@ -23,9 +23,12 @@ spec:
         - name: mq-config
           configMap:
             name: mq-config
+        - name: mq-init
+          configMap:
+            name: mq-init
       containers:
         - name: mq
-          image: rabbitmq:3-management-alpine
+          image: rabbitmq:latest
           ports:
             - containerPort: 5672
               protocol: TCP
@@ -37,6 +40,10 @@ spec:
             - name: mq-config
               mountPath: /etc/rabbitmq/rabbitmq.conf
               subPath: rabbitmq.conf
+            - name: mq-init
+              mountPath: /etc/rabbitmq/definitions.json
+              subPath: definitions.json
+
 ---
 apiVersion: v1
 kind: Service

@@ -1,0 +1,18 @@
+apiVersion: builtin
+kind: LabelTransformer
+metadata:
+  name: Labeltransformer
+labels:
+  component: orb
+fieldSpecs:
+- path: metadata/labels
+  create: true
+- path: spec/selector
+  kind: Service
+  create: false
+- path: spec/selector/matchLabels
+  kind: Deployment
+  create: false
+- path: spec/template/metadata/labels
+  kind: Deployment
+  create: false

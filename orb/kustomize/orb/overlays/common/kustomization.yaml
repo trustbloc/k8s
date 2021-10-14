@@ -3,7 +3,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-
 # Labels to add to all resources and selectors.
 #commonLabels:
 #  someName: someValue
@@ -15,12 +14,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-nameSuffix: "-1"
-
-replicas:
-- count: 1
-  name: orb
-
 configMapGenerator:
 - behavior: merge
   envs:
@@ -28,24 +21,13 @@ configMapGenerator:
   name: orb-env
 
 secretGenerator:
-- files:
-  - ../certs/tls.crt
-  - ../certs/tls.key
-  name: orb-wildcard-cert
-  type: kubernetes.io/tls
 - behavior: merge
   envs:
   - orb/secret.env
   name: orb-env-secret
 
-replacements:
-- path: ../replacements-service.yml
-- path: ../replacements-secret.yml
-
 resources:
-- ../../common
-- ../ingress.yml
-
+- ../../base
 
 transformers:
 - sedtransform.yml
