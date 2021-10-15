@@ -17,6 +17,19 @@ server {
         root ${STATIC_ASSETS};
     }
 
+    location /images/icons {
+        root ${STATIC_ASSETS};
+    }
+
+   location /config {
+        root ${STATIC_ASSETS};
+    }
+
+   location /manifest.json {
+        add_header 'Access-Control-Allow-Origin' "*" always;
+        add_header 'Access-Control-Allow-Methods' 'GET' always;
+    }
+
     location ~ agent-js-worker\.wasm$ {
         gzip_static on;
         types {
