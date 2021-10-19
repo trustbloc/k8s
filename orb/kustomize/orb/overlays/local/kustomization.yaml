@@ -25,3 +25,5 @@ resources:
 
 transformers:
 - labeltransformer.yml
+commonLabels:
+  instance: local

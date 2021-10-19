@@ -25,7 +25,11 @@ kind: Kustomization
 
 replacements:
 - path: edv/replacements.yml
+  source: null
+  targets: null
 - path: oathkeeper/replacements.yml
+  source: null
+  targets: null
 - source:
     kind: Secret
     name: edv-wildcard-cert
