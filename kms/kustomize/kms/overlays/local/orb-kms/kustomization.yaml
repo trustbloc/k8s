@@ -23,6 +23,8 @@ kind: Kustomization
 
 replacements:
 - path: kms/replacements.yml
+  source: null
+  targets: null
 - source:
     kind: Secret
     name: orb-kms-wildcard-cert

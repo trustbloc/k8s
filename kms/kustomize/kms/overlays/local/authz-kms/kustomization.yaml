@@ -23,6 +23,8 @@ kind: Kustomization
 
 replacements:
 - path: oathkeeper/replacements.yml
+  source: null
+  targets: null
 - source:
     kind: Secret
     name: authz-kms-wildcard-cert

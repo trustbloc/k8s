@@ -26,6 +26,9 @@ configMapGenerator:
   envs:
   - orb/config.env
   name: orb-env
+- files:
+    - ../certs/ca.crt
+  name: orb-ca-cert
 
 secretGenerator:
 - files:
@@ -51,3 +54,6 @@ transformers:
 - sedtransform.yml
 - sedb64transform.yml
 - labeltransformer.yml
+
+patchesStrategicMerge:
+  - add-ca.yml
