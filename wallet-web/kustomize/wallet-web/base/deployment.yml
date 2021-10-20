@@ -30,6 +30,12 @@ spec:
         - name: wallet-static-images
           configMap:
             name: wallet-static-images
+        - name: wallet-static-icons
+          configMap:
+            name: wallet-static-icons
+        - name: wallet-static-config
+          configMap:
+            name: wallet-static-config
       containers:
       - name: web
         envFrom:
@@ -55,4 +61,10 @@ spec:
             readOnly: true
           - name: wallet-static-images
             mountPath: /etc/static/images
+            readOnly: true
+          - name: wallet-static-icons
+            mountPath: /etc/static/images/icons
+            readOnly: true
+          - name: wallet-static-config
+            mountPath: /etc/static/config
             readOnly: true
