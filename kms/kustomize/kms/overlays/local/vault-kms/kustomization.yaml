@@ -14,9 +14,6 @@
 # field above.
 commonLabels:
   component: vault-kms
-  group: core
-  instance: local
-  project: trustbloc
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -62,7 +59,7 @@ secretGenerator:
 configMapGenerator:
 - behavior: merge
   envs:
-  - kms/config.env
+  - ../config.env
   name: vault-kms-env
 - files:
   - ../certs/ca.crt
