@@ -23,5 +23,6 @@ resources:
 - vault-kms
 
 commonLabels:
+  group: core
   instance: local
   project: trustbloc
