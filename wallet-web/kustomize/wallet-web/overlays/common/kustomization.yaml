@@ -37,6 +37,11 @@ configMapGenerator:
     - ./static/images/icons/credential--vaccination-icon.svg
     - ./static/images/icons/credential-drivers-license-icon.svg
   name: wallet-static-icons
+- files:
+    - ./static/manifest.json
+    - ./static/favicon.ico
+    - ./static/favicon.png
+  name: wallet-static-manifest
 
 secretGenerator:
 - behavior: merge

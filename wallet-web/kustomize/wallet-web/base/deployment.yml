@@ -36,6 +36,9 @@ spec:
         - name: wallet-static-config
           configMap:
             name: wallet-static-config
+        - name: wallet-static-manifest
+          configMap:
+            name: wallet-static-manifest
       containers:
       - name: web
         envFrom:
@@ -67,4 +70,7 @@ spec:
             readOnly: true
           - name: wallet-static-config
             mountPath: /etc/static/config
+            readOnly: true
+          - name: wallet-static-manifest
+            mountPath: /etc/static
             readOnly: true
