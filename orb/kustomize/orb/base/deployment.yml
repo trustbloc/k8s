@@ -41,7 +41,7 @@ spec:
               name: prometheus
           livenessProbe:
             httpGet:
-              path: /healthcheck
+              path: /.well-known/nodeinfo
               port: http-port
             initialDelaySeconds: 300
             periodSeconds: 10
