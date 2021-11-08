@@ -27,7 +27,7 @@ configMapGenerator:
   name: orb-driver-env
 
 resources:
-- ../../../base
+- ../../base
 
 transformers:
   - sedtransform.yml
