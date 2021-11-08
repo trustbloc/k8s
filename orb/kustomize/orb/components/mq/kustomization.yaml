@@ -11,9 +11,6 @@ images:
   newName: docker.io/rabbitmq
   newTag: 3-management-alpine
 
-commonLabels:
-  component: orb
-
 configMapGenerator:
 - files:
   - rabbitmq.conf
