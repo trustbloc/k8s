@@ -59,7 +59,7 @@ replacements:
       name: orb-driver
 
 resources:
-- ../../common/orb-driver
+- ../../common
 - ingress.yml
 
 transformers:
