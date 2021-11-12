@@ -9,10 +9,8 @@ type wget || apk --no-cache add wget
 
 rm -rf .build
 mkdir -p .build
-# TODO use orb tag url
-wget https://nightly.link/trustbloc/orb/actions/artifacts/83210100.zip -O .build/orb-cli.zip
+wget https://github.com/trustbloc/orb/releases/download/v0.1.3/orb-cli-linux-amd64.tar.gz -O .build/orb-cli-linux-amd64.tar.gz
 cd .build
-unzip orb-cli.zip
 tar -zxf orb-cli-linux-amd64.tar.gz
 
 domain1IRI=https://orb-1.||DOMAIN||/services/orb
