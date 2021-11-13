@@ -73,7 +73,8 @@ server {
             "sidetreeToken":"${SIDETREE_TOKEN}",
             "hubAuthURL":"${HTTP_SERVER_HUB_AUTH_URL}",
             "staticAssetsUrl": "${STATIC_ASSETS_URL}",
-            "context-provider-url":"${CONTEXT_PROVIDER_URL}"
+            "context-provider-url":"${CONTEXT_PROVIDER_URL}",
+            "unanchoredDIDMaxLifeTime": ${UNANCHORED_DID_MAX_LIFE_TIME}
         }';
     }
 }
