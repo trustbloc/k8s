@@ -1,21 +1,18 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
-
 #!/usr/bin/env bash
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+set -e
 
 # Set default values, which may be overriden by the environment variables
 : ${DOMAIN:=trustbloc.dev}
 : ${MEMORY:=6g}
 : ${CPUS:=4}
 : ${ADDONS:=ingress,ingress-dns,dashboard}
+: ${KUBERNETES_VERSION:=v1.21.2}
 
-PATCH=.ingress_coredns.patch
-
-# List of services used to generate domain names
-SERVICES=$( cat service_list.txt )
 OS=$( uname -s | tr '[:upper:]' '[:lower:]' )
 
 # Use specified driver if set, otherwise minikube will auto-detect the best default driver for a given platform
@@ -28,29 +25,11 @@ else
     fi
 fi
 
-minikube start --memory=$MEMORY --cpus=$CPUS --addons=$ADDONS $DRIVER $MINIKUBE_OPTIONS
-MINIKUBE_IP=$( minikube ip )
+minikube start --memory=$MEMORY --cpus=$CPUS --addons=$ADDONS --kubernetes-version=$KUBERNETES_VERSION $DRIVER $MINIKUBE_OPTIONS
 
-# Generate coredns configMap patch
-echo '        hosts {' > $PATCH
-for service in $SERVICES; do
-    echo "          $MINIKUBE_IP $service.$DOMAIN" >> $PATCH
-done
-echo '          fallthrough' >> $PATCH
-echo '        }' >> $PATCH
-
-# Patch coredns configMap
-if ! kubectl get cm coredns -n kube-system -o yaml | grep -q hosts; then
-    echo 'Patching coredns ConfigMap'
-    EDITOR='sed -i "/loadbalance/r.ingress_coredns.patch"' kubectl edit cm coredns -n kube-system
-    kubectl delete po -l k8s-app=kube-dns -n kube-system # apply new configmap changes
-else
-    echo 'Skipping coredns ConfigMap patch because it has already been patched. Please patch it manually to add any new entries.'
-fi
+source ./coredns_patch.sh
 
 echo '!!! Make sure you have these entries added to your /etc/hosts !!!'
 echo '=========================== CUT =========================='
-for service in $SERVICES; do
-    echo "$MINIKUBE_IP $service.$DOMAIN"
-done
+generate_host_entries
 echo '=========================== CUT =========================='
