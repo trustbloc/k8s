@@ -34,4 +34,4 @@ kind: Kustomization
 images:
 - name: orb
   newName: ghcr.io/trustbloc-cicd/orb
-  newTag: v0.1.4-snapshot-8e6f200
+  newTag: v0.1.4-snapshot-fb4cec0
