@@ -24,7 +24,11 @@ kind: Kustomization
 
 replacements:
 - path: resolver/replacements.yml
+  source: null
+  targets: null
 - path: uni-resolver-web/replacements.yml
+  source: null
+  targets: null
 - source:
     kind: Secret
     name: resolver-wildcard-cert
