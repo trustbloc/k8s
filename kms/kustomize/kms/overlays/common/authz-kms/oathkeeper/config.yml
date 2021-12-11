@@ -12,7 +12,7 @@ serve:
       allowed_headers:
         - Content-Type
         - Authorization
-        - Hub-Kms-Secret
+        - Secret-Share
       allowed_origins:
         - https://wallet.||DOMAIN||
       allow_credentials: true
@@ -41,6 +41,6 @@ mutators:
     enabled: true
     config:
       headers:
-        HUB-KMS-USER: '{{ print .Subject }}'
+        AUTH-USER: '{{ print .Subject }}'
   noop:
     enabled: true
