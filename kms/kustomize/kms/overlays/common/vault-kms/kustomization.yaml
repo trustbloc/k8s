@@ -33,9 +33,6 @@ secretGenerator:
   envs:
   - kms/secret.env
   name: kms-env-secret
-- literals:
-  - secret-lock.key=1234567891011121314151617181920212223242526272829303132
-  name: kms-lock-key
 
 configMapGenerator:
 - behavior: merge
@@ -43,5 +40,3 @@ configMapGenerator:
   - kms/config.env
   name: kms-env
 
-patchesStrategicMerge:
-- kms/add-key.yml
