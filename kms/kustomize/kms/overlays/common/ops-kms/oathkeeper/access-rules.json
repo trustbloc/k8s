@@ -5,7 +5,7 @@
       "url": "http://ops-kms"
     },
     "match": {
-      "url": "http://ops-oathkeeper-proxy.||DOMAIN||/kms/keystores",
+      "url": "http://ops-oathkeeper-proxy.||DOMAIN||/v1/keystores",
       "methods": ["POST"]
     },
     "authenticators": [{
@@ -24,22 +24,15 @@
       "url": "http://ops-kms"
     },
     "match": {
-      "url": "http://ops-oathkeeper-proxy.||DOMAIN||/kms/keystores/<*>",
-      "methods": ["POST", "GET"]
+      "url": "http://ops-oathkeeper-proxy.||DOMAIN||/v1/keystores/<*>",
+      "methods": ["POST", "PUT", "GET"]
     },
     "authenticators": [{
       "handler": "noop"
     }],
-    "mutators": [
-      {
-        "handler": "header",
-        "config": {
-          "headers": {
-            "Hub-Kms-User": "{{ print .Subject }}"
-          }
-        }
-      }
-    ],
+    "mutators": [{
+      "handler": "noop"
+    }],
     "authorizer": {
       "handler": "allow"
     }

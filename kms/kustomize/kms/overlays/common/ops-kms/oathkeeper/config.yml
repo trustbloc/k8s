@@ -12,7 +12,6 @@ serve:
       allowed_headers:
         - Content-Type
         - Authorization
-        - Hub-Kms-Secret
         - Capability-Invocation
         - Digest
         - Signature
@@ -41,9 +40,6 @@ authorizers:
 
 mutators:
   header:
-    enabled: true
-    config:
-      headers:
-        HUB-KMS-USER: '{{ print .Subject }}'
+    enabled: false
   noop:
     enabled: true

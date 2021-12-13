@@ -5,7 +5,7 @@
       "url": "http://authz-kms"
     },
     "match": {
-      "url": "http://authz-oathkeeper-proxy.||DOMAIN||/kms/keystores",
+      "url": "http://authz-oathkeeper-proxy.||DOMAIN||/v1/keystores",
       "methods": ["POST"]
     },
     "authenticators": [{
@@ -13,7 +13,12 @@
     }],
     "mutators": [
       {
-        "handler": "noop"
+        "handler": "header",
+        "config": {
+          "headers": {
+            "Auth-User": "{{ print .Subject }}"
+          }
+        }
       }
     ],
     "authorizer": {
@@ -26,7 +31,7 @@
       "url": "http://authz-kms"
     },
     "match": {
-      "url": "http://authz-oathkeeper-proxy.||DOMAIN||/kms/keystores/<*>",
+      "url": "http://authz-oathkeeper-proxy.||DOMAIN||/v1/keystores/<*>",
       "methods": ["POST", "GET"]
     },
     "authenticators": [{
@@ -37,7 +42,7 @@
         "handler": "header",
         "config": {
           "headers": {
-            "Hub-Kms-User": "{{ print .Subject }}"
+            "Auth-User": "{{ print .Subject }}"
           }
         }
       }
