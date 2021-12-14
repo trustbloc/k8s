@@ -74,8 +74,8 @@ set-images: kustomize
 deploy-registrar: prechecks kustomize kubectl
 	@docker pull universalregistrar/driver-did-v1:latest
 	@minikube image load universalregistrar/driver-did-v1:latest
-	@docker pull honeyblock/uni-registrar-web:custom_v1.0
-	@minikube image load honeyblock/uni-registrar-web:custom_v1.0
+	@docker pull universalregistrar/uni-registrar-web:latest
+	@minikube image load universalregistrar/uni-registrar-web:latest
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
