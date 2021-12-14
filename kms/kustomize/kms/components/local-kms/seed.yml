@@ -1,0 +1,39 @@
+Keys:
+  Symmetric:
+    Aes:
+      - Metadata:
+          KeyId: a7b46a6d-8285-4b53-8a58-101c818d58fe
+        BackingKeys:
+          - f6e17f4e8c61c784aa77a6fe1bbef8fe98668b05b04153a85e5a3751c82744cb
+          - 921d0a9a3e1de092e1792005c5a8847e34bdabbcddf9acbd0bd7b68d19b0e302
+
+      - Metadata:
+          KeyId: cb272b30-d948-432a-bdf8-513da782c573
+        BackingKeys:
+          - 111354669ba2992a4b481c9ff7464c0230a4450c74e9b8fee596db8da01e9db0
+          - 4192c2572cea2dba149eb0608ff66fe6ce317dec0054371a1bab6a591c6fe0dd
+
+      - Metadata:
+          KeyId: 320beae4-0059-470b-9ebb-653eb602938b
+        BackingKeys:
+          - 4bd5225742428857024833194a850f4d88496dacd91d172cc1010c67142b4e74
+          - f4e95571aa62a2c7ce1cc3aa57a4506d84ba32282efdc467759bed4628f308cc
+
+      - Metadata:
+          KeyId: e1371252-5886-4b0c-aacc-0d629369e605
+        BackingKeys:
+          - 16994d9e96864bcb727519090a248ab0b6cd9015b2fb4a1781613924c254a730
+          - d3ac7b0d13460734020aabbfdc0b9af1d9338025f7c510f947a03268f4565740
+
+Aliases:
+  - AliasName: alias/authz-kms
+    TargetKeyId: a7b46a6d-8285-4b53-8a58-101c818d58fe
+
+  - AliasName: alias/ops-kms
+    TargetKeyId: cb272b30-d948-432a-bdf8-513da782c573
+
+  - AliasName: alias/vault-kms
+    TargetKeyId: 320beae4-0059-470b-9ebb-653eb602938b
+
+  - AliasName: alias/orb-kms
+    TargetKeyId: e1371252-5886-4b0c-aacc-0d629369e605

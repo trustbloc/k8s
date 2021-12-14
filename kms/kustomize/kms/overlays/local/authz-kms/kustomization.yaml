@@ -51,10 +51,6 @@ secretGenerator:
   - ../certs/tls.key
   name: authz-kms-wildcard-cert
   type: kubernetes.io/tls
-- behavior: replace
-  files:
-  - secret-lock.key=../keys/authz-kms-secret-lock.key
-  name: authz-kms-lock-key
 
 configMapGenerator:
 - behavior: merge

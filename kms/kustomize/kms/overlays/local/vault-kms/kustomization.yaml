@@ -51,10 +51,6 @@ secretGenerator:
   - ../certs/tls.key
   name: vault-kms-wildcard-cert
   type: kubernetes.io/tls
-- behavior: replace
-  files:
-  - secret-lock.key=../keys/vault-kms-secret-lock.key
-  name: vault-kms-lock-key
 
 configMapGenerator:
 - behavior: merge

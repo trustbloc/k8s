@@ -51,10 +51,6 @@ secretGenerator:
   - ../certs/tls.key
   name: orb-kms-wildcard-cert
   type: kubernetes.io/tls
-- behavior: replace
-  files:
-  - secret-lock.key=../keys/orb-kms-secret-lock.key
-  name: orb-kms-lock-key
 
 configMapGenerator:
 - behavior: merge
