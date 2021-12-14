@@ -33,5 +33,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: vc-server
-  newName: ghcr.io/trustbloc/vc-server
-  newTag: 0.1.7
+  newName: ghcr.io/trustbloc-cicd/vc-server
+  newTag: 0.1.8-snapshot-90c6b45
+
