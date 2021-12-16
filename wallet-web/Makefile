@@ -22,7 +22,7 @@ ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 
 #IMAGES
-WALLET_WEB_IMG				?= ghcr.io/trustbloc-cicd/wallet-web:v0.1.8-snapshot-9ef901f
+WALLET_WEB_IMG				?= ghcr.io/trustbloc-cicd/wallet-web:v0.1.8-snapshot-f40c6fb
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/wallet-web
