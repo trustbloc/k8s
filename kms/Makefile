@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-KMS_IMG				?= ghcr.io/trustbloc-cicd/kms:v0.1.8-snapshot-5e97d07
+KMS_IMG				?= ghcr.io/trustbloc-cicd/kms:v0.1.8-snapshot-6e6eca6
 OATHKEEPER_IMG			?= oryd/oathkeeper:v0.38.4-alpine
 LOCALKMS_IMG			?= docker.io/nsmithuk/local-kms:3.11.0
 
