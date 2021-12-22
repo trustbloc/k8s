@@ -17,6 +17,7 @@ export DOMAIN      		        ?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN      		?= orb-1.${DOMAIN}
 export MONGODB_URL				?= mongodb://mongoroot:secret@mongodb:27017
 export ORB_AUTH_TOKENS			?= admin=ADMIN_TOKEN
+export ORB_AUTH_TOKENS_DEF      ?=/services/orb/outbox||admin,/services/orb/inbox||admin,/sidetree/.*/operations||admin
 export MQ_USER					?= admin
 export MQ_PASSWORD				?= password
 export MQ_BASE_URL						?= amqp://admin:password@mq:5672
