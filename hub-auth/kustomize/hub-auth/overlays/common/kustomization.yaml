@@ -46,7 +46,8 @@ configMapGenerator:
   - hydra/hydra-env.env
   name: hydra-env
 - files:
-    - ./static/images/demo_provider.svg
+    - ./static/images/en--demo-sign-in-button.svg
+    - ./static/images/en--demo-sign-up-button.svg
   name: auth-static-images
 
 resources:
