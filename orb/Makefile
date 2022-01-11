@@ -27,7 +27,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ORB_IMG	 	?= fqutishat/orb:latest
+ORB_IMG	 	?= fqutishat/orb:test
 RABBITMQ_IMG		?= docker.io/rabbitmq:3-management-alpine
 
 # do not modify

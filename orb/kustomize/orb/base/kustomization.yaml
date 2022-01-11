@@ -34,4 +34,4 @@ kind: Kustomization
 images:
 - name: orb
   newName: fqutishat/orb
-  newTag: latest
+  newTag: test
