@@ -27,7 +27,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.4-snapshot-8290e79
+ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.4-snapshot-ee519eb
 RABBITMQ_IMG		?= docker.io/rabbitmq:3-management-alpine
 
 # do not modify
