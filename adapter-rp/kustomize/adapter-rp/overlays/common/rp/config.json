@@ -30,6 +30,15 @@
       }
     ]
   },
+  "vaccert:local": {
+    "name": "Vaccination Certificate",
+    "purpose": "We need to verify your vaccination Certificate.",
+    "schema": [
+      {
+        "uri": "https://w3id.org/vaccination/v1#VaccinationCertificate"
+      }
+    ]
+  },
   "driver_license:local": {
     "name": "Driver's license.",
     "purpose": "Verify your identity.",
