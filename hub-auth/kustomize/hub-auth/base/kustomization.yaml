@@ -40,4 +40,4 @@ kind: Kustomization
 images:
 - name: hub-auth
   newName: ghcr.io/trustbloc-cicd/hub-auth
-  newTag: 0.1.8-snapshot-8f77146
+  newTag: 0.1.8-snapshot-4119871

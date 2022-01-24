@@ -36,4 +36,4 @@ kind: Kustomization
 images:
 - name: wallet-web
   newName: ghcr.io/trustbloc-cicd/wallet-web
-  newTag: v0.1.8-snapshot-ea71d56
+  newTag: v0.1.8-snapshot-7a9961e
