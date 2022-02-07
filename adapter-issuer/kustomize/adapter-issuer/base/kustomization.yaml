@@ -16,21 +16,24 @@ generatorOptions: {}
 
 configMapGenerator:
 - envs:
-  - config.env
+  - issuer/config.env
   name: issuer-env
+- files:
+  - issuer/config.json
+  name: issuer-config
 
 secretGenerator:
 - envs:
-  - secret.env
+  - issuer/secret.env
   name: issuer-env-secret
 
 resources:
-- deployment.yml
-- service.yml
+- issuer/deployment.yml
+- issuer/service.yml
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: issuer-adapter
   newName: ghcr.io/trustbloc-cicd/issuer-adapter
-  newTag: 0.1.8-snapshot-5bb1b98
+  newTag: 0.1.8-snapshot-ee371c1
