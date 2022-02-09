@@ -19,6 +19,10 @@ spec:
       labels:
         app: issuer
     spec:
+      volumes:
+        - name: config
+          configMap:
+            name: issuer-config
       containers:
       - name: issuer
         envFrom:
@@ -35,6 +39,9 @@ spec:
           - containerPort: 8082
             protocol: TCP
             name: didcomm-port
+        volumeMounts:
+          - name: config
+            mountPath: /etc/issuer-adapter/config
         livenessProbe:
           httpGet:
             path: /healthcheck

@@ -90,7 +90,7 @@ secretGenerator:
 configMapGenerator:
 - behavior: merge
   envs:
-  - config.env
+  - issuer/config.env
   name: adapter-issuer-env
 - files:
   - certs/ca.crt
