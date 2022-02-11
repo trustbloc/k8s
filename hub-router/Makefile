@@ -18,12 +18,14 @@ export BLOC_DOMAIN		?= orb-1.${DOMAIN}
 export ARIESD_DATABASE_URL								?= mongodb://mongoroot:secret@mongodb:27017
 export HUB_ROUTER_DSN_PERSISTENT			?= mongodb://mongoroot:secret@mongodb:27017
 export HUB_ROUTER_DSN_TRANSIENT				?= mongodb://mongoroot:secret@mongodb:27017
+export HUB_ROUTER_REQUEST_TOKENS ?= sidetreeToken=ADMIN_TOKEN
+
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-HUB_ROUTER_IMG				?= ghcr.io/trustbloc-cicd/hub-router:0.1.8-snapshot-661a4d5
+HUB_ROUTER_IMG				?= ghcr.io/trustbloc-cicd/hub-router:0.1.8-snapshot-f9ec6ef
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/hub-router
