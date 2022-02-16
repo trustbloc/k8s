@@ -22,7 +22,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ISSUER_ADAPTER_IMG				?= ghcr.io/trustbloc-cicd/issuer-adapter:0.1.8-snapshot-1425c31
+ISSUER_ADAPTER_IMG				?= ghcr.io/trustbloc-cicd/issuer-adapter:0.1.8-snapshot-120025c
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/adapter-issuer
