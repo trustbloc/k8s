@@ -58,7 +58,7 @@ server {
             "blocDomain":"${BLOC_DOMAIN}",
             "walletMediatorURL":"${WALLET_MEDIATOR_URL}",
             "credentialMediatorURL":"${CREDENTIAL_MEDIATOR_URL}",
-            "blindedRouting":"${BLINDED_ROUTING}",
+            "blindedRouting":${BLINDED_ROUTING},
             "storageType":"${STORAGE_TYPE}",
             "edvServerURL":"${EDV_SERVER_URL}",
             "edge-agent-server":"${EDGE_AGENT_SERVER}",
