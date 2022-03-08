@@ -34,10 +34,6 @@ configMapGenerator:
   envs:
   - holder/config.env
   name: holder-vcs-env
-- behavior: merge
-  envs:
-  - governance/config.env
-  name: governance-vcs-env
 - files:
   - ../certs/ca.crt
   name: vcs-ca-cert
@@ -54,7 +50,6 @@ replacements:
 - path: issuer/replacements.yml
 - path: verifier/replacements.yml
 - path: holder/replacements.yml
-- path: governance/replacements.yml
 - source:
     kind: Secret
     name: vcs-wildcard-cert
@@ -75,18 +70,12 @@ replacements:
     select:
       kind: Ingress
       name: holder-vcs
-  - fieldPaths:
-    - spec.tls.0.secretName
-    select:
-      kind: Ingress
-      name: governance-vcs
 
 resources:
 - ../../common
 - issuer/ingress.yml
 - verifier/ingress.yml
 - holder/ingress.yml
-- governance/ingress.yml
 
 transformers:
 - sedtransform.yml
@@ -96,4 +85,3 @@ patchesStrategicMerge:
 - issuer/add-ca.yml
 - verifier/add-ca.yml
 - holder/add-ca.yml
-- governance/add-ca.yml
