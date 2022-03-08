@@ -33,13 +33,6 @@ configMapGenerator:
   envs:
   - holder/config.env
   name: holder-vcs-env
-- behavior: merge
-  envs:
-  - governance/config.env
-  name: governance-vcs-env
-- files:
-  - governance/config.json
-  name: governance-config
 
 secretGenerator:
 - behavior: merge
@@ -54,20 +47,12 @@ secretGenerator:
   envs:
   - holder/secret.env
   name: holder-vcs-env-secret
-- behavior: merge
-  envs:
-  - governance/secret.env
-  name: governance-vcs-env-secret
 
 resources:
 - ../issuer
 - ../verifier
 - ../holder
-- ../governance
 
 transformers:
 - sedtransform.yml
 - sedb64transform.yml
-
-patchesStrategicMerge:
-- governance/add-config.yml

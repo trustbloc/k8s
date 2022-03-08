@@ -21,7 +21,6 @@
 	- `issuer-vcs.DOMAIN`
 	- `verifier-vcs.DOMAIN`
 	- `holder-vcs.DOMAIN`
-	- `governance-vcs.DOMAIN`
 * Will deploy Sandbox VCS, pointing to an already provisioned MONGODB specified with `MONGODB_URL`
 	- `make deploy MONGODB_URL=mongodb://mongoroot:secret@mongodb:27017`
 * if running `podman` pass `CONTAINER_CMD=podman` as option to make
