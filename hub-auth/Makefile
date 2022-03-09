@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-HUB_AUTH_IMG				?= ghcr.io/trustbloc-cicd/hub-auth:0.1.8-snapshot-4119871
+HUB_AUTH_IMG				?= ghcr.io/trustbloc-cicd/hub-auth:0.1.8-snapshot-c60c0d1
 HYDRA_IMG			?= oryd/hydra:v1.3.2-alpine
 
 # do not modify
