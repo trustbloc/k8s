@@ -29,16 +29,6 @@
                "properties":[
                   {
                      "path":[
-                        "$.credentialSubject.image"
-                     ],
-                     "schema":{
-                        "type":"string",
-                        "format":"image/png"
-                     },
-                     "label":"Card Holder"
-                  },
-                  {
-                     "path":[
                         "$.credentialSubject.givenName"
                      ],
                      "schema":{
