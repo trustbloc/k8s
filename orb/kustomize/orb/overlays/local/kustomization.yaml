@@ -17,6 +17,7 @@ kind: Kustomization
 
 components:
 - ../../components/mq
+- ../../components/local-kms
 
 resources:
 - orb1
