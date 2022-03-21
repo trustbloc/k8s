@@ -27,8 +27,9 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.4-snapshot-927a80f
+ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.4-snapshot-cdcdd68
 RABBITMQ_IMG		?= docker.io/rabbitmq:3-management-alpine
+LOCALKMS_IMG			?= docker.io/nsmithuk/local-kms:3.11.0
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/orb
@@ -88,10 +89,13 @@ set-images: kustomize
 	pushd ${KUSTOMIZE_DIR}/components/mq &&\
 	${KUSTOMIZE} edit set image rabbitmq=${RABBITMQ_IMG} &&\
 	popd
+	@pushd ${KUSTOMIZE_DIR}/components/local-kms &&\
+	${KUSTOMIZE} edit set image local-kms=${LOCALKMS_IMG} &&\
+	popd
 
 .PHONY: deploy-orb
 deploy-orb: prechecks set-images set-labels-orb kustomize kubectl
-	@docker pull $(ORB_IMG)
+	#@docker pull $(ORB_IMG)
 	@minikube image load $(ORB_IMG)
 	@docker pull ${RABBITMQ_IMG}
 	@minikube image load ${RABBITMQ_IMG}
