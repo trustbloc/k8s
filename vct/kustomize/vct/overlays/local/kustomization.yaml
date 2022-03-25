@@ -75,6 +75,9 @@ resources:
 - ../common
 - vct/ingress.yml
 
+components:
+- ../../components/local-kms
+
 patchesStrategicMerge:
 - vct/add-ca.yml
 

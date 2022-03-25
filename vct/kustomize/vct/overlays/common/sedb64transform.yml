@@ -8,4 +8,4 @@ apiVersion: svceng
 kind: SedB64Transformer
 metadata:
   name: sedb64transformer
-argsOneLiner: s^||MONGODB_URL||^${MONGODB_URL}^ s^||TRILLIAN_LOG_POSTGRES||^${TRILLIAN_LOG_POSTGRES}^
+argsOneLiner: s^||POSTGRES_URL||^${POSTGRES_URL}^ s^||TRILLIAN_LOG_POSTGRES||^${TRILLIAN_LOG_POSTGRES}^

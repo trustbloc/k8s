@@ -1,0 +1,44 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vct-local-kms
+  labels:
+    app: vct-local-kms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vct-local-kms
+  template:
+    metadata:
+      labels:
+        app: vct-local-kms
+    spec:
+      volumes:
+        - name: seed
+          configMap:
+            name: vct-local-kms-seed
+      containers:
+        - name: vct-local-kms
+          image: "local-kms:latest"
+          imagePullPolicy: IfNotPresent
+          command: [ "local-kms" ]
+          envFrom:
+            - configMapRef:
+                name: vct-local-kms-env
+          volumeMounts:
+            - name: seed
+              mountPath: /init
+              readOnly: true
+          ports:
+            - name: api
+              containerPort: 8020
+              protocol: TCP
+          resources:
+            {}

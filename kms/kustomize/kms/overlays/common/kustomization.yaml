@@ -19,5 +19,4 @@ kind: Kustomization
 resources:
 - authz-kms
 - ops-kms
-- orb-kms
 - vault-kms

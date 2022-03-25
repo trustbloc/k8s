@@ -22,7 +22,6 @@ components:
 resources:
 - authz-kms
 - ops-kms
-- orb-kms
 - vault-kms
 
 commonLabels:
