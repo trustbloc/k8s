@@ -24,7 +24,6 @@ router
 router-ws
 orb-driver
 orb-1
-orb-kms
 vct
 orb-2
 orb-3

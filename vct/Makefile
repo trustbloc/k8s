@@ -15,13 +15,14 @@ export DEPLOYMENT_ENV		    ?= local
 COMMON_LABELS					:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      				?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN      		?= orb-1.${DOMAIN}
-export MONGODB_URL				?= mongodb://mongoroot:secret@mongodb:27017
+export POSTGRES_URL				?= postgres://orbvct:orbvct-secret-pw@postgres:5432
 
 OS 								= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  							= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.4-snapshot-0886cdd
+VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.4-snapshot-dcf85a6
+LOCALKMS_IMG			        ?= docker.io/nsmithuk/local-kms:3.11.0
 
 export TRILLIAN_LOG_POSTGRES		?= user=orbvct host=postgres password=orbvct-secret-pw dbname=orbvct port=5432 sslmode=disable
 
@@ -79,6 +80,9 @@ set-labels-vct: kustomize
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
 	${KUSTOMIZE} edit set image vct=${VCT_IMG} &&\
+	popd
+	@pushd ${KUSTOMIZE_DIR}/components/local-kms &&\
+	${KUSTOMIZE} edit set image local-kms=${LOCALKMS_IMG} &&\
 	popd
 
 .PHONY: deploy-vct

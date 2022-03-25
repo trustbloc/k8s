@@ -19,12 +19,6 @@ Keys:
           - 4bd5225742428857024833194a850f4d88496dacd91d172cc1010c67142b4e74
           - f4e95571aa62a2c7ce1cc3aa57a4506d84ba32282efdc467759bed4628f308cc
 
-      - Metadata:
-          KeyId: e1371252-5886-4b0c-aacc-0d629369e605
-        BackingKeys:
-          - 16994d9e96864bcb727519090a248ab0b6cd9015b2fb4a1781613924c254a730
-          - d3ac7b0d13460734020aabbfdc0b9af1d9338025f7c510f947a03268f4565740
-
 Aliases:
   - AliasName: alias/authz-kms
     TargetKeyId: a7b46a6d-8285-4b53-8a58-101c818d58fe
@@ -34,6 +28,3 @@ Aliases:
 
   - AliasName: alias/vault-kms
     TargetKeyId: 320beae4-0059-470b-9ebb-653eb602938b
-
-  - AliasName: alias/orb-kms
-    TargetKeyId: e1371252-5886-4b0c-aacc-0d629369e605

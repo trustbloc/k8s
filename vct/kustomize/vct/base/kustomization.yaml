@@ -34,4 +34,4 @@ kind: Kustomization
 images:
 - name: vct
   newName: ghcr.io/trustbloc-cicd/vct
-  newTag: v0.1.4-snapshot-0886cdd
+  newTag: v0.1.4-snapshot-dcf85a6

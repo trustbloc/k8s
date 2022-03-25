@@ -95,7 +95,7 @@ set-images: kustomize
 
 .PHONY: deploy-orb
 deploy-orb: prechecks set-images set-labels-orb kustomize kubectl
-	#@docker pull $(ORB_IMG)
+	@docker pull $(ORB_IMG)
 	@minikube image load $(ORB_IMG)
 	@docker pull ${RABBITMQ_IMG}
 	@minikube image load ${RABBITMQ_IMG}
