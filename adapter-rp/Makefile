@@ -23,7 +23,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-RP_ADAPTER_IMG						?= ghcr.io/trustbloc-cicd/rp-adapter:0.1.8-snapshot-6e2addf
+RP_ADAPTER_IMG						?= ghcr.io/trustbloc-cicd/rp-adapter:0.1.8-snapshot-7a06f19
 HYDRA_IMG			?= oryd/hydra:v1.3.2-alpine
 
 

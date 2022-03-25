@@ -34,4 +34,4 @@ kind: Kustomization
 images:
 - name: hub-confidential-storage
   newName: ghcr.io/trustbloc-cicd/hub-confidential-storage
-  newTag: 0.1.8-snapshot-90c6b45
+  newTag: 0.1.8-snapshot-b13477f
