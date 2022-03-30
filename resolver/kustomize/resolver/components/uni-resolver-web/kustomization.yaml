@@ -9,7 +9,7 @@ kind: Component
 images:
 - name: uni-resolver-web
   newName: universalresolver/uni-resolver-web
-  newTag: latest
+  newTag: v0.4.0-8390e7a
 
 configMapGenerator:
 - files:

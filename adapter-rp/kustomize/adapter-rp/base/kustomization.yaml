@@ -35,5 +35,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: rp-adapter
-  newName: ghcr.io/trustbloc-cicd/rp-adapter
-  newTag: 0.1.8-snapshot-614337c
+  newName: ghcr.io/trustbloc/rp-adapter
+  newTag: 0.1.8

@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-DID_IMG				?= ghcr.io/trustbloc-cicd/did-resolver:0.1.8-snapshot-967b624
+DID_IMG				?= ghcr.io/trustbloc/did-resolver:0.1.8
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/resolver
@@ -84,8 +84,8 @@ deploy-resolver: prechecks kustomize kubectl
 	@minikube image load veresone/uni-resolver-did-v1-driver:latest
 	@docker pull uport/uni-resolver-driver-did-uport:1.3.1
 	@minikube image load uport/uni-resolver-driver-did-uport:1.3.1
-	@docker pull universalresolver/uni-resolver-web:latest
-	@minikube image load universalresolver/uni-resolver-web:latest
+	@docker pull universalresolver/uni-resolver-web:v0.4.0-8390e7a
+	@minikube image load universalresolver/uni-resolver-web:v0.4.0-8390e7a
 	@docker pull $(DID_IMG)
 	@minikube image load $(DID_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
