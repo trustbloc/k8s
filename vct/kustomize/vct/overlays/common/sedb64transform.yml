@@ -8,4 +8,4 @@ apiVersion: svceng
 kind: SedB64Transformer
 metadata:
   name: sedb64transformer
-argsOneLiner: s^||POSTGRES_URL||^${POSTGRES_URL}^ s^||TRILLIAN_LOG_POSTGRES||^${TRILLIAN_LOG_POSTGRES}^
+argsOneLiner: s^||POSTGRES_URL||^${POSTGRES_URL}^ s^||TRILLIAN_LOG_POSTGRES||^${TRILLIAN_LOG_POSTGRES}^ s^||VCT_API_READ_TOKEN||^${VCT_API_READ_TOKEN}^ s^||VCT_API_WRITE_TOKEN||^${VCT_API_WRITE_TOKEN}^
