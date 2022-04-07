@@ -21,13 +21,15 @@ export ORB_AUTH_TOKENS_DEF      ?=/services/orb/outbox||admin,/services/orb/inbo
 export MQ_USER					?= admin
 export MQ_PASSWORD				?= password
 export MQ_BASE_URL						?= amqp://admin:password@mq:5672
+export ORB_REQUEST_TOKENS			?= vct-read=VCT_READ_TOKEN,vct-write=VCT_ADMIN_TOKEN
+
 
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.4-snapshot-660e67b
+ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v0.1.4-snapshot-9cf25ed
 RABBITMQ_IMG		?= docker.io/rabbitmq:3-management-alpine
 LOCALKMS_IMG			?= docker.io/nsmithuk/local-kms:3.11.0
 

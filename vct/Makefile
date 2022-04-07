@@ -16,12 +16,14 @@ COMMON_LABELS					:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      				?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN      		?= orb-1.${DOMAIN}
 export POSTGRES_URL				?= postgres://orbvct:orbvct-secret-pw@postgres:5432
+export VCT_API_READ_TOKEN       ?= VCT_READ_TOKEN
+export VCT_API_WRITE_TOKEN      ?= VCT_ADMIN_TOKEN
 
 OS 								= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  							= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.4-snapshot-f39fe22
+VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v0.1.4-snapshot-222452d
 LOCALKMS_IMG			        ?= docker.io/nsmithuk/local-kms:3.11.0
 
 export TRILLIAN_LOG_POSTGRES		?= user=orbvct host=postgres password=orbvct-secret-pw dbname=orbvct port=5432 sslmode=disable
