@@ -32,5 +32,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: vault-server
-  newName: ghcr.io/trustbloc/vault-server
-  newTag: 0.1.8
+  newName: ghcr.io/trustbloc-cicd/vault-server
+  newTag: 0.1.9-snapshot-e8b1c97
