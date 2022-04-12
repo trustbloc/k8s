@@ -16,16 +16,16 @@ COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN		?= orb-1.${DOMAIN}
 export ARIESD_DATABASE_URL								?= mongodb://mongoroot:secret@mongodb:27017
-export HUB_ROUTER_DSN_PERSISTENT			?= mongodb://mongoroot:secret@mongodb:27017
-export HUB_ROUTER_DSN_TRANSIENT				?= mongodb://mongoroot:secret@mongodb:27017
-export HUB_ROUTER_REQUEST_TOKENS ?= sidetreeToken=ADMIN_TOKEN
+export MEDIATOR_DSN_PERSISTENT			?= mongodb://mongoroot:secret@mongodb:27017
+export MEDIATOR_DSN_TRANSIENT				?= mongodb://mongoroot:secret@mongodb:27017
+export MEDIATOR_REQUEST_TOKENS ?= sidetreeToken=ADMIN_TOKEN
 
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-HUB_ROUTER_IMG				?= ghcr.io/trustbloc-cicd/mediator:0.1.9-snapshot-eb92bae
+MEDIATOR_IMG				?= ghcr.io/trustbloc-cicd/mediator:0.1.9-snapshot-eb92bae
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/hub-router
@@ -77,13 +77,13 @@ set-labels: kustomize
 .PHONY: set-images
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
-	${KUSTOMIZE} edit set image hub-router=${HUB_ROUTER_IMG} &&\
+	${KUSTOMIZE} edit set image hub-router=${MEDIATOR_IMG} &&\
 	popd
 
 .PHONY: deploy-hub-router
 deploy-hub-router: prechecks kustomize kubectl
-	@docker pull $(HUB_ROUTER_IMG)
-	@minikube image load $(HUB_ROUTER_IMG)
+	@docker pull $(MEDIATOR_IMG)
+	@minikube image load $(MEDIATOR_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
