@@ -16,13 +16,13 @@ COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN		?= orb-1.${DOMAIN}
 export MONGODB_DSN								?= mongodb://mongoroot:secret@mongodb:27017
-export CHS_REQUEST_TOKENS ?= sidetreeToken=ADMIN_TOKEN
+export CSH_REQUEST_TOKENS ?= sidetreeToken=ADMIN_TOKEN
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-CSH_IMAGE				?= ghcr.io/trustbloc-cicd/hub-confidential-storage:0.1.9-snapshot-d7dd714
+CSH_IMAGE				?= ghcr.io/trustbloc-cicd/hub-confidential-storage:0.1.9-snapshot-cbdf7de
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/csh
