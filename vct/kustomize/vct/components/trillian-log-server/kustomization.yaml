@@ -19,7 +19,7 @@ kind: Component
 images:
 - name: trillian-log-server
   newName: ghcr.io/trustbloc/vct-log-server
-  newTag: v1.0.0-rc.1
+  newTag: v0.1.4-snapshot-42bc5b1
 
 resources:
 - trillian-log-server.yml
