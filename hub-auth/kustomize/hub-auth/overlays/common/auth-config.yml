@@ -10,6 +10,10 @@ providers:
     clientID: hub-auth
     clientSecret: hub-auth-secret
     name: Demo OIDC
-    signUpLogoURL: https://hub-auth.||DOMAIN||/static/images/en--demo-sign-up-button.svg
-    signInLogoURL: https://hub-auth.||DOMAIN||/static/images/en--demo-sign-in-button.svg
+    signUpIconURL:
+      en: https://auth.trustbloc.local:8044/static/images/en--demo-sign-up-button.svg
+      fr: https://auth.trustbloc.local:8044/static/images/fr--demo-sign-up-button.svg
+    signInIconURL:
+      en: https://auth.trustbloc.local:8044/static/images/en--demo-sign-in-button.svg
+      fr: https://auth.trustbloc.local:8044/static/images/fr--demo-sign-in-button.svg
     order: 1
