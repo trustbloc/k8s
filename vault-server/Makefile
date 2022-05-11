@@ -23,7 +23,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-VAULT_SERVER_IMG				?= ghcr.io/trustbloc-cicd/vault-server:0.1.9-snapshot-cbdf7de
+VAULT_SERVER_IMG				?= ghcr.io/trustbloc-cicd/vault-server:0.1.9-snapshot-cb06664
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/vault-server
