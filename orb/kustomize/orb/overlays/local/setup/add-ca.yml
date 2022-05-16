@@ -18,9 +18,6 @@ spec:
             name: orb-add-followers-ca-cert
       containers:
       - name: orb-add-followers
-        envFrom:
-          - configMapRef:
-              name: orb-add-followers-env
         volumeMounts:
           - name: ca-cert
             mountPath: /etc/orb-add-followers/tls

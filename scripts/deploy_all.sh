@@ -14,15 +14,8 @@ set -e
 : ${DOMAIN:=trustbloc.dev}
 : ${DEPLOYMENT_ENV:=local}
 
-
-: ${ORB_DEPLOY:=orb orb-driver}
-
-if [[ ${ORB_MIN} = "true" ]]; then
-ORB_DEPLOY=orb
-fi
-
 ## Should be deployed in the listed order
-: ${COMPONENTS=edv kms vct ${ORB_DEPLOY} resolver registrar csh vcs vault-server hub-auth hub-router wallet-server wallet-web adapter-issuer adapter-rp}
+: ${COMPONENTS=edv kms vct orb resolver registrar csh vcs vault-server hub-auth hub-router wallet-server wallet-web adapter-issuer adapter-rp}
 DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)
