@@ -25,7 +25,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-MEDIATOR_IMG				?= ghcr.io/trustbloc-cicd/mediator:0.1.9-snapshot-eb92bae
+MEDIATOR_IMG				?= ghcr.io/trustbloc-cicd/mediator:0.1.9-snapshot-d4a80cf
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/hub-router
