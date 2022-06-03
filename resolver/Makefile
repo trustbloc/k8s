@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-DID_IMG				?= ghcr.io/trustbloc-cicd/did-resolver:v0.0.1-snapshot-9127aca
+DID_IMG				?= ghcr.io/trustbloc-cicd/did-resolver:v0.0.1-snapshot-8968d74
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/resolver
