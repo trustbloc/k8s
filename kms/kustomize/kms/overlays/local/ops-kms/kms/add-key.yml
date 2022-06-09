@@ -1,0 +1,22 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kms
+spec:
+  template:
+    spec:
+      volumes:
+        - name: gnap-key
+          secret:
+            secretName: ops-kms-gnap-key
+      containers:
+        - name: kms
+          volumeMounts:
+            - name: gnap-key
+              mountPath: /etc/keys

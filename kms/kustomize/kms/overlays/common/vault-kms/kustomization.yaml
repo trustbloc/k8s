@@ -39,4 +39,3 @@ configMapGenerator:
   envs:
   - kms/config.env
   name: kms-env
-

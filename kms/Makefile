@@ -37,11 +37,11 @@ export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
 all: setup
 
 .PHONY: setup
-setup: generate-test-certs generate-test-keys
+setup: generate-test-certs generate-gnap-keys
 	@echo setup
 
 .PHONY: setup-no-certs
-setup-no-certs: generate-test-keys
+setup-no-certs: generate-gnap-keys
 	@echo setup-no-certs
 
 .PHONY: generate-test-certs
@@ -57,13 +57,13 @@ generate-test-certs: clean-certs
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.key tls.key
 	@cd ${CERTS_OUTPUT_DIR} && ln -fs ${DOMAIN}.crt tls.crt
 
-.PHONY: generate-test-keys
-generate-test-keys: clean-keys
+.PHONY: generate-gnap-keys
+generate-gnap-keys: clean-keys
 	@echo $(abspath .)
 	@$(CONTAINER_CMD) run ${CONTAINER_CMD_RUN_OPTS} -i --rm \
 		-v $(abspath .):/opt/workspace:Z \
 		-e KEYS_OUTPUT_DIR=${KEYS_OUTPUT_DIR} \
-		--entrypoint "/opt/workspace/scripts/generate_lock_test_key.sh" \
+		--entrypoint "/opt/workspace/scripts/generate_gnap_keys.sh" \
 		docker.io/frapsoft/openssl:latest
 
 .PHONY: deploy
