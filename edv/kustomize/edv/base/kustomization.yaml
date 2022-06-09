@@ -33,4 +33,4 @@ kind: Kustomization
 images:
 - name: edv
   newName: ghcr.io/trustbloc-cicd/edv
-  newTag: 0.1.9-snapshot-16a2b0b
+  newTag: 0.1.9-snapshot-894c500
