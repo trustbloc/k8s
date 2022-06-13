@@ -37,7 +37,6 @@ secretGenerator:
   - kms/secret.env
   name: kms-env-secret
 
-
 configMapGenerator:
 - behavior: merge
   envs:
@@ -51,4 +50,3 @@ configMapGenerator:
   files:
   - oathkeeper/access-rules.json
   name: oathkeeper-rules
-

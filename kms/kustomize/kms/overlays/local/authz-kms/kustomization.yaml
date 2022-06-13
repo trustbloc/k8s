@@ -55,7 +55,7 @@ secretGenerator:
 configMapGenerator:
 - behavior: merge
   envs:
-  - ../config.env
+  - kms/config.env
   name: authz-kms-env
 - files:
   - ../certs/ca.crt

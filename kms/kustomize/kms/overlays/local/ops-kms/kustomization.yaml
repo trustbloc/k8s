@@ -51,12 +51,14 @@ secretGenerator:
   - ../certs/tls.key
   name: ops-kms-wildcard-cert
   type: kubernetes.io/tls
-
+- files:
+    - ../keys/ops-kms-gnap-key.pem
+  name: ops-kms-gnap-key
 
 configMapGenerator:
 - behavior: merge
   envs:
-  - ../config.env
+  - kms/config.env
   name: ops-kms-env
 - files:
   - ../certs/ca.crt
@@ -64,4 +66,5 @@ configMapGenerator:
 
 patchesStrategicMerge:
 - kms/add-ca.yml
+- kms/add-key.yml
 - oathkeeper/update-local-cert-store.yml
