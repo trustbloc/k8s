@@ -29,4 +29,4 @@ kind: Kustomization
 images:
 - name: orb-driver
   newName: ghcr.io/trustbloc-cicd/orb-did-driver
-  newTag: v1.0.0-rc2-snapshot-8fc19d2
+  newTag: v1.0.0-rc2-snapshot-d310515
