@@ -22,7 +22,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-VCS_IMG				?= ghcr.io/trustbloc-cicd/vc-server:0.1.9-snapshot-658ced0
+VCS_IMG				?= ghcr.io/trustbloc-cicd/vc-server:0.1.9-snapshot-43a768b
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/vcs
