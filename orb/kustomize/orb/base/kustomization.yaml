@@ -33,5 +33,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: orb
-  newName: ghcr.io/trustbloc-cicd/orb
-  newTag: v1.0.0-rc2-snapshot-81fc0f7
+  newName: ghcr.io/trustbloc/orb
+  newTag: v1.0.0-rc2
