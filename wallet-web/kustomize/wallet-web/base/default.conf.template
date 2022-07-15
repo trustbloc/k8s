@@ -73,11 +73,14 @@ server {
             "sidetreeToken":"${SIDETREE_TOKEN}",
             "hubAuthURL":"${HTTP_SERVER_HUB_AUTH_URL}",
             "staticAssetsUrl": "${STATIC_ASSETS_URL}",
+            "walletWebUrl": "${WALLET_WEB_URL}",
             "context-provider-url":"${CONTEXT_PROVIDER_URL}",
             "unanchoredDIDMaxLifeTime": ${UNANCHORED_DID_MAX_LIFE_TIME},
             "media-type-profiles": "${DIDCOMM_MEDIA_TYPE_PROFILES}",
             "key-type": "${DIDCOMM_KEY_TYPE}",
-            "key-agreement-type": "${DIDCOMM_KEY_AGREEMENT_TYPE}"
+            "key-agreement-type": "${DIDCOMM_KEY_AGREEMENT_TYPE}",
+            "web-socket-read-limit": ${WEB_SOCKET_READ_LIMIT},
+            "kms-server-url":"${KMS_SERVER_URL}"
         }';
     }
 }

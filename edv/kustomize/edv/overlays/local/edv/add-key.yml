@@ -1,0 +1,22 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edv
+spec:
+  template:
+    spec:
+      volumes:
+        - name: gnap-key
+          secret:
+            secretName: edv-gnap-key
+      containers:
+        - name: edv
+          volumeMounts:
+            - name: gnap-key
+              mountPath: /etc/keys
