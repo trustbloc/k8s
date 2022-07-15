@@ -49,6 +49,9 @@ configMapGenerator:
     - ./static/images/en--demo-sign-in-button.svg
     - ./static/images/en--demo-sign-up-button.svg
   name: auth-static-images
+- files:
+    - ./static/config/access_policy.json
+  name: auth-static-config
 
 resources:
 - ../../base

@@ -28,6 +28,7 @@ configMapGenerator:
   name: wallet-static-images
 - files:
     - ./static/config/credentialDisplayData.json
+    - ./static/config/gnap-access-token.json
   name: wallet-static-config
 - files:
     - ./static/images/icons/credential--flight-icon.svg

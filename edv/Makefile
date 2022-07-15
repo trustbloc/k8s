@@ -21,12 +21,13 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-EDV_IMG				?= ghcr.io/trustbloc-cicd/edv:0.1.9-snapshot-4908bd7
+EDV_IMG				?= ghcr.io/trustbloc-cicd/edv:0.1.9-snapshot-754d2a8
 OATHKEEPER_IMG			?= oryd/oathkeeper:v0.38.4-alpine
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/edv
 CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
+KEYS_OUTPUT_DIR				= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/keys
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
 export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
 
@@ -34,10 +35,10 @@ export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
 all: setup
 
 .PHONY: setup
-setup: generate-test-certs
+setup: generate-test-certs generate-gnap-keys
 
 .PHONY: setup-no-certs
-setup-no-certs:
+setup-no-certs: generate-gnap-keys
 	@echo setup-no-certs
 
 .PHONY: generate-test-certs
@@ -76,6 +77,15 @@ set-images: kustomize
 	cd ../components/oathkeeper &&\
 	${KUSTOMIZE} edit set image oathkeeper=${OATHKEEPER_IMG} &&\
 	popd
+
+.PHONY: generate-gnap-keys
+generate-gnap-keys: clean-keys
+	@echo $(abspath .)
+	@$(CONTAINER_CMD) run ${CONTAINER_CMD_RUN_OPTS} -i --rm \
+		-v $(abspath .):/opt/workspace:Z \
+		-e KEYS_OUTPUT_DIR=${KEYS_OUTPUT_DIR} \
+		--entrypoint "/opt/workspace/scripts/generate_gnap_keys.sh" \
+		docker.io/frapsoft/openssl:latest
 
 .PHONY: deploy-edv
 deploy-edv: prechecks kustomize kubectl
@@ -125,8 +135,12 @@ endif
 clean: clean-all
 
 .PHONY: clean-all
-clean-all: clean-certs
+clean-all: clean-certs clean-keys
 
 .PHONY: clean-certs
 clean-certs:
 	@rm -Rf ${CERTS_OUTPUT_DIR}
+
+.PHONY: clean-keys
+clean-keys:
+	@rm -Rf ${KEYS_OUTPUT_DIR}

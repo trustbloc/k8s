@@ -65,6 +65,9 @@ secretGenerator:
   - certs/tls.key
   name: edv-wildcard-cert
   type: kubernetes.io/tls
+- files:
+  - ./keys/edv-gnap-key.pem
+  name: edv-gnap-key
 
 transformers:
 - sedtransform.yml
@@ -77,4 +80,5 @@ resources:
 
 patchesStrategicMerge:
 - edv/add-ca.yml
+- edv/add-key.yml
 - oathkeeper/update-local-cert-store.yml

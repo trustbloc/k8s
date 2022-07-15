@@ -26,6 +26,9 @@ spec:
         - name: config
           configMap:
             name: auth-config
+        - name: auth-static-config
+          configMap:
+            name: auth-static-config
         - name: auth-static-images
           configMap:
             name: auth-static-images
@@ -48,6 +51,9 @@ spec:
             readOnly: true
           - name: config
             mountPath: /etc/hub-auth/config
+            readOnly: true
+          - name: auth-static-config
+            mountPath: /etc/static/config
             readOnly: true
           - name: auth-static-images
             mountPath: /etc/static/images
