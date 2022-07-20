@@ -26,7 +26,6 @@ orb-driver
 orb-1
 vct
 orb-2
-uni-registrar-web
 uni-resolver-web
 vault-kms
 vault-server
