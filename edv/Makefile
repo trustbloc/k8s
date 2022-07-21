@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-EDV_IMG				?= ghcr.io/trustbloc-cicd/edv:0.1.9-snapshot-754d2a8
+EDV_IMG				?= ghcr.io/trustbloc-cicd/edv:0.1.9-snapshot-356ac68
 OATHKEEPER_IMG			?= oryd/oathkeeper:v0.38.4-alpine
 
 # do not modify
