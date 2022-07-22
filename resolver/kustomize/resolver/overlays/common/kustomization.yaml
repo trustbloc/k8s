@@ -29,8 +29,6 @@ transformers:
 
 #- ../../components/driver-did-sov
 components:
-- ../../components/uni-resolver-did-v1-driver
-- ../../components/uni-resolver-driver-did-uport
 - ../../components/uni-resolver-web
 
 configMapGenerator:

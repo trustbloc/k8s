@@ -27,14 +27,6 @@ configMapGenerator:
   envs:
   - edv/config.env
   name: edv-env
-- behavior: replace
-  files:
-  - oathkeeper/config.yml
-  name: edv-oathkeeper-config
-- behavior: replace
-  files:
-  - oathkeeper/access-rules.json
-  name: edv-oathkeeper-rules
 
 secretGenerator:
 - behavior: merge
@@ -48,4 +40,3 @@ transformers:
 
 resources:
 - ../../base
-- ../oathkeeper

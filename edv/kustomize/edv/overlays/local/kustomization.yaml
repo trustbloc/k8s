@@ -27,9 +27,6 @@ replacements:
 - path: edv/replacements.yml
   source: null
   targets: null
-- path: oathkeeper/replacements.yml
-  source: null
-  targets: null
 - source:
     kind: Secret
     name: edv-wildcard-cert
@@ -40,11 +37,6 @@ replacements:
     select:
       kind: Ingress
       name: edv
-  - fieldPaths:
-    - spec.tls.0.secretName
-    select:
-      kind: Ingress
-      name: edv-oathkeeper-proxy
 
 replicas:
 - count: 1
@@ -76,9 +68,7 @@ transformers:
 resources:
 - ../common
 - edv/ingress.yml
-- oathkeeper/ingress.yml
 
 patchesStrategicMerge:
 - edv/add-ca.yml
 - edv/add-key.yml
-- oathkeeper/update-local-cert-store.yml

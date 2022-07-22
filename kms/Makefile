@@ -22,7 +22,6 @@ ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
 KMS_IMG				?= ghcr.io/trustbloc-cicd/kms:v0.1.9-snapshot-7d05718
-OATHKEEPER_IMG			?= oryd/oathkeeper:v0.38.4-alpine
 LOCALKMS_IMG			?= docker.io/nsmithuk/local-kms:3.11.0
 
 # do not modify
@@ -89,9 +88,6 @@ set-labels-kms: kustomize
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
 	${KUSTOMIZE} edit set image kms=${KMS_IMG} &&\
-	popd
-	@pushd ${KUSTOMIZE_DIR}/components/oathkeeper &&\
-	${KUSTOMIZE} edit set image oathkeeper=${OATHKEEPER_IMG} &&\
 	popd
 	@pushd ${KUSTOMIZE_DIR}/components/local-kms &&\
 	${KUSTOMIZE} edit set image local-kms=${LOCALKMS_IMG} &&\

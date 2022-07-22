@@ -15,14 +15,12 @@ export DEPLOYMENT_ENV	?= local
 COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export AUTH_MONGODB_URL								?= mongodb://mongoroot:secret@mongodb:27017
-export HYDRA_POSTGRES_DSN								?= postgres://authresthydra:authresthydra-secret-pw@postgres:5432/authresthydra?sslmode=disable
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
 HUB_AUTH_IMG				?= ghcr.io/trustbloc-cicd/auth:0.1.9-snapshot-5a7b16c
-HYDRA_IMG			?= oryd/hydra:v1.3.2-alpine
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/hub-auth
@@ -86,16 +84,11 @@ set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
 	${KUSTOMIZE} edit set image hub-auth=${HUB_AUTH_IMG} &&\
 	popd
-	@pushd ${KUSTOMIZE_DIR}/components/hydra &&\
-	${KUSTOMIZE} edit set image hydra=${HYDRA_IMG} &&\
-	popd
 
 .PHONY: deploy-hub-auth
 deploy-hub-auth: prechecks kustomize kubectl
 	@docker pull $(HUB_AUTH_IMG)
 	@minikube image load $(HUB_AUTH_IMG)
-	@docker pull $(HYDRA_IMG)
-	@minikube image load $(HYDRA_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/hub-auth | $(KUBECTL) apply -f -
 

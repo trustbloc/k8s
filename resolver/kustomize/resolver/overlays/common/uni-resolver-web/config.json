@@ -1,12 +1,5 @@
 {
   "drivers": [
-     {
-      "pattern": "^(did:v1:test:nym:.+)$",
-       "image": "veresone/uni-resolver-did-v1-driver",
-       "url": "http://uni-resolver-did-v1-driver",
-       "imageProperties": "true",
-       "tag": "latest"
-    },
     {
       "pattern": "^(did:elem:.+$)",
       "url": "https://element-did.com/api/v1/sidetree/$1"

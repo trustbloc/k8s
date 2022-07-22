@@ -22,7 +22,6 @@ ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
 EDV_IMG				?= ghcr.io/trustbloc-cicd/edv:0.1.9-snapshot-356ac68
-OATHKEEPER_IMG			?= oryd/oathkeeper:v0.38.4-alpine
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/edv
@@ -74,8 +73,6 @@ set-labels: kustomize
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
 	${KUSTOMIZE} edit set image edv=${EDV_IMG} &&\
-	cd ../components/oathkeeper &&\
-	${KUSTOMIZE} edit set image oathkeeper=${OATHKEEPER_IMG} &&\
 	popd
 
 .PHONY: generate-gnap-keys
@@ -91,8 +88,6 @@ generate-gnap-keys: clean-keys
 deploy-edv: prechecks kustomize kubectl
 	@docker pull $(EDV_IMG)
 	@minikube image load $(EDV_IMG)
-	@docker pull $(OATHKEEPER_IMG)
-	@minikube image load $(OATHKEEPER_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
 	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
