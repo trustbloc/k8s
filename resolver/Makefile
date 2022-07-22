@@ -80,10 +80,6 @@ set-images: kustomize
 deploy-resolver: prechecks kustomize kubectl
 	#@docker pull universalresolver/driver-did-sov:latest
 	#@minikube image load universalresolver/driver-did-sov:latest
-	@docker pull veresone/uni-resolver-did-v1-driver:latest
-	@minikube image load veresone/uni-resolver-did-v1-driver:latest
-	@docker pull uport/uni-resolver-driver-did-uport:1.3.1
-	@minikube image load uport/uni-resolver-driver-did-uport:1.3.1
 	@docker pull universalresolver/uni-resolver-web:v0.4.0-8390e7a
 	@minikube image load universalresolver/uni-resolver-web:v0.4.0-8390e7a
 	@docker pull $(DID_IMG)

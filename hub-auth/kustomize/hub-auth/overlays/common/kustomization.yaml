@@ -25,10 +25,6 @@ kind: Kustomization
 secretGenerator:
 - behavior: merge
   envs:
-  - hydra/hydra-secret.env
-  name: hydra-secret
-- behavior: merge
-  envs:
   - auth-secret.env
   name: auth-env-secret
 
@@ -41,10 +37,6 @@ configMapGenerator:
   files:
   - providers.yml=auth-config.yml
   name: auth-config
-- behavior: merge
-  envs:
-  - hydra/hydra-env.env
-  name: hydra-env
 - files:
     - ./static/images/en--demo-sign-in-button.svg
     - ./static/images/en--demo-sign-up-button.svg
@@ -59,6 +51,3 @@ resources:
 transformers:
 - sedtransform.yml
 - sedb64transform.yml
-
-components:
-- ../../components/hydra

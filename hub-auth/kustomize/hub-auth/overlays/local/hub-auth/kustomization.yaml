@@ -44,9 +44,9 @@ configMapGenerator:
   name: hub-auth-ca-cert
 
 replacements:
-- path: ../hydra/replacements.yml
-- path: ../hydra-admin/replacements.yml
 - path: replacements.yml
+  source: null
+  targets: null
 - source:
     kind: Secret
     name: hub-auth-wildcard-cert
@@ -71,8 +71,6 @@ replacements:
 resources:
 - ../../common
 - ingress.yml
-- ../hydra/ingress.yml
-- ../hydra-admin/ingress.yml
 
 transformers:
 - sedtransform.yml

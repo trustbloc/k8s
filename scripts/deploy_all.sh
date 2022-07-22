@@ -15,7 +15,7 @@ set -e
 : ${DEPLOYMENT_ENV:=local}
 
 ## Should be deployed in the listed order
-: ${COMPONENTS=edv kms vct orb resolver csh vcs vault-server hub-auth hub-router wallet-server wallet-web adapter-issuer adapter-rp}
+: ${COMPONENTS=edv kms vct orb resolver csh vcs vault-server hub-auth hub-router wallet-web adapter-issuer adapter-rp}
 DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)
@@ -23,15 +23,14 @@ declare -A HEALTCHECK_URL=(
     [orb]="https://orb-1.$DOMAIN/healthcheck https://orb-2.$DOMAIN/healthcheck"
     [orb-driver]="https://orb-driver.$DOMAIN/healthcheck"
     [vct]="https://vct.$DOMAIN/healthcheck"
-    [edv]="https://edv-oathkeeper-proxy.$DOMAIN/healthcheck"
+    [edv]="https://edv.$DOMAIN/healthcheck"
     [resolver]="https://did-resolver.$DOMAIN/healthcheck"
     [csh]="https://csh.$DOMAIN/healthcheck"
     [vcs]="https://issuer-vcs.$DOMAIN/healthcheck https://verifier-vcs.$DOMAIN/healthcheck https://holder-vcs.$DOMAIN/healthcheck"
     [vault-server]="https://vault-server.$DOMAIN/healthcheck"
-    [kms]="https://authz-oathkeeper-proxy.$DOMAIN/healthcheck https://ops-oathkeeper-proxy.$DOMAIN/healthcheck https://vault-kms.$DOMAIN/healthcheck"
+    [kms]="https://vault-kms.$DOMAIN/healthcheck"
     [hub-auth]="https://hub-auth.$DOMAIN/healthcheck"
     [hub-router]="https://router-api.$DOMAIN/healthcheck"
-    [wallet-server]="https://wallet-support.$DOMAIN/healthcheck"
     [wallet-web]="https://wallet.$DOMAIN/healthcheck"
     [adapter-issuer]="https://adapter-issuer.$DOMAIN/healthcheck"
     [adapter-rp]="https://adapter-rp.$DOMAIN/healthcheck"
@@ -42,7 +41,7 @@ declare -A HEALTHCHECK_CODE=(
     [https://orb-1.$DOMAIN/healthcheck]=200
     [https://orb-2.$DOMAIN/healthcheck]=200
     [https://orb-driver.$DOMAIN/healthcheck]=200
-    [https://edv-oathkeeper-proxy.$DOMAIN/healthcheck]=200
+    [https://edv.$DOMAIN/healthcheck]=200
     [https://did-resolver.$DOMAIN/healthcheck]=200
     [https://uni-resolver-web.$DOMAIN/1.0/identifiers/did:elem:EiAS3mqC4OLMKOwcz3ItIL7XfWduPT7q3Fa4vHgiCfSG2A]=200
     [https://issuer-vcs.$DOMAIN/healthcheck]=200
@@ -50,13 +49,10 @@ declare -A HEALTHCHECK_CODE=(
     [https://holder-vcs.$DOMAIN/healthcheck]=200
     [https://vault-server.$DOMAIN/healthcheck]=200
     [https://csh.$DOMAIN/healthcheck]=200
-    [https://authz-oathkeeper-proxy.$DOMAIN/healthcheck]=200
-    [https://ops-oathkeeper-proxy.$DOMAIN/healthcheck]=200
     [https://vault-kms.$DOMAIN/healthcheck]=200
     [https://router-api.$DOMAIN/healthcheck]=200
     [https://hub-auth.$DOMAIN/healthcheck]=200
     [https://wallet.$DOMAIN/healthcheck]=200
-    [https://wallet-support.$DOMAIN/healthcheck]=200
     [https://adapter-rp.$DOMAIN/healthcheck]=200
     [https://adapter-issuer.$DOMAIN/healthcheck]=200
 )

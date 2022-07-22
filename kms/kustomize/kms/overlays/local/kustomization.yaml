@@ -20,8 +20,6 @@ components:
 - ../../components/local-kms
 
 resources:
-- authz-kms
-- ops-kms
 - vault-kms
 
 commonLabels:
