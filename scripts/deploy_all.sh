@@ -15,7 +15,7 @@ set -e
 : ${DEPLOYMENT_ENV:=local}
 
 ## Should be deployed in the listed order
-: ${COMPONENTS=edv kms vct orb resolver csh vcs vault-server hub-auth hub-router wallet-web adapter-issuer adapter-rp}
+: ${COMPONENTS=edv kms vct orb resolver csh vcs vault-server auth mediator wallet-web adapter-issuer adapter-rp}
 DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)
@@ -29,8 +29,8 @@ declare -A HEALTCHECK_URL=(
     [vcs]="https://issuer-vcs.$DOMAIN/healthcheck https://verifier-vcs.$DOMAIN/healthcheck https://holder-vcs.$DOMAIN/healthcheck"
     [vault-server]="https://vault-server.$DOMAIN/healthcheck"
     [kms]="https://vault-kms.$DOMAIN/healthcheck"
-    [hub-auth]="https://hub-auth.$DOMAIN/healthcheck"
-    [hub-router]="https://router-api.$DOMAIN/healthcheck"
+    [auth]="https://auth.$DOMAIN/healthcheck"
+    [mediator]="https://mediator-api.$DOMAIN/healthcheck"
     [wallet-web]="https://wallet.$DOMAIN/healthcheck"
     [adapter-issuer]="https://adapter-issuer.$DOMAIN/healthcheck"
     [adapter-rp]="https://adapter-rp.$DOMAIN/healthcheck"
@@ -50,8 +50,8 @@ declare -A HEALTHCHECK_CODE=(
     [https://vault-server.$DOMAIN/healthcheck]=200
     [https://csh.$DOMAIN/healthcheck]=200
     [https://vault-kms.$DOMAIN/healthcheck]=200
-    [https://router-api.$DOMAIN/healthcheck]=200
-    [https://hub-auth.$DOMAIN/healthcheck]=200
+    [https://mediator-api.$DOMAIN/healthcheck]=200
+    [https://auth.$DOMAIN/healthcheck]=200
     [https://wallet.$DOMAIN/healthcheck]=200
     [https://adapter-rp.$DOMAIN/healthcheck]=200
     [https://adapter-issuer.$DOMAIN/healthcheck]=200

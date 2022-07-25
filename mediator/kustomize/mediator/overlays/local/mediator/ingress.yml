@@ -1,0 +1,31 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mediator
+  labels:
+    app: mediator
+    component: mediator
+    group: core
+spec:
+  tls:
+  - hosts:
+      - mediator_SERVICE_NAME.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
+  rules:
+  - host: mediator_SERVICE_NAME.||DOMAIN||
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: mediator_SERVICE_NAME
+            port:
+              name: http
