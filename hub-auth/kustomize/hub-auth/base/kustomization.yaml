@@ -1,0 +1,43 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+
+generatorOptions: {}
+
+configMapGenerator:
+- envs:
+  - auth.env
+  name: auth-env
+- files:
+  - providers.yml=auth-config.yml
+  name: auth-config
+
+secretGenerator:
+- literals:
+  - auth.key=5QWpW+aj7WTNzEdZmTcOXXlWP78Z49CmcS9T9Bn4nx0=
+  - enc.key=ccKjwMDwhXzanvKJUVSMHPGYQ9OdBqAb3Ywg7hv58qY=
+  name: auth-keys
+- envs:
+  - auth-secret.env
+  name: auth-env-secret
+
+resources:
+- auth.yml
+
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: hub-auth
+  newName: ghcr.io/trustbloc-cicd/auth
+  newTag: 0.1.9-snapshot-5a7b16c
