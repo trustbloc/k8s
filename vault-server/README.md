@@ -1,4 +1,4 @@
-# [vault-server](https://github.com/trustbloc/edge-service/tree/main/cmd/vault-server) k8s deployment #
+# [vault-server](https://github.com/trustbloc/ace/tree/main/cmd/vault-server) k8s deployment #
 
 
 ## pre-requisits

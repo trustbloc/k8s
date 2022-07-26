@@ -1,4 +1,4 @@
-# [VCS](https://github.com/trustbloc/edge-service) k8s deployment #
+# [VCS](https://github.com/trustbloc/vcs) k8s deployment #
 
 
 ## pre-requisits

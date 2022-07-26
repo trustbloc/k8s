@@ -1,4 +1,4 @@
-# [resolver](https://github.com/trustbloc/edge-service/tree/main/cmd/did-rest) k8s deployment #
+# [resolver](https://github.com/trustbloc/did-resolver/tree/main/cmd/did-rest) k8s deployment #
 
 
 ## pre-requisits
