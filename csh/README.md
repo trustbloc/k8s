@@ -1,4 +1,4 @@
-# [confidential-storage-hub](https://github.com/trustbloc/edge-service) k8s deployment #
+# [confidential-storage-hub](https://github.com/trustbloc/ace/tree/main/cmd/confidential-storage-hub) k8s deployment #
 
 
 ## pre-requisits
