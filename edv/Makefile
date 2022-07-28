@@ -21,7 +21,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-EDV_IMG				?= ghcr.io/trustbloc-cicd/edv:0.1.9-snapshot-356ac68
+EDV_IMG				?= ghcr.io/trustbloc-cicd/edv:0.1.9-snapshot-eca059d
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/edv
