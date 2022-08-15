@@ -34,4 +34,4 @@ kind: Kustomization
 images:
 - name: hub-router
   newName: ghcr.io/trustbloc-cicd/mediator
-  newTag: 0.1.9-snapshot-12ee465
+  newTag: 0.1.9-snapshot-37a6e04

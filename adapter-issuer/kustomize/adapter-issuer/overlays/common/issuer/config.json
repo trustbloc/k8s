@@ -61,7 +61,7 @@
                      ],
                      "schema":{
                         "type":"string",
-                        "format":"date"
+                        "contentMediaType":"date"
                      },
                      "label":"Date of Birth"
                   },
@@ -80,7 +80,7 @@
                      ],
                      "schema":{
                         "type":"string",
-                        "format":"date"
+                        "contentMediaType":"date"
                      },
                      "label":"Resident Since"
                   }
