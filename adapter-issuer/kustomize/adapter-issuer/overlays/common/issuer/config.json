@@ -24,7 +24,14 @@
                   }
                },
                "description":{
-                  "text":"Sample Permanent Resident Card issued by Government of Example Citizenship & Immigration Services"
+                  "text":"Sample Permanent Resident Card issued by Government of Example Citizenship & Immigration Services",
+                  "path":[
+                     "$.description"
+                  ],
+                  "fallback":"Government of Example Permanent Resident Card.",
+                  "schema":{
+                     "type":"string"
+                  }
                },
                "properties":[
                   {
