@@ -4,7 +4,7 @@
     "purpose": "We need your consent to access your bank and account information.",
     "schema": [
       {
-        "uri": "https://example.org/examples#AuthorizationCredential"
+        "uri": "https://example.org/examples#IssuerManifestCredential"
       }
     ],
     "constraints": {
@@ -53,7 +53,7 @@
     "purpose": "We need your consent to verify issuance of your driver's license.",
     "schema": [
       {
-        "uri": "https://example.org/examples#AuthorizationCredential"
+        "uri": "https://example.org/examples#IssuerManifestCredential"
       }
     ],
     "constraints": {
@@ -75,7 +75,7 @@
     "purpose": "Determine eligibility for the service.",
     "schema": [
       {
-        "uri": "https://example.org/examples#AuthorizationCredential"
+        "uri": "https://example.org/examples#IssuerManifestCredential"
       }
     ],
     "constraints": {
