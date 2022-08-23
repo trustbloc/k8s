@@ -14,7 +14,6 @@ configMapGenerator:
   name: static-file-server-env
 - files:
   - ld-contexts.json
-  - orb-ld-contexts.json
   name: static-file-server-data
 
 apiVersion: kustomize.config.k8s.io/v1alpha1
