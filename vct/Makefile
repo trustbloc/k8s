@@ -23,7 +23,7 @@ OS 								= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  							= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v1.0.0-rc3-snapshot-03b2f10
+VCT_IMG	 						?= ghcr.io/trustbloc-cicd/vct:v1.0.0-rc3-snapshot-c395321
 LOCALKMS_IMG			        ?= docker.io/nsmithuk/local-kms:3.11.0
 
 export TRILLIAN_LOG_POSTGRES		?= user=orbvct host=postgres password=orbvct-secret-pw dbname=orbvct port=5432 sslmode=disable
