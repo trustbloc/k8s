@@ -9,7 +9,7 @@ apt-get install -y wget unzip
 
 rm -rf .build
 mkdir -p .build
-wget https://nightly.link/trustbloc/orb/actions/artifacts/338614505.zip -O .build/orb-cli.zip
+wget https://nightly.link/trustbloc/orb/actions/artifacts/342633387.zip -O .build/orb-cli.zip
 cd .build
 unzip orb-cli.zip
 tar -zxf orb-cli-linux-amd64.tar.gz

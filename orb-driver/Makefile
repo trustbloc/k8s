@@ -20,7 +20,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ORB_DRIVER_IMG	 	?= ghcr.io/trustbloc-cicd/orb-did-driver:v1.0.0-rc3-snapshot-97eec12
+ORB_DRIVER_IMG	 	?= ghcr.io/trustbloc-cicd/orb-did-driver:v1.0.0-rc3-snapshot-62534ce
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/orb-driver
