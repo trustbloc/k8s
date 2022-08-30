@@ -88,8 +88,8 @@ deploy-dbs: prechecks kustomize kubectl
 	@minikube image load $(POSTGRES_IMG)
 	@docker pull $(MONGODB_IMG)
 	@minikube image load $(MONGODB_IMG)
-	@docker pull ipfs/go-ipfs:v0.14.0
-	@minikube image load ipfs/go-ipfs:v0.14.0
+	@docker pull ipfs/go-ipfs:v0.10.0
+	@minikube image load ipfs/go-ipfs:v0.10.0
 	@docker pull ${STATIC_FILE_SERVER}
 	@minikube image load ${STATIC_FILE_SERVER}
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
