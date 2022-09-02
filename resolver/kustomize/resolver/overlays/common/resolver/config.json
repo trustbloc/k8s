@@ -8,6 +8,10 @@
         "url": "https://uniresolver.io/1.0/identifiers/$1"
       },
       {
+        "pattern": "^(did:ion:.+)$",
+        "url": "https://uniresolver.io/1.0/identifiers/$1"
+      },
+      {
         "pattern": "^(did:web:.+)$",
         "url": ""
       },
