@@ -16,20 +16,32 @@ generatorOptions: {}
 
 configMapGenerator:
 - envs:
-  - config.env
+  - web/config.env
   name: web-env
 - files:
-  - default.conf.template
+  - web/default.conf.template
   name: nginx-config-template
+- literals:
+  - VOID=clear
+  name: static-images
+- literals:
+  - VOID=clear
+  name: static-icons
+- literals:
+  - VOID=clear
+  name: static-config
+- literals:
+  - VOID=clear
+  name: static-manifest
 
 secretGenerator:
 - envs:
-  - secret.env
+  - web/secret.env
   name: web-env-secret
 
 resources:
-- deployment.yml
-- service.yml
+- web/deployment.yml
+- web/service.yml
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization

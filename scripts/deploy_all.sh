@@ -31,7 +31,7 @@ declare -A HEALTCHECK_URL=(
     [kms]="https://vault-kms.$DOMAIN/healthcheck"
     [hub-auth]="https://hub-auth.$DOMAIN/healthcheck"
     [hub-router]="https://router-api.$DOMAIN/healthcheck"
-    [wallet-web]="https://wallet.$DOMAIN/healthcheck"
+    [wallet-web]="https://wallet.$DOMAIN/healthcheck https://vcwallet.$DOMAIN/healthcheck"
     [adapter-issuer]="https://adapter-issuer.$DOMAIN/healthcheck"
     [adapter-rp]="https://adapter-rp.$DOMAIN/healthcheck"
 )
@@ -53,6 +53,7 @@ declare -A HEALTHCHECK_CODE=(
     [https://router-api.$DOMAIN/healthcheck]=200
     [https://hub-auth.$DOMAIN/healthcheck]=200
     [https://wallet.$DOMAIN/healthcheck]=200
+    [https://vcwallet.$DOMAIN/healthcheck]=200
     [https://adapter-rp.$DOMAIN/healthcheck]=200
     [https://adapter-issuer.$DOMAIN/healthcheck]=200
 )

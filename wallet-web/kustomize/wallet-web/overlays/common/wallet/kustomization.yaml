@@ -1,0 +1,59 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Adds namespace to all resources.
+#namespace: edge-sandbox-system
+
+# Value of this field is prepended to the
+# names of all resources, e.g. a deployment named
+# "wordpress" becomes "alices-wordpress".
+# Note that it should also match with the prefix (text before '-') of the namespace
+# field above.
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configMapGenerator:
+- behavior: merge
+  envs:
+  - config.env
+  name: wallet-web-env
+- files:
+    - ../static/images/logo.svg
+  name: wallet-static-images
+  behavior: replace  
+- files:
+    - ../static/config/credentialDisplayData.json
+    - ../static/config/gnap-access-token.json
+  behavior: replace
+  name: wallet-static-config
+- files:
+    - ../static/images/icons/credential--flight-icon.svg
+    - ../static/images/icons/credential--generic-icon.svg
+    - ../static/images/icons/credential--school-icon.svg
+    - ../static/images/icons/credential--uscis-icon.svg
+    - ../static/images/icons/credential--vaccination-icon.svg
+    - ../static/images/icons/credential-drivers-license-icon.svg
+  behavior: replace
+  name: wallet-static-icons
+- files:
+    - ../static/manifest.json
+    - ../static/favicon.ico
+    - ../static/favicon.png
+  behavior: replace
+  name: wallet-static-manifest
+
+secretGenerator:
+- behavior: merge
+  envs:
+  - secret.env
+  name: wallet-web-env-secret
+
+commonLabels:
+  component: wallet-web
+
+resources:
+- ../../wallet

@@ -13,45 +13,16 @@
 # Note that it should also match with the prefix (text before '-') of the namespace
 # field above.
 commonLabels:
+  group: services
   project: trustbloc
+
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-configMapGenerator:
-- behavior: merge
-  envs:
-  - config.env
-  name: web-env
-- files:
-    - ./static/images/logo.svg
-  name: wallet-static-images
-- files:
-    - ./static/config/credentialDisplayData.json
-    - ./static/config/gnap-access-token.json
-  name: wallet-static-config
-- files:
-    - ./static/images/icons/credential--flight-icon.svg
-    - ./static/images/icons/credential--generic-icon.svg
-    - ./static/images/icons/credential--school-icon.svg
-    - ./static/images/icons/credential--uscis-icon.svg
-    - ./static/images/icons/credential--vaccination-icon.svg
-    - ./static/images/icons/credential-drivers-license-icon.svg
-  name: wallet-static-icons
-- files:
-    - ./static/manifest.json
-    - ./static/favicon.ico
-    - ./static/favicon.png
-  name: wallet-static-manifest
-
-secretGenerator:
-- behavior: merge
-  envs:
-    - secret.env
-  name: web-env-secret
-
 resources:
-- ../../base
+- wallet
+- vcwallet
 
 transformers:
 - sedtransform.yml

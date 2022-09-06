@@ -69,7 +69,7 @@ endif
 
 .PHONY: set-labels
 set-labels: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} &&\
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/web &&\
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
@@ -83,7 +83,7 @@ set-images: kustomize
 deploy-wallet-web: prechecks kustomize kubectl
 	@minikube image load $(WALLET_WEB_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/web | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
 undeploy: prechecks kustomize kubectl set-images set-labels undeploy-wallet-web
@@ -91,7 +91,7 @@ undeploy: prechecks kustomize kubectl set-images set-labels undeploy-wallet-web
 .PHONY: undeploy-wallet-web
 undeploy-wallet-web: prechecks kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/web | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:
