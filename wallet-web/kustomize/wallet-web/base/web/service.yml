@@ -9,7 +9,7 @@ apiVersion: v1
 kind: Service
 metadata:
   creationTimestamp: null
-  name: wallet
+  name: web
 spec:
   ports:
   - name: http
@@ -19,6 +19,5 @@ spec:
   selector:
     app: web
     group: wallet
-    component: wallet-web
 status:
   loadBalancer: {}

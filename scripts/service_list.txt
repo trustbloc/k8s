@@ -23,5 +23,6 @@ uni-resolver-web
 vault-kms
 vault-server
 verifier-vcs
+vcwallet
 wallet
 static-file-server

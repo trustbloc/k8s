@@ -13,8 +13,7 @@
 # Note that it should also match with the prefix (text before '-') of the namespace
 # field above.
 commonLabels:
-  component: wallet-web
-  group: wallet
+  group: services
   instance: local
   project: trustbloc
 
@@ -23,30 +22,18 @@ kind: Kustomization
 
 secretGenerator:
 - files:
-  - certs/tls.crt
-  - certs/tls.key
+  - ../certs/tls.crt
+  - ../certs/tls.key
   name: wallet-wildcard-cert
   type: kubernetes.io/tls
 
 replacements:
-- source:
-    kind: Service
-    name: wallet
-    version: v1
-  targets:
-  - fieldPaths:
-    - spec.tls.0.hosts.0
-    - spec.rules.0.host
-    options:
-      delimiter: .
-    select:
-      kind: Ingress
-      name: wallet-web
-  - fieldPaths:
-    - spec.rules.0.http.paths.0.backend.service.name
-    select:
-      kind: Ingress
-      name: wallet-web
+- path: wallet/replacements.yml
+  source: null
+  targets: null
+- path: vcwallet/replacements.yml
+  source: null
+  targets: null
 - source:
     kind: Secret
     name: wallet-wildcard-cert
@@ -57,10 +44,16 @@ replacements:
     select:
       kind: Ingress
       name: wallet-web
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: vcwallet-web
 
 resources:
-- ../common
-- ingress.yml
+- ../../common
+- vcwallet/ingress.yml
+- wallet/ingress.yml
 
 transformers:
 - sedtransform.yml
