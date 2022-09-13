@@ -20,10 +20,124 @@ commonLabels:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-- wallet
-- vcwallet
+configMapGenerator:
+- behavior: merge
+  envs:
+  - vcwallet/config.env
+  name: vcwallet-web-env
+  options:
+    labels:
+      component: vcwallet-web
 
+- files:
+    - static/images/logo.svg
+  behavior: replace
+  name: vcwallet-static-images
+  options:
+    labels:
+      component: vcwallet-web
+
+- files:
+    - static/config/credentialDisplayData.json
+    - static/config/gnap-access-token.json
+  behavior: replace
+  name: vcwallet-static-config
+  options:
+    labels:
+      component: vcwallet-web
+
+- files:
+    - static/images/icons/credential--flight-icon.svg
+    - static/images/icons/credential--generic-icon.svg
+    - static/images/icons/credential--school-icon.svg
+    - static/images/icons/credential--uscis-icon.svg
+    - static/images/icons/credential--vaccination-icon.svg
+    - static/images/icons/credential-drivers-license-icon.svg
+  behavior: replace
+  name: vcwallet-static-icons
+  options:
+    labels:
+      component: vcwallet-web
+
+- files:
+    - static/manifest.json
+    - static/favicon.ico
+    - static/favicon.png
+  behavior: replace
+  name: vcwallet-static-manifest
+  options:
+    labels:
+      component: vcwallet-web
+
+- behavior: merge
+  envs:
+  - wallet/config.env
+  name: wallet-web-env
+  options:
+    labels:
+      component: wallet-web
+
+- files:
+    - static/images/logo.svg
+  name: wallet-static-images
+  behavior: replace
+  options:
+    labels:
+      component: wallet-web
+
+- files:
+    - static/config/credentialDisplayData.json
+    - static/config/gnap-access-token.json
+  behavior: replace
+  name: wallet-static-config
+  options:
+    labels:
+      component: wallet-web
+
+- files:
+    - static/images/icons/credential--flight-icon.svg
+    - static/images/icons/credential--generic-icon.svg
+    - static/images/icons/credential--school-icon.svg
+    - static/images/icons/credential--uscis-icon.svg
+    - static/images/icons/credential--vaccination-icon.svg
+    - static/images/icons/credential-drivers-license-icon.svg
+  behavior: replace
+  name: wallet-static-icons
+  options:
+    labels:
+      component: wallet-web
+
+- files:
+    - static/manifest.json
+    - static/favicon.ico
+    - static/favicon.png
+  behavior: replace
+  name: wallet-static-manifest
+  options:
+    labels:
+      component: wallet-web
+
+
+secretGenerator:
+- behavior: merge
+  envs:
+  - vcwallet/secret.env
+  name: vcwallet-web-env-secret
+  options:
+    labels:
+      component: vcwallet-web
+
+- behavior: merge
+  envs:
+  - wallet/secret.env
+  name: wallet-web-env-secret
+  options:
+    labels:
+      component: wallet-web
+
+resources:
+- ../vcwallet
+- ../wallet
 transformers:
 - sedtransform.yml
 - sedb64transform.yml
