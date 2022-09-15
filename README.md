@@ -12,7 +12,7 @@ The repo contains the scripts to deploy the core TrustBloc components.
 
 ### MacOS additional prerequisites
 - [HyperKit](https://minikube.sigs.k8s.io/docs/drivers/hyperkit/) installed
-- Install GNU sed and base64 utils: `brew install gnu-sed coreutils bash`
+- Install GNU sed and base64 utils: `brew install gnu-sed coreutils bash jq`
 - Create directory with symlinks to the used GNU tools
   ```
   # mkdir ~/gnu && cd ~/gnu && ln -fs $( which gsed ) sed && ln -fs $( which gbase64 ) base64
