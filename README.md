@@ -3,15 +3,14 @@
 The repo contains the scripts to deploy the core TrustBloc components.
 
 ## Prerequisites
-- docker (running)
-- [minikube](https://minikube.sigs.k8s.io/docs/start/) [IMP: supported version: [v1.24.0](#minikube-installation)]
-- [kubectl](https://kubernetes.io/docs/tasks/tools/)  [supported version: v1.21]
-- GNU bash [minimum version: v5] (for macOS, refer [macos setup](#macos-additional-prerequisites))
+- docker (running) [For Apple Silicon-based Macs, must be v3.6.0 or higher]
+- [minikube](https://minikube.sigs.k8s.io/docs/start/) [[v1.24.0](#minikube-installation) or higher]
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)  [v1.21 or higher]
+- GNU bash [v5 or higher] (for macOS, refer to [macos setup](#macos-additional-prerequisites))
 - GNU make
 - GNU sed
 
 ### MacOS additional prerequisites
-- [HyperKit](https://minikube.sigs.k8s.io/docs/drivers/hyperkit/) installed
 - Install GNU sed and base64 utils: `brew install gnu-sed coreutils bash jq`
 - Create directory with symlinks to the used GNU tools
   ```
@@ -22,24 +21,49 @@ The repo contains the scripts to deploy the core TrustBloc components.
   # PATH=~/gnu:$PATH
   ```
 
+#### For Apple Silicon (arm64) Macs
+- The brew [docker-mac-net-connect](https://github.com/chipmk/docker-mac-net-connect) service installed:
+  ```
+  brew install chipmk/tap/docker-mac-net-connect
+  ```
+  Important: See the [Running](#running) below to see how to correctly run the service.
+
+#### For Intel (x86-64) Macs
+
+- [HyperKit](https://minikube.sigs.k8s.io/docs/drivers/hyperkit/) installed
+
 ### Minikube installation
 
-#### v.1.24.0
-##### macOS
+#### macOS - Apple Silicon (arm64)
 ```
-curl -LO https://github.com/kubernetes/minikube/releases/download/v1.24.0/minikube-darwin-amd64
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-arm64
+sudo install minikube-darwin-arm64 /usr/local/bin/minikube
+```
 
+#### macOS - Intel (x86-64)
+```
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64
 sudo install minikube-darwin-amd64 /usr/local/bin/minikube
 ```
 
-##### linux
+#### linux (x86-64)
 ```
-curl -LO https://github.com/kubernetes/minikube/releases/download/v1.24.0/minikube-linux-amd64
-
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ```
 
 ## Running
+
+### Important Extra Step for Apple Silicon Macs
+If using an Apple Silicon (arm64)-based Mac, before attempting to start up Sandbox, you will need to start the `docker-mac-net-connect` brew service with root permissions to ensure that host-to-VM communication works:
+
+```
+sudo brew services start chipmk/tap/docker-mac-net-connect
+```
+
+Note that the service will not be able to connect to Docker without root permissions.
+
+### Some Common Commands
 
 Re-create any existing minikube cluster and deploy all trustbloc services into the newly created cluster:
 
