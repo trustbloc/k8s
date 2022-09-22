@@ -1,0 +1,22 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vcs
+spec:
+  template:
+    spec:
+      volumes:
+        - name: kms-key
+          secret:
+            secretName: vcs-kms-key
+      containers:
+        - name: vcs
+          volumeMounts:
+            - name: kms-key
+              mountPath: /etc/keys
