@@ -16,18 +16,17 @@ COMMON_LABELS		:= instance:${DEPLOYMENT_ENV}
 export DOMAIN      		?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export BLOC_DOMAIN		?= orb-1.${DOMAIN}
 export MONGODB_URL								?= mongodb://mongoroot:secret@mongodb:27017
-export VC_REST_REQUEST_TOKENS ?=sidetreeToken=ADMIN_TOKEN
 
 OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
-#IMAGES built from https://github.com/trustbloc/vcs/tree/vcapi
-VCS_IMG				?= ghcr.io/trustbloc-cicd/vc-server:0.1.9-snapshot-8f39d49
+#IMAGES built from https://github.com/trustbloc/vcs/tree/main
+VCS_IMG				?= ghcr.io/trustbloc-cicd/vc-server:0.1.9-snapshot-1002fa9
 
 # do not modify
-KUSTOMIZE_DIR       	= kustomize/vcs
+KUSTOMIZE_DIR       	= kustomize/vcs-v1
 CERTS_OUTPUT_DIR      	 	= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/certs
-PREFIX							?=
+KEYS_OUTPUT_DIR				= ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/keys
 KUSTOMIZE_BUILD_OPTS			?= --load-restrictor LoadRestrictionsNone --enable-alpha-plugins
 export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
 
@@ -35,11 +34,10 @@ export KUSTOMIZE_PLUGIN_HOME						= $(abspath .)/kustomize/plugin
 all: setup
 
 .PHONY: setup
-setup: generate-test-certs
-	@echo setup
+setup: generate-test-certs generate-kms-keys
 
 .PHONY: setup-no-certs
-setup-no-certs:
+setup-no-certs: generate-kms-keys
 	@echo setup-no-certs
 
 .PHONY: generate-test-certs
@@ -67,22 +65,31 @@ endif
 
 .PHONY: set-labels
 set-labels: kustomize
-	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vcs &&\
+	@pushd ${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} &&\
 		${KUSTOMIZE} edit set label ${COMMON_LABELS} &&\
 		popd
 
 .PHONY: set-images
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
-	${KUSTOMIZE} edit set image vc-server=${VCS_IMG} &&\
+	${KUSTOMIZE} edit set image vcs=${VCS_IMG} &&\
 	popd
+
+.PHONY: generate-kms-keys
+generate-kms-keys: clean-keys
+	@echo $(abspath .)
+	@$(CONTAINER_CMD) run ${CONTAINER_CMD_RUN_OPTS} -i --rm \
+		-v $(abspath .):/opt/workspace:Z \
+		-e KEYS_OUTPUT_DIR=${KEYS_OUTPUT_DIR} \
+		--entrypoint "/opt/workspace/scripts/generate_kms_keys.sh" \
+		docker.io/frapsoft/openssl:latest
 
 .PHONY: deploy-vcs
 deploy-vcs: prechecks kustomize kubectl
 	@docker pull $(VCS_IMG)
 	@minikube image load $(VCS_IMG)
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vcs | $(KUBECTL) apply -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
 undeploy: prechecks kustomize kubectl set-images set-labels undeploy-vcs
@@ -90,7 +97,7 @@ undeploy: prechecks kustomize kubectl set-images set-labels undeploy-vcs
 .PHONY: undeploy-vcs
 undeploy-vcs: prechecks kustomize kubectl
 	$(KUSTOMIZE) build ${KUSTOMIZE_BUILD_OPTS} \
-	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV}/vcs | $(KUBECTL) delete -f -
+	${KUSTOMIZE_DIR}/overlays/${DEPLOYMENT_ENV} | $(KUBECTL) delete -f -
 
 .PHONY: kustomize
 kustomize:
@@ -123,8 +130,12 @@ endif
 clean: clean-all
 
 .PHONY: clean-all
-clean-all: clean-certs
+clean-all: clean-certs clean-keys
 
 .PHONY: clean-certs
 clean-certs:
 	@rm -Rf ${CERTS_OUTPUT_DIR}
+
+.PHONY: clean-keys
+clean-keys:
+	@rm -Rf ${KEYS_OUTPUT_DIR}
