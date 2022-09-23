@@ -1,0 +1,28 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: auth-hydra-admin
+  labels:
+    app: hydra
+spec:
+  tls:
+  - hosts:
+      - auth-hydra-admin.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
+  rules:
+  - host: auth-hydra-admin.||DOMAIN||
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: HYDRA_ADMIN_SERVICE_NAME
+            port:
+              name: http

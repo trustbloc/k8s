@@ -4,6 +4,8 @@ adapter-issuer-didcomm
 adapter-issuer
 adapter-rp-didcomm
 adapter-rp
+auth-hydra
+auth-hydra-admin
 csh
 did-resolver
 edv
