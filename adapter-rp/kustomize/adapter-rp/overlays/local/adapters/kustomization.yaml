@@ -24,9 +24,17 @@ kind: Kustomization
 
 replacements:
 - path: hydra/replacements.yml
+  source: null
+  targets: null
 - path: hydra-admin/replacements.yml
+  source: null
+  targets: null
 - path: rp/replacements/adapter-rp.yml
+  source: null
+  targets: null
 - path: rp/replacements/adapter-rp-didcomm.yml
+  source: null
+  targets: null
 - source:
     kind: Secret
     name: adapters-wildcard-cert

@@ -6,6 +6,7 @@ adapter-rp-didcomm
 adapter-rp
 auth-hydra
 auth-hydra-admin
+api-gateway
 csh
 did-resolver
 edv
