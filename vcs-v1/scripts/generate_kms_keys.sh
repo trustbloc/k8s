@@ -20,6 +20,6 @@ cd /opt/workspace
 mkdir -p ${KEYS_OUTPUT_DIR}
 
 # create private key for KMS encryption
-openssl ecparam -name prime256v1 -genkey -noout -out ${KEYS_OUTPUT_DIR}/vcs-kms-key.pem
+openssl rand 32 | base64 | sed 's/+/-/g; s/\//_/g' > ${KEYS_OUTPUT_DIR}/vcs-kms-key.pem
 
 echo "... Done generating KMS encryption key ${KEYS_OUTPUT_DIR}"
