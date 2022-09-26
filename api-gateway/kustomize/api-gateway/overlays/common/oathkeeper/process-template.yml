@@ -1,0 +1,32 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oathkeeper
+spec:
+  template:
+    spec:
+      volumes:
+        - name: script
+          configMap:
+            name: process-template-script
+        - name: access-rules-template
+          configMap:
+            name: access-rules-template
+      initContainers:
+        - name: process-oathkeeper-template
+          image: "alpine:latest"
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh"]
+          args: ["/opt/process_template.sh"]
+          volumeMounts:
+            - name: script
+              mountPath: /opt
+            - name: access-rules-template
+              mountPath: /oathkeeper/template

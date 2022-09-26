@@ -15,7 +15,7 @@ set -e
 : ${DEPLOYMENT_ENV:=local}
 
 ## Should be deployed in the listed order
-: ${COMPONENTS=auth-hydra edv kms vct orb resolver csh vcs vcs-v1 vault-server hub-auth hub-router wallet-web adapter-issuer adapter-rp}
+: ${COMPONENTS=api-gateway auth-hydra edv kms vct orb resolver csh vcs vcs-v1 vault-server hub-auth hub-router wallet-web adapter-issuer adapter-rp}
 DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)

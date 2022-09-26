@@ -40,8 +40,14 @@ configMapGenerator:
 
 replacements:
 - path: router/replacements.yml
+  source: null
+  targets: null
 - path: router-api/replacements.yml
+  source: null
+  targets: null
 - path: router-ws/replacements.yml
+  source: null
+  targets: null
 - source:
     kind: Secret
     name: router-wildcard-cert

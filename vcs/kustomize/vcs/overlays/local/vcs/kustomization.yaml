@@ -48,8 +48,14 @@ secretGenerator:
 
 replacements:
 - path: issuer/replacements.yml
+  source: null
+  targets: null
 - path: verifier/replacements.yml
+  source: null
+  targets: null
 - path: holder/replacements.yml
+  source: null
+  targets: null
 - source:
     kind: Secret
     name: vcs-wildcard-cert
