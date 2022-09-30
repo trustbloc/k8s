@@ -18,6 +18,9 @@ configMapGenerator:
 - envs:
   - config.env
   name: vcs-env
+- files:
+  - profiles.json
+  name: vcs-profile-config
 
 secretGenerator:
 - envs:
@@ -33,4 +36,4 @@ kind: Kustomization
 images:
 - name: vcs
   newName: ghcr.io/trustbloc-cicd/vc-server
-  newTag: 0.1.9-snapshot-a3fb306
+  newTag: 0.1.9-snapshot-7f9329f

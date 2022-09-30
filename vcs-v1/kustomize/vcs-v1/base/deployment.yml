@@ -19,6 +19,10 @@ spec:
       labels:
         app: vcs
     spec:
+      volumes:
+        - name: config
+          configMap:
+            name: vcs-profile-config
       containers:
       - name: vcs
         envFrom:
@@ -32,6 +36,9 @@ spec:
           - containerPort: 8081
             protocol: TCP
             name: http-port
+        volumeMounts:
+          - name: config
+            mountPath: /etc/vcs/config
         livenessProbe:
           httpGet:
             path: /healthcheck

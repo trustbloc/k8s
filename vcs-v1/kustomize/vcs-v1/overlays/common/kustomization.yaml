@@ -27,6 +27,10 @@ configMapGenerator:
   envs:
   - vcs/config.env
   name: vcs-env
+- behavior: replace
+  files:
+  - vcs/profiles.json
+  name: vcs-profile-config
 
 secretGenerator:
 - behavior: merge

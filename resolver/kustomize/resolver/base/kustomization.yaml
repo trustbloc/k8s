@@ -32,4 +32,4 @@ kind: Kustomization
 images:
 - name: did-resolver
   newName: ghcr.io/trustbloc-cicd/did-resolver
-  newTag: v0.0.1-snapshot-8968d74
+  newTag: v0.0.1-snapshot-58ab302
