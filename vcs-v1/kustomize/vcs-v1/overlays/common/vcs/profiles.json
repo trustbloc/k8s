@@ -55,6 +55,25 @@
         "createDID":true,
         "didDomain":"https://||BLOC_DOMAIN||",
         "didServiceAuthToken":"ADMIN_TOKEN"
+     },
+     {
+        "issuer":{
+           "id":"jwt-web-ED25519-Ed25519Signature2020",
+           "name":"Test Issuer with vc-jwt signed with did-web with ED25519 key and Ed25519Signature2020 signature",
+           "organizationID":"test-org",
+           "url":"https://test-issuer.com",
+           "active":true,
+           "vcConfig":{
+              "signingAlgorithm":"Ed25519Signature2020",
+              "signatureRepresentation":1,
+              "keyType":"ED25519",
+              "format":"jwt",
+              "didMethod":"web"
+           }
+        },
+        "createDID":true,
+        "didDomain":"https://||BLOC_DOMAIN||",
+        "didServiceAuthToken":"ADMIN_TOKEN"
      }
   ],
   "verifiers":[
@@ -73,6 +92,32 @@
                  "proof":true,
                  "status":false
               }
+           }
+        },
+        "createDID":true,
+        "didDomain":"https://||BLOC_DOMAIN||",
+        "didServiceAuthToken":"ADMIN_TOKEN"
+     },
+     {
+        "verifier":{
+           "id":"jwt-web-ED25519-Ed25519Signature2020",
+           "name":"Test Verifier",
+           "organizationID":"test-org",
+           "url":"https://test-verifier.com",
+           "active":true,
+           "checks":{
+              "credential":{
+                 "format":[
+                    "jwt"
+                 ],
+                 "proof":true,
+                 "status":false
+              }
+           },
+           "oidcConfig": {
+              "roSigningAlgorithm": "Ed25519Signature2020",
+              "keyType": "ED25519",
+              "didMethod": "web"
            }
         },
         "createDID":true,
