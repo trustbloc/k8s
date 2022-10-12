@@ -112,13 +112,78 @@
                  ],
                  "proof":true,
                  "status":false
+              },
+              "presentation": {
+                 "format": [
+                    "jwt"
+                 ],
+                 "proof": false
               }
            },
            "oidcConfig": {
               "roSigningAlgorithm": "Ed25519Signature2020",
               "keyType": "ED25519",
               "didMethod": "web"
-           }
+           },
+           "presentationDefinitions": [
+              {
+                 "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
+                 "format": {
+                    "ldp_vc": {
+                       "proof_type": [
+                          "JsonWebSignature2020",
+                          "Ed25519Signature2018",
+                          "EcdsaSecp256k1Signature2019",
+                          "RsaSignature2018"
+                       ]
+                    },
+                    "ldp_vp": {
+                       "proof_type": [
+                          "JsonWebSignature2020",
+                          "Ed25519Signature2018",
+                          "EcdsaSecp256k1Signature2019",
+                          "RsaSignature2018"
+                       ]
+                    },
+                    "ldp": {
+                       "proof_type": [
+                          "JsonWebSignature2020",
+                          "Ed25519Signature2018",
+                          "EcdsaSecp256k1Signature2019",
+                          "RsaSignature2018"
+                       ]
+                    }
+                 },
+                 "input_descriptors": [
+                    {
+                       "id": "degree",
+                       "name": "degree",
+                       "purpose": "We can only hire with bachelor degree.",
+                       "schema": [
+                          {
+                             "uri": "https://www.w3.org/2018/credentials#VerifiableCredential",
+                             "required": false
+                          }
+                       ],
+                       "constraints": {
+                          "fields": [
+                             {
+                                "path": [
+                                   "$.credentialSubject.degree.type",
+                                   "$.vc.credentialSubject.degree.type"
+                                ],
+                                "purpose": "We can only hire with bachelor degree.",
+                                "filter": {
+                                   "type": "string",
+                                   "const": "BachelorDegree"
+                                }
+                             }
+                          ]
+                       }
+                    }
+                 ]
+              }
+           ]
         },
         "createDID":true,
         "didDomain":"https://||BLOC_DOMAIN||",
