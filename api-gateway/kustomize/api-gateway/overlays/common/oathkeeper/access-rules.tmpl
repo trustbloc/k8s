@@ -1,8 +1,8 @@
-# 
-# Copyright SecureKey Technologies Inc. All Rights Reserved. 
-# 
-# SPDX-License-Identifier: Apache-2.0 
-# 
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
 [
   {
@@ -11,7 +11,7 @@
       "url": "http://vcs"
     },
     "match": {
-      "url": "http://api-gateway.||DOMAIN||/<.*>",
+      "url": "http://api-gateway.||DOMAIN||/<issuer|verifier>/profiles<.*>",
       "methods": [
         "GET",
         "POST",
@@ -43,5 +43,43 @@
     "authorizer": {
       "handler": "allow"
     }
-  }
+  },
+  {
+    "id": "dev-interactions-authorization-response",
+    "upstream": {
+      "url": "http://vcs"
+    },
+    "match": {
+      "url": "http://api-gateway.||DOMAIN||/verifier/interactions/authorization-response",
+      "methods": ["POST"]
+    },
+    "authenticators": [{
+      "handler": "noop"
+    }],
+    "mutators": [{
+      "handler": "noop"
+    }],
+    "authorizer": {
+      "handler": "allow"
+    }
+   },
+   {
+     "id": "dev-request-object",
+     "upstream": {
+       "url": "http://vcs"
+     },
+     "match": {
+       "url": "http://api-gateway.||DOMAIN||/request-object/<.*>",
+       "methods": ["GET"]
+     },
+     "authenticators": [{
+       "handler": "noop"
+     }],
+     "mutators": [{
+       "handler": "noop"
+     }],
+     "authorizer": {
+       "handler": "allow"
+     }
+   }
 ]
