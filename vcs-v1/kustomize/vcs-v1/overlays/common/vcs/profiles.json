@@ -127,7 +127,7 @@
            },
            "presentationDefinitions": [
               {
-                 "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
+                 "id": "b6b89b94-3ef4-4494-88e2-f8957be7483e",
                  "format": {
                     "ldp_vc": {
                        "proof_type": [
@@ -156,30 +156,14 @@
                  },
                  "input_descriptors": [
                     {
-                       "id": "degree",
-                       "name": "degree",
-                       "purpose": "We can only hire with bachelor degree.",
+                       "id": "WorkplaceCredential",
+                       "name": "WorkplaceCredential",
+                       "purpose": "So we can see that you are an expert.",
                        "schema": [
                           {
-                             "uri": "https://www.w3.org/2018/credentials#VerifiableCredential",
-                             "required": false
+                             "uri": "WorkplaceCredential"
                           }
-                       ],
-                       "constraints": {
-                          "fields": [
-                             {
-                                "path": [
-                                   "$.credentialSubject.degree.type",
-                                   "$.vc.credentialSubject.degree.type"
-                                ],
-                                "purpose": "We can only hire with bachelor degree.",
-                                "filter": {
-                                   "type": "string",
-                                   "const": "BachelorDegree"
-                                }
-                             }
-                          ]
-                       }
+                       ]
                     }
                  ]
               }
