@@ -123,7 +123,7 @@
            "oidcConfig": {
               "roSigningAlgorithm": "JsonWebSignature2020",
               "keyType": "ED25519",
-              "didMethod": "web"
+              "didMethod": "ion"
            },
            "presentationDefinitions": [
               {
@@ -143,9 +143,7 @@
               }
            ]
         },
-        "createDID":true,
-        "didDomain":"https://||BLOC_DOMAIN||",
-        "didServiceAuthToken":"ADMIN_TOKEN"
+        "createDID":true
      }
   ]
 }
