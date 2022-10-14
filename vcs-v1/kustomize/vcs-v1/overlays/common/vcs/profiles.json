@@ -100,7 +100,7 @@
      },
      {
         "verifier":{
-           "id":"jwt-web-ED25519-Ed25519Signature2020",
+           "id":"jwt-web-ED25519-JsonWebSignature2020",
            "name":"Test Verifier",
            "organizationID":"test-org",
            "url":"https://test-verifier.com",
@@ -121,7 +121,7 @@
               }
            },
            "oidcConfig": {
-              "roSigningAlgorithm": "Ed25519Signature2020",
+              "roSigningAlgorithm": "JsonWebSignature2020",
               "keyType": "ED25519",
               "didMethod": "web"
            },
