@@ -110,7 +110,7 @@
                  "format":[
                     "jwt"
                  ],
-                 "proof":true,
+                 "proof":false,
                  "status":false
               },
               "presentation": {
