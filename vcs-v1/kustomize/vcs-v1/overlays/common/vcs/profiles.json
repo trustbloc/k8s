@@ -105,6 +105,7 @@
            "organizationID":"test-org",
            "url":"https://test-verifier.com",
            "active":true,
+           "webHook": "https://demo-rp.||DOMAIN||/verify/openid4vp/webhook",
            "checks":{
               "credential":{
                  "format":[
