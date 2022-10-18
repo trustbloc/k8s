@@ -64,6 +64,42 @@
     }
    },
    {
+     "id": "oidc4vp-interactions-claims",
+     "upstream": {
+       "url": "http://vcs"
+     },
+     "match": {
+       "url": "http://api-gateway.||DOMAIN||/verifier/interactions/<.*>/claim",
+       "methods": [
+         "GET"
+       ]
+     },
+     "authenticators": [
+       {
+         "handler": "oauth2_introspection",
+         "config": {
+           "required_scope": [
+             "org_admin"
+           ]
+         }
+       }
+     ],
+     "mutators": [
+       {
+         "handler": "header",
+         "config": {
+           "headers": {
+             "X-User": "{{ print .Subject }}",
+             "X-API-Key": "rw_token"
+           }
+         }
+       }
+     ],
+     "authorizer": {
+       "handler": "allow"
+     }
+   },
+   {
      "id": "dev-request-object",
      "upstream": {
        "url": "http://vcs"
