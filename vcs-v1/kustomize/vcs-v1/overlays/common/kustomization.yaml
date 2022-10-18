@@ -42,5 +42,9 @@ transformers:
 - sedtransform.yml
 - sedb64transform.yml
 
+
+components:
+- ../../components/local-kms
+
 resources:
 - ../../base

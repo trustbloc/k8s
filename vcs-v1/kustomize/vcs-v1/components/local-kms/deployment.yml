@@ -1,0 +1,36 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vcs-local-kms
+  labels:
+    app: vcs-local-kms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vcs-local-kms
+  template:
+    metadata:
+      labels:
+        app: vcs-local-kms
+    spec:
+      containers:
+        - name: vcs-local-kms
+          image: "local-kms:latest"
+          imagePullPolicy: IfNotPresent
+          command: [ "local-kms" ]
+          envFrom:
+            - configMapRef:
+                name: vcs-local-kms-env
+          ports:
+            - name: api
+              containerPort: 8020
+              protocol: TCP
+          resources:
+            {}

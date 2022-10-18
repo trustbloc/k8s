@@ -2,15 +2,14 @@
   "issuers":[
      {
         "issuer":{
-           "id":"ldp-web-ED25519-Ed25519Signature2020",
-           "name":"Test Issuer with vc-ldp signed with did-web with ED25519 key and Ed25519Signature2020 signature",
+           "id":"ldp-web-P256-JsonWebSignature2020",
+           "name":"Test Issuer with vc-ldp signed with did-web with P256 key and JsonWebSignature2020 signature",
            "organizationID":"test-org",
            "url":"https://test-issuer.com",
            "active":true,
            "vcConfig":{
-              "signingAlgorithm":"Ed25519Signature2020",
-              "signatureRepresentation":1,
-              "keyType":"ED25519",
+              "signingAlgorithm":"JsonWebSignature2020",
+              "keyType":"ECDSAP256DER",
               "format":"ldp",
               "didMethod":"web"
            }
@@ -21,54 +20,17 @@
      },
      {
         "issuer":{
-           "id":"ldp-web-ED25519-JsonWebSignature2020",
-           "name":"Test Issuer with vc-ldp signed with did-web with ED25519 key and JsonWebSignature2020 signature",
-           "organizationID":"test-org",
-           "url":"https://test-issuer.com",
-           "active":true,
-           "vcConfig":{
-              "signingAlgorithm":"JsonWebSignature2020",
-              "keyType":"ED25519",
-              "format":"ldp",
-              "didMethod":"web"
-           }
-        },
-        "createDID":true,
-        "didDomain":"https://||BLOC_DOMAIN||",
-        "didServiceAuthToken":"ADMIN_TOKEN"
-     },
-     {
-        "issuer":{
-           "id":"ldp-orb-ED25519-JsonWebSignature2020",
-           "name":"Test Issuer with vc-ldp signed with did-orb with ED25519 key and JsonWebSignature2020 signature",
+           "id":"ldp-orb-P256-JsonWebSignature2020",
+           "name":"Test Issuer with vc-ldp signed with did-orb with P256 key and JsonWebSignature2020 signature",
            "organizationID":"test-org",
            "url":"https://test-issuer.com",
            "active":true,
            "vcConfig":{
               "signingAlgorithm":"JsonWebSignature2020",
               "signatureRepresentation":1,
-              "keyType":"ED25519",
+              "keyType":"ECDSAP256DER",
               "format":"ldp",
               "didMethod":"orb"
-           }
-        },
-        "createDID":true,
-        "didDomain":"https://||BLOC_DOMAIN||",
-        "didServiceAuthToken":"ADMIN_TOKEN"
-     },
-     {
-        "issuer":{
-           "id":"jwt-web-ED25519-Ed25519Signature2020",
-           "name":"Test Issuer with vc-jwt signed with did-web with ED25519 key and Ed25519Signature2020 signature",
-           "organizationID":"test-org",
-           "url":"https://test-issuer.com",
-           "active":true,
-           "vcConfig":{
-              "signingAlgorithm":"Ed25519Signature2020",
-              "signatureRepresentation":1,
-              "keyType":"ED25519",
-              "format":"jwt",
-              "didMethod":"web"
            }
         },
         "createDID":true,
@@ -122,8 +84,8 @@
               }
            },
            "oidcConfig": {
-              "roSigningAlgorithm": "JsonWebSignature2020",
-              "keyType": "ED25519",
+              "roSigningAlgorithm": "EcdsaSecp256k1Signature2019",
+              "keyType": "ECDSASecp256k1IEEEP1363",
               "didMethod": "ion"
            },
            "presentationDefinitions": [
