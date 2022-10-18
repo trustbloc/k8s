@@ -83,6 +83,7 @@
            "name":"Test Verifier",
            "organizationID":"test-org",
            "url":"https://test-verifier.com",
+           "webHook": "https://demo-rp.local.trustbloc.dev/verify/openid4vp/webhook",
            "active":true,
            "checks":{
               "credential":{
@@ -104,6 +105,7 @@
            "name":"Test Verifier",
            "organizationID":"test-org",
            "url":"https://test-verifier.com",
+           "webHook": "https://demo-rp.local.trustbloc.dev/verify/openid4vp/webhook",
            "active":true,
            "checks":{
               "credential":{
