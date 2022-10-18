@@ -23,6 +23,8 @@ ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES built from https://github.com/trustbloc/vcs/tree/main
 VCS_IMG				?= ghcr.io/trustbloc-cicd/vc-server:0.1.9-snapshot-bca6f3a
+LOCALKMS_IMG			?= docker.io/fqutishat/local-kms:latest
+
 
 # do not modify
 KUSTOMIZE_DIR       	= kustomize/vcs-v1
@@ -74,6 +76,9 @@ set-labels: kustomize
 set-images: kustomize
 	@pushd ${KUSTOMIZE_DIR}/base &&\
 	${KUSTOMIZE} edit set image vcs=${VCS_IMG} &&\
+	popd
+	@pushd ${KUSTOMIZE_DIR}/components/local-kms &&\
+	${KUSTOMIZE} edit set image local-kms=${LOCALKMS_IMG} &&\
 	popd
 
 .PHONY: generate-kms-keys
