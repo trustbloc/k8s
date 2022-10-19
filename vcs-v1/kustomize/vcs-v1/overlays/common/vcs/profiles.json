@@ -65,7 +65,7 @@
            "id":"jwt-web-ED25519-JsonWebSignature2020",
            "name":"Utopian Background Check",
            "organizationID":"test-org",
-           "url":"https://test-verifier.com",
+           "url":"https://demo-rp.||DOMAIN||",
            "active":true,
            "webHook": "https://demo-rp.||DOMAIN||/verify/openid4vp/webhook",
            "checks":{
