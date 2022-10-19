@@ -63,7 +63,7 @@
      {
         "verifier":{
            "id":"jwt-web-ED25519-JsonWebSignature2020",
-           "name":"Test Verifier",
+           "name":"Utopian Background Check",
            "organizationID":"test-org",
            "url":"https://test-verifier.com",
            "active":true,
