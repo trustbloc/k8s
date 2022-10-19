@@ -23,7 +23,7 @@ ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES built from https://github.com/trustbloc/vcs/tree/main
 VCS_IMG				?= ghcr.io/trustbloc-cicd/vc-server:0.1.9-snapshot-bca6f3a
-LOCALKMS_IMG			?= docker.io/fqutishat/local-kms:latest
+LOCALKMS_IMG			?= docker.io/fqutishat/local-kms:new
 
 
 # do not modify
