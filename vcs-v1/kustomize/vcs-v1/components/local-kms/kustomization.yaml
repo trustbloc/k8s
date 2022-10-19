@@ -9,7 +9,7 @@ kind: Component
 images:
 - name: local-kms
   newName: docker.io/fqutishat/local-kms
-  newTag: latest
+  newTag: new
 
 configMapGenerator:
 - envs:
