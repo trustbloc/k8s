@@ -74,7 +74,7 @@
                     "jwt"
                  ],
                  "proof":true,
-                 "status":false
+                 "status":true
               },
               "presentation": {
                  "format": [
