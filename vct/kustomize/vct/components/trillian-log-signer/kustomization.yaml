@@ -19,7 +19,7 @@ kind: Component
 images:
 - name: trillian-log-signer
   newName: ghcr.io/trustbloc-cicd/vct-log-signer
-  newTag: v1.0.0-rc4-snapshot-8b6a133
+  newTag: v1.0.0-rc4-snapshot-1ebe69f
 
 resources:
 - trillian-log-signer.yml
