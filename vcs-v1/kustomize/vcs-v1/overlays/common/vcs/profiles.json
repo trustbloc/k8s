@@ -74,12 +74,13 @@
                     "jwt"
                  ],
                  "proof":true,
-                 "status":true
+                 "status":false
               },
               "presentation": {
                  "format": [
                     "jwt"
                  ],
+                 "vcSubject": true,
                  "proof": true
               }
            },
