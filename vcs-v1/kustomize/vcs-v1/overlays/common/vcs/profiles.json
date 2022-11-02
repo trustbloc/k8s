@@ -94,12 +94,12 @@
                  "id": "b6b89b94-3ef4-4494-88e2-f8957be7483e",
                  "input_descriptors": [
                     {
-                       "id": "WorkplaceCredential",
-                       "name": "WorkplaceCredential",
+                       "id": "VerifiedEmployee",
+                       "name": "VerifiedEmployee",
                        "purpose": "So we can see that you are an expert.",
                        "schema": [
                           {
-                             "uri": "WorkplaceCredential"
+                             "uri": "VerifiedEmployee"
                           }
                        ]
                     }
