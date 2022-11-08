@@ -11,7 +11,8 @@
               "signingAlgorithm":"JsonWebSignature2020",
               "keyType":"ECDSAP256DER",
               "format":"ldp",
-              "didMethod":"web"
+              "didMethod":"web",
+              "vcStatusListVersion": "StatusList2021Entry"
            }
         },
         "createDID":true,
@@ -30,7 +31,8 @@
               "signatureRepresentation":1,
               "keyType":"ECDSAP256DER",
               "format":"ldp",
-              "didMethod":"orb"
+              "didMethod":"orb",
+              "vcStatusListVersion": "StatusList2021Entry"
            }
         },
         "createDID":true,
@@ -74,7 +76,7 @@
                     "jwt"
                  ],
                  "proof":true,
-                 "status":false
+                 "status":true
               },
               "presentation": {
                  "format": [
