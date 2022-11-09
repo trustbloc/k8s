@@ -80,7 +80,7 @@
                     "jwt"
                  ],
                  "proof":true,
-                 "status":true
+                 "status":false
               },
               "presentation": {
                  "format": [
