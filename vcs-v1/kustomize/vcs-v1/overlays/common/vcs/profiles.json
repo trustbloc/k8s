@@ -12,7 +12,9 @@
               "keyType":"ECDSAP256DER",
               "format":"ldp",
               "didMethod":"web",
-              "vcStatusListVersion": "StatusList2021Entry"
+              "status": {
+                 "type": "StatusList2021Entry"
+              }
            }
         },
         "createDID":true,
@@ -32,7 +34,9 @@
               "keyType":"ECDSAP256DER",
               "format":"ldp",
               "didMethod":"orb",
-              "vcStatusListVersion": "StatusList2021Entry"
+              "status": {
+                 "type": "StatusList2021Entry"
+              }
            }
         },
         "createDID":true,
