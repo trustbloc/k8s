@@ -29,7 +29,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-ORB_IMG	 	?= ghcr.io/trustbloc-cicd/orb:v1.0.0-rc4-snapshot-1cf1ce2
+ORB_IMG	 	?= ghcr.io/trustbloc/orb:v1.0.0-rc4
 RABBITMQ_IMG		?= docker.io/rabbitmq:3-management-alpine
 LOCALKMS_IMG			?= docker.io/nsmithuk/local-kms:3.11.0
 

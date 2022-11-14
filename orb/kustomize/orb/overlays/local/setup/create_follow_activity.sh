@@ -20,7 +20,7 @@ esac
 
 rm -rf .build
 mkdir -p .build
-wget https://github.com/trustbloc/orb/releases/download/v1.0.0-rc3/orb-cli-linux-$ARCH.tar.gz -O .build/orb-cli-linux-$ARCH.tar.gz
+wget https://github.com/trustbloc/orb/releases/download/v1.0.0-rc4/orb-cli-linux-$ARCH.tar.gz -O .build/orb-cli-linux-$ARCH.tar.gz
 cd .build
 tar -zxf orb-cli-linux-$ARCH.tar.gz
 
