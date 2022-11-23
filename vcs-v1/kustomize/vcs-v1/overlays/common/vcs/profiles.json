@@ -42,6 +42,45 @@
         "createDID":true,
         "didDomain":"https://||BLOC_DOMAIN||",
         "didServiceAuthToken":"ADMIN_TOKEN"
+     },
+     {
+        "issuer": {
+           "id": "bank_issuer",
+           "name": "Bank Issuer",
+           "organizationID": "test-org",
+           "url": "https://vcs.local.trustbloc.dev",
+           "active": true,
+           "vcConfig": {
+              "signingAlgorithm": "JsonWebSignature2020",
+              "signatureRepresentation": 0,
+              "keyType": "ECDSAP256DER",
+              "format": "ldp",
+              "didMethod": "orb",
+              "status": {
+                 "type": "StatusList2021Entry"
+              }
+           },
+           "oidcConfig": {
+              "client_id": "bank_issuer",
+              "client_secret_handle": "bank-issuer-secret",
+              "redirect_uri": "https://localhost:4455/oidc/redirect",
+              "issuer_well_known": "https://hydra.local.trustbloc.dev/.well-known/openid-configuration"
+           },
+           "credentialTemplates": [
+              {
+                 "contexts": [
+                    "https://www.w3.org/2018/credentials/v1",
+                    "https://w3id.org/citizenship/v1"
+                 ],
+                 "type": "PermanentResidentCard",
+                 "id": "templateID",
+                 "issuer": "did:orb:bank_issuer"
+              }
+           ]
+        },
+        "createDID": true,
+        "didDomain":"https://||BLOC_DOMAIN||",
+        "didServiceAuthToken":"ADMIN_TOKEN"
      }
   ],
   "verifiers":[
