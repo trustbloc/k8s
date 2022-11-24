@@ -48,7 +48,8 @@
            "id": "bank_issuer",
            "name": "Bank Issuer",
            "organizationID": "test-org",
-           "url": "https://vcs.local.trustbloc.dev",
+           "url": "https://vcs.||DOMAIN||",
+           "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
            "active": true,
            "vcConfig": {
               "signingAlgorithm": "JsonWebSignature2020",
@@ -63,8 +64,8 @@
            "oidcConfig": {
               "client_id": "bank_issuer",
               "client_secret_handle": "bank-issuer-secret",
-              "redirect_uri": "https://localhost:4455/oidc/redirect",
-              "issuer_well_known": "https://hydra.local.trustbloc.dev/.well-known/openid-configuration"
+              "redirect_uri": "https://vcs.||DOMAIN||/oidc/redirect",
+              "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration"
            },
            "credentialTemplates": [
               {
