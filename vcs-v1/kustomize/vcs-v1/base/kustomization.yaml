@@ -20,6 +20,7 @@ configMapGenerator:
   name: vcs-env
 - files:
   - profiles.json
+  - clients.json
   name: vcs-profile-config
 
 secretGenerator:
@@ -36,4 +37,4 @@ kind: Kustomization
 images:
 - name: vcs
   newName: ghcr.io/trustbloc-cicd/vc-server
-  newTag: 0.1.9-snapshot-39b3119
+  newTag: 0.1.9-snapshot-2bf1f8f

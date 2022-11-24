@@ -30,6 +30,7 @@ configMapGenerator:
 - behavior: replace
   files:
   - vcs/profiles.json
+  - vcs/clients.json
   name: vcs-profile-config
 
 secretGenerator:
