@@ -52,11 +52,11 @@
            "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
            "active": true,
            "vcConfig": {
-              "signingAlgorithm": "JsonWebSignature2020",
+              "signingAlgorithm": "EcdsaSecp256k1Signature2019",
               "signatureRepresentation": 0,
-              "keyType": "ECDSAP256DER",
-              "format": "ldp",
-              "didMethod": "orb",
+              "keyType": "ECDSASecp256k1IEEEP1363",
+              "format": "jwt",
+              "didMethod": "ion",
               "status": {
                  "type": "StatusList2021Entry"
               }
@@ -75,13 +75,11 @@
                  ],
                  "type": "PermanentResidentCard",
                  "id": "templateID",
-                 "issuer": "did:orb:bank_issuer"
+                 "issuer": "did:ion:bank_issuer"
               }
            ]
         },
-        "createDID": true,
-        "didDomain":"https://||BLOC_DOMAIN||",
-        "didServiceAuthToken":"ADMIN_TOKEN"
+        "createDID": true
      }
   ],
   "verifiers":[
