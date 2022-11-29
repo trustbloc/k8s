@@ -46,7 +46,7 @@
      {
         "issuer": {
            "id": "bank_issuer",
-           "name": "Bank Issuer",
+           "name": "Acme Corp",
            "organizationID": "test-org",
            "url": "https://vcs.||DOMAIN||",
            "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
@@ -91,10 +91,10 @@
                           "name": "Verified Employee",
                           "locale": "en-US",
                           "logo": {
-                             "url": "https://example.com/public/logo.png",
+                             "url": "https://media.githubusercontent.com/media/trustbloc/wallet-sdk/main/demo/app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57%402x.png",
                              "alternative_text": "a square logo of a employee verification"
                           },
-                          "background_color": "#12107c",
+                          "background_color": "#000000",
                           "text_color": "#FFFFFF"
                        }
                     ],
