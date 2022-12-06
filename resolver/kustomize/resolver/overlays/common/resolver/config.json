@@ -15,6 +15,9 @@
         "pattern": "^(did:web:.+)$"
       },
       {
+        "pattern": "^(did:key:.+)$"
+      },
+      {
         "pattern": "^(did:.+)$",
         "url": "https://uni-resolver-web.||DOMAIN||/1.0/identifiers/$1"
       }
