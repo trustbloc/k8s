@@ -58,7 +58,8 @@
               "format": "jwt",
               "didMethod": "ion",
               "status": {
-                 "type": "RevocationList2021Status"
+                 "type": "RevocationList2021Status",
+                 "disable": true
               }
            },
            "oidcConfig": {
