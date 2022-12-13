@@ -54,7 +54,7 @@
            "vcConfig": {
               "signingAlgorithm": "EcdsaSecp256k1Signature2019",
               "signatureRepresentation": 0,
-              "keyType": "ECDSASecp256k1IEEEP1363",
+              "keyType": "ECDSASecp256k1DER",
               "format": "jwt",
               "didMethod": "ion",
               "status": {
@@ -211,7 +211,7 @@
            },
            "oidcConfig": {
               "roSigningAlgorithm": "EcdsaSecp256k1Signature2019",
-              "keyType": "ECDSASecp256k1IEEEP1363",
+              "keyType": "ECDSASecp256k1DER",
               "didMethod": "ion"
            },
            "presentationDefinitions": [
