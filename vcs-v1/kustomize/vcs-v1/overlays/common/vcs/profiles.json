@@ -1,238 +1,238 @@
 {
-  "issuers": [
-    {
-      "issuer": {
-        "id": "ldp-web-P256-JsonWebSignature2020",
-        "name": "Test Issuer with vc-ldp signed with did-web with P256 key and JsonWebSignature2020 signature",
-        "organizationID": "test-org",
-        "url": "https://test-issuer.com",
-        "active": true,
-        "vcConfig": {
-          "signingAlgorithm": "JsonWebSignature2020",
-          "keyType": "ECDSAP256DER",
-          "format": "ldp",
-          "didMethod": "web",
-          "status": {
-            "type": "StatusList2021Entry"
-          }
-        }
-      },
-      "createDID": true,
-      "didDomain": "https://||BLOC_DOMAIN||",
-      "didServiceAuthToken": "ADMIN_TOKEN"
-    },
-    {
-      "issuer": {
-        "id": "ldp-orb-P256-JsonWebSignature2020",
-        "name": "Test Issuer with vc-ldp signed with did-orb with P256 key and JsonWebSignature2020 signature",
-        "organizationID": "test-org",
-        "url": "https://test-issuer.com",
-        "active": true,
-        "vcConfig": {
-          "signingAlgorithm": "JsonWebSignature2020",
-          "signatureRepresentation": 1,
-          "keyType": "ECDSAP256DER",
-          "format": "ldp",
-          "didMethod": "orb",
-          "status": {
-            "type": "StatusList2021Entry"
-          }
-        }
-      },
-      "createDID": true,
-      "didDomain": "https://||BLOC_DOMAIN||",
-      "didServiceAuthToken": "ADMIN_TOKEN"
-    },
-    {
-      "issuer": {
-        "id": "bank_issuer",
-        "name": "Acme Corp",
-        "organizationID": "test-org",
-        "url": "https://vcs.||DOMAIN||",
-        "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
-        "active": true,
-        "vcConfig": {
-          "signingAlgorithm": "EcdsaSecp256k1Signature2019",
-          "signatureRepresentation": 0,
-          "keyType": "ECDSASecp256k1DER",
-          "format": "jwt",
-          "didMethod": "ion",
-          "status": {
-            "type": "RevocationList2021Status",
-            "disable": true
-          }
+  "issuers":[
+     {
+        "issuer":{
+           "id":"ldp-web-P256-JsonWebSignature2020",
+           "name":"Test Issuer with vc-ldp signed with did-web with P256 key and JsonWebSignature2020 signature",
+           "organizationID":"test-org",
+           "url":"https://test-issuer.com",
+           "active":true,
+           "vcConfig":{
+              "signingAlgorithm":"JsonWebSignature2020",
+              "keyType":"ECDSAP256DER",
+              "format":"ldp",
+              "didMethod":"web",
+              "status": {
+                 "type": "StatusList2021Entry"
+              }
+           }
         },
-        "oidcConfig": {
-          "client_id": "bank_issuer",
-          "client_secret_handle": "bank-issuer-secret",
-          "redirect_uri": "https://api-gateway.||DOMAIN||/oidc/redirect",
-          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration"
+        "createDID":true,
+        "didDomain":"https://||BLOC_DOMAIN||",
+        "didServiceAuthToken":"ADMIN_TOKEN"
+     },
+     {
+        "issuer":{
+           "id":"ldp-orb-P256-JsonWebSignature2020",
+           "name":"Test Issuer with vc-ldp signed with did-orb with P256 key and JsonWebSignature2020 signature",
+           "organizationID":"test-org",
+           "url":"https://test-issuer.com",
+           "active":true,
+           "vcConfig":{
+              "signingAlgorithm":"JsonWebSignature2020",
+              "signatureRepresentation":1,
+              "keyType":"ECDSAP256DER",
+              "format":"ldp",
+              "didMethod":"orb",
+              "status": {
+                 "type": "StatusList2021Entry"
+              }
+           }
         },
-        "credentialTemplates": [
-          {
-            "contexts": [
-              "https://www.w3.org/2018/credentials/v1"
-            ],
-            "type": "VerifiedEmployee",
-            "id": "templateID",
-            "issuer": "did:ion:bank_issuer"
-          }
-        ],
-        "credentialMetadata": {
-          "credentials_supported": {
-            "VerifiedEmployee": {
-              "format": "jwt_vc_json",
-              "id": "VerifiedEmployee_JWT",
-              "types": [
-                "VerifiableCredential",
-                "VerifiedEmployee"
-              ],
-              "display": [
-                {
-                  "name": "Verified Employee",
-                  "locale": "en-US",
-                  "logo": {
-                    "url": "https://media.githubusercontent.com/media/trustbloc/wallet-sdk/main/demo/app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57%402x.png",
-                    "alternative_text": "a square logo of a employee verification"
+        "createDID":true,
+        "didDomain":"https://||BLOC_DOMAIN||",
+        "didServiceAuthToken":"ADMIN_TOKEN"
+     },
+     {
+        "issuer": {
+           "id": "bank_issuer",
+           "name": "Acme Corp",
+           "organizationID": "test-org",
+           "url": "https://vcs.||DOMAIN||",
+           "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
+           "active": true,
+           "vcConfig": {
+              "signingAlgorithm": "EcdsaSecp256k1Signature2019",
+              "signatureRepresentation": 0,
+              "keyType": "ECDSASecp256k1DER",
+              "format": "jwt",
+              "didMethod": "ion",
+              "status": {
+                 "type": "RevocationList2021Status",
+                 "disable": true
+              }
+           },
+           "oidcConfig": {
+              "client_id": "bank_issuer",
+              "client_secret_handle": "bank-issuer-secret",
+              "redirect_uri": "https://api-gateway.||DOMAIN||/oidc/redirect",
+              "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration"
+           },
+           "credentialTemplates": [
+              {
+                 "contexts": [
+                    "https://www.w3.org/2018/credentials/v1"
+                 ],
+                 "type": "VerifiedEmployee",
+                 "id": "templateID",
+                 "issuer": "did:ion:bank_issuer"
+              }
+           ],
+          "credentialMetadata": {
+            "credentials_supported": {
+              "VerifiedEmployee": {
+                "format": "jwt_vc_json",
+                "id": "VerifiedEmployee_JWT",
+                "types": [
+                  "VerifiableCredential",
+                  "VerifiedEmployee"
+                ],
+                "display": [
+                  {
+                    "name": "Verified Employee",
+                    "locale": "en-US",
+                    "logo": {
+                      "url": "https://media.githubusercontent.com/media/trustbloc/wallet-sdk/main/demo/app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57%402x.png",
+                      "alternative_text": "a square logo of a employee verification"
+                    },
+                    "background_color": "#0000FF",
+                    "text_color": "#FFFFFF"
+                  }
+                ],
+                "credentialSubject": {
+                  "displayName": {
+                    "display": [
+                      {
+                        "name": "Employee",
+                        "locale": "en-US"
+                      }
+                    ]
                   },
-                  "background_color": "#0000FF",
-                  "text_color": "#FFFFFF"
-                }
-              ],
-              "credentialSubject": {
-                "displayName": {
-                  "display": [
-                    {
-                      "name": "Employee",
-                      "locale": "en-US"
-                    }
-                  ]
-                },
-                "givenName": {
-                  "display": [
-                    {
-                      "name": "Given Name",
-                      "locale": "en-US"
-                    }
-                  ]
-                },
-                "jobTitle": {
-                  "display": [
-                    {
-                      "name": "Job Title",
-                      "locale": "en-US"
-                    }
-                  ]
-                },
-                "surname": {
-                  "display": [
-                    {
-                      "name": "Surname",
-                      "locale": "en-US"
-                    }
-                  ]
-                },
-                "preferredLanguage": {
-                  "display": [
-                    {
-                      "name": "Preferred Language",
-                      "locale": "en-US"
-                    }
-                  ]
-                },
-                "mail": {
-                  "display": [
-                    {
-                      "name": "Mail",
-                      "locale": "en-US"
-                    }
-                  ]
-                },
-                "photo": {
-                  "display": [
-                    {
-                      "name": "Photo"
-                    }
-                  ]
+                  "givenName": {
+                    "display": [
+                      {
+                        "name": "Given Name",
+                        "locale": "en-US"
+                      }
+                    ]
+                  },
+                  "jobTitle": {
+                    "display": [
+                      {
+                        "name": "Job Title",
+                        "locale": "en-US"
+                      }
+                    ]
+                  },
+                  "surname": {
+                    "display": [
+                      {
+                        "name": "Surname",
+                        "locale": "en-US"
+                      }
+                    ]
+                  },
+                  "preferredLanguage": {
+                    "display": [
+                      {
+                        "name": "Preferred Language",
+                        "locale": "en-US"
+                      }
+                    ]
+                  },
+                  "mail": {
+                    "display": [
+                      {
+                        "name": "Mail",
+                        "locale": "en-US"
+                      }
+                    ]
+                  },
+                  "photo": {
+                    "display": [
+                      {
+                        "name": "Photo"
+                      }
+                    ]
+                  }
                 }
               }
             }
           }
-        }
-      },
-      "createDID": true
-    }
+        },
+        "createDID": true
+     }
   ],
-  "verifiers": [
-    {
-      "verifier": {
-        "id": "test-verifier",
-        "name": "Test Verifier",
-        "organizationID": "test-org",
-        "url": "https://test-verifier.com",
-        "active": true,
-        "checks": {
-          "credential": {
-            "format": [
-              "ldp"
-            ],
-            "proof": true,
-            "status": false
-          }
-        }
-      },
-      "createDID": true,
-      "didDomain": "https://||BLOC_DOMAIN||",
-      "didServiceAuthToken": "ADMIN_TOKEN"
-    },
-    {
-      "verifier": {
-        "id": "jwt-web-ED25519-JsonWebSignature2020",
-        "name": "Utopian Background Check",
-        "organizationID": "test-org",
-        "url": "https://demo-rp.||DOMAIN||/",
-        "active": true,
-        "webHook": "https://demo-rp.||DOMAIN||/verify/openid4vp/webhook",
-        "checks": {
-          "credential": {
-            "format": [
-              "jwt"
-            ],
-            "proof": true,
-            "status": false
-          },
-          "presentation": {
-            "format": [
-              "jwt"
-            ],
-            "vcSubject": true,
-            "proof": true
-          }
-        },
-        "oidcConfig": {
-          "roSigningAlgorithm": "EcdsaSecp256k1Signature2019",
-          "keyType": "ECDSASecp256k1DER",
-          "didMethod": "ion"
-        },
-        "presentationDefinitions": [
-          {
-            "id": "b6b89b94-3ef4-4494-88e2-f8957be7483e",
-            "input_descriptors": [
-              {
-                "id": "VerifiableCredential",
-                "name": "VerifiableCredential",
-                "purpose": "So we can see that you are an expert.",
-                "schema": [
-                  {
-                    "uri": "VerifiableCredential"
-                  }
-                ]
+  "verifiers":[
+     {
+        "verifier":{
+           "id":"test-verifier",
+           "name":"Test Verifier",
+           "organizationID":"test-org",
+           "url":"https://test-verifier.com",
+           "active":true,
+           "checks":{
+              "credential":{
+                 "format":[
+                    "ldp"
+                 ],
+                 "proof":true,
+                 "status":false
               }
-            ]
-          }
-        ]
-      },
-      "createDID": true
-    }
+           }
+        },
+        "createDID":true,
+        "didDomain":"https://||BLOC_DOMAIN||",
+        "didServiceAuthToken":"ADMIN_TOKEN"
+     },
+     {
+        "verifier":{
+           "id":"jwt-web-ED25519-JsonWebSignature2020",
+           "name":"Utopian Background Check",
+           "organizationID":"test-org",
+           "url":"https://demo-rp.||DOMAIN||/",
+           "active":true,
+           "webHook": "https://demo-rp.||DOMAIN||/verify/openid4vp/webhook",
+           "checks":{
+              "credential":{
+                 "format":[
+                    "jwt"
+                 ],
+                 "proof":true,
+                 "status":false
+              },
+              "presentation": {
+                 "format": [
+                    "jwt"
+                 ],
+                 "vcSubject": true,
+                 "proof": true
+              }
+           },
+           "oidcConfig": {
+              "roSigningAlgorithm": "EcdsaSecp256k1Signature2019",
+              "keyType": "ECDSASecp256k1DER",
+              "didMethod": "ion"
+           },
+           "presentationDefinitions": [
+              {
+                 "id": "b6b89b94-3ef4-4494-88e2-f8957be7483e",
+                 "input_descriptors": [
+                    {
+                       "id": "VerifiableCredential",
+                       "name": "VerifiableCredential",
+                       "purpose": "So we can see that you are an expert.",
+                       "schema": [
+                          {
+                             "uri": "VerifiableCredential"
+                          }
+                       ]
+                    }
+                 ]
+              }
+           ]
+        },
+        "createDID":true
+     }
   ]
 }
