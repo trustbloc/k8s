@@ -26,7 +26,7 @@ The repo contains the scripts to deploy the core TrustBloc components.
   ```
   brew install chipmk/tap/docker-mac-net-connect
   ```
-  Important: See the [Running](#running) below to see how to correctly run the service.
+  Important: See the [Running](#running) section below to see how to correctly run the service.
 
 #### For Intel (x86-64) Macs
 
@@ -90,6 +90,18 @@ Minikube cluster re-create:
 Open the dashboard in a browser:
 
 `minikube dashboard`
+
+## Workaround for connection issues when using a VPN on macOS
+
+Certain VPNs (on the host machine) have known issues with port conflicts when using the Hyperkit driver. The Hyperkit
+driver is used when running on an x86-64 machine.
+
+If disabling the VPN is not possible, one workaround is to use the `docker` driver along with the `docker-mac-net-connect` brew service.
+
+To do this:
+1. Install the brew [docker-mac-net-connect](https://github.com/chipmk/docker-mac-net-connect) service: `brew install chipmk/tap/docker-mac-net-connect`.
+2. Start the service: `sudo brew services start chipmk/tap/docker-mac-net-connect`. Note: must be started with root permissions.
+3. Change the driver to `docker` in the `minikube_setup.sh` script.
 
 ## Contributing
 Thank you for your interest in contributing. Please see our [community contribution guidelines](https://github.com/trustbloc/community/blob/main/CONTRIBUTING.md) for more information.
