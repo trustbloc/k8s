@@ -94,7 +94,7 @@
                            "locale": "en-US",
                            "logo": {
                               "url": "https://media.githubusercontent.com/media/trustbloc/wallet-sdk/main/demo/app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57%402x.png",
-                              "alternative_text": "a square logo of a employee verification"
+                              "alt_text": "a square logo of a employee verification"
                            },
                            "background_color": "#0000FF",
                            "text_color": "#FFFFFF"
