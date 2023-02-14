@@ -266,5 +266,26 @@
       "authorizer": {
         "handler": "allow"
       }
+    },
+    {
+          "id": "openid-configuration-endpoint-issuer",
+          "upstream": {
+            "url": "http://vcs"
+          },
+          "match": {
+            "url": "http://api-gateway.||DOMAIN||/issuer/<.*>/.well-known/openid-credential-issuer",
+            "methods": [
+              "GET"
+            ]
+          },
+          "authenticators": [{
+            "handler": "noop"
+          }],
+          "mutators": [{
+            "handler": "noop"
+          }],
+          "authorizer": {
+            "handler": "allow"
+          }
     }
 ]
