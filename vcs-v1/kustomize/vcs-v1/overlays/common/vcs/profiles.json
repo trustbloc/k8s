@@ -79,8 +79,8 @@
                }
             ],
             "credentialMetadata": {
-               "credentials_supported": {
-                  "verified_employee": {
+               "credentials_supported" : [
+                  {
                      "formats": {
                         "jwt_vc": {
                            "types": ["VerifiableCredential", "VerifiedEmployee"],
@@ -159,7 +159,7 @@
                         }
                      }
                   }
-               }
+               ]
             }
          },
          "createDID": true
