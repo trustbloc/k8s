@@ -22,7 +22,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES built from https://github.com/trustbloc/vcs/tree/main
-VCS_IMG				?= ghcr.io/trustbloc-cicd/vc-server:v0.1.9-snapshot-e1f44bc
+VCS_IMG				?= ghcr.io/trustbloc-cicd/vc-server:v0.1.9-snapshot-c1654d3
 LOCALKMS_IMG			?= docker.io/nsmithuk/local-kms:3.11.0
 
 
