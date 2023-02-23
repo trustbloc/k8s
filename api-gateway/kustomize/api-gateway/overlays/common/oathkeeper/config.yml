@@ -13,7 +13,7 @@ serve:
 access_rules:
   repositories:
     - file:///etc/rules/access-rules.json
-  matching_strategy: regexp  
+  matching_strategy: regexp
 
 authenticators:
   oauth2_introspection:
@@ -33,7 +33,7 @@ mutators:
     enabled: true
     config:
       headers:
-        X-User: "{{ print .Subject }}"
+        X-Tenant-ID: "{{ print .Subject }}"
         X-API-Key: "rw_token"
   noop:
     enabled: true
