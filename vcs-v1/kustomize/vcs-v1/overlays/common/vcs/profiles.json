@@ -151,10 +151,10 @@
                 "photo": {
                   "display": [
                     {
-                      "name": "Photo",
-                      "value_type": "image"
+                      "name": "Photo"
                     }
-                  ]
+                  ],
+                  "value_type": "image"
                 }
               }
             }
