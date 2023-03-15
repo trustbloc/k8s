@@ -1,3 +1,10 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+# Copyright Avast Software. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
 # Labels to add to all resources and selectors.
 #commonLabels:
 #  someName: someValue
@@ -23,8 +30,6 @@ resources:
 - deployment.yml
 - service.yml
 
-apiVersion: kustomize.config.k8s.io/v1alpha1
-kind: Component
 images:
 - name: static-file-server
   newName: halverneus/static-file-server
