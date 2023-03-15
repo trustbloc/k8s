@@ -1,5 +1,6 @@
 #
 # Copyright SecureKey Technologies Inc. All Rights Reserved.
+# Copyright Avast Software. All Rights Reserved.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -20,9 +21,6 @@ configMapGenerator:
 - envs:
   - hydra-env.env
   name: hydra-env
-
-apiVersion: kustomize.config.k8s.io/v1alpha1
-kind: Component
 
 resources:
 - hydra.yml
