@@ -41,7 +41,7 @@ spec:
             mountPath: /etc/vcs/config
         livenessProbe:
           httpGet:
-            path: /version
+            path: /healthcheck
             port: http-port
           initialDelaySeconds: 30
           periodSeconds: 10
