@@ -162,6 +162,143 @@
         }
       },
       "createDID": true
+    },
+    {
+      "issuer": {
+        "id": "pr_card_issuer_jwtsd",
+        "name": "PR Card Issuer",
+        "organizationID": "test-org",
+        "url": "https://vcs.||DOMAIN||",
+        "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
+        "active": true,
+        "vcConfig": {
+          "signingAlgorithm": "EcdsaSecp256k1Signature2019",
+          "signatureRepresentation": 0,
+          "keyType": "ECDSASecp256k1DER",
+          "format": "jwt",
+          "didMethod": "ion",
+          "status": {
+            "type": "RevocationList2021Status",
+            "disable": true
+          },
+          "sdjwt": {
+            "enable": true,
+            "hashAlg": 5
+          }
+        },
+        "oidcConfig": {
+          "client_id": "pr_card_issuer_jwtsd",
+          "client_secret_handle": "pr-card-issuer-jwtsd-secret",
+          "redirect_uri": "https://api-gateway.||DOMAIN||/oidc/redirect",
+          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration"
+        },
+        "credentialTemplates": [
+          {
+            "contexts": [
+              "https://www.w3.org/2018/credentials/v1",
+              "https://w3id.org/citizenship/v1"
+            ],
+            "type": "PermanentResidentCard",
+            "id": "templateID",
+            "issuer": "did:ion:pr_card_issuer_jwtsd"
+          }
+        ],
+        "credentialMetadata": {
+          "credentials_supported": [
+            {
+              "format": "jwt_vc_json",
+              "id": "PermanentResidentCard",
+              "types": [
+                "VerifiableCredential",
+                "PermanentResidentCard"
+              ],
+              "display": [
+                {
+                  "name": "Permanent Resident Card",
+                  "locale": "en-US",
+                  "logo":{
+                    "url": "https://example.com/trust.png",
+                    "alt_text":"Citizenship & Immigration Services"
+                  },
+                  "background_color": "#2b5283",
+                  "text_color": "#FFFFFF"
+                }
+              ],
+              "credentialSubject":{
+                "given_name": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "order": 0,
+                  "display": [
+                    {
+                      "name": "First Name",
+                      "locale": "en-US"
+                    }
+                  ]
+                },
+                "family_name": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "order": 1,
+                  "display": [
+                    {
+                      "name": "Last Name",
+                      "locale": "en-US"
+                    }
+                  ]
+                },
+                "doc_number": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "order": 2,
+                  "mask": "regex(^(.*).{4}$)",
+                  "display": [
+                    {
+                      "name": "Document Number",
+                      "locale": "en-US"
+                    }
+                  ]
+                },
+                "birthdate": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "order": 3,
+                  "pattern": "date:YYYY-MM-DD",
+                  "mask": "regex((.*))",
+                  "display": [
+                    {
+                      "name": "Date of Birth",
+                      "locale": "en-US"
+                    }
+                  ]
+                },
+                "country":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Country"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "issue_date": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "pattern": "date:YYYY-MM-DD",
+                  "order": 4,
+                  "display": [
+                    {
+                      "name": "Issue Date",
+                      "locale": "en-US"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "createDID": true
     }
   ],
   "verifiers": [
@@ -228,6 +365,91 @@
                     "uri": "VerifiableCredential"
                   }
                 ]
+              }
+            ]
+          }
+        ]
+      },
+      "createDID": true
+    },
+    {
+      "verifier": {
+        "id": "pr-card-jwtsd-verifier",
+        "name": "PR Card Verifier",
+        "organizationID": "test-org",
+        "url": "https://demo-rp.||DOMAIN||/",
+        "active": true,
+        "webHook": "https://demo-rp.||DOMAIN||/verify/openid4vp/webhook",
+        "checks": {
+          "credential": {
+            "format": [
+              "jwt"
+            ],
+            "proof": true,
+            "status": false
+          },
+          "presentation": {
+            "format": [
+              "jwt"
+            ],
+            "vcSubject": true,
+            "proof": true
+          }
+        },
+        "oidcConfig": {
+          "roSigningAlgorithm": "EcdsaSecp256k1Signature2019",
+          "keyType": "ECDSASecp256k1DER",
+          "didMethod": "ion"
+        },
+        "presentationDefinitions": [
+          {
+            "id": "b6b89b94-3ef4-4494-88e2-f8957be1283e",
+            "input_descriptors": [
+              {
+                "id": "PermanentResidentCard",
+                "schema": [
+                  {
+                    "uri": "https://w3id.org/citizenship#PermanentResidentCard"
+                  }
+                ],
+                "constraints": {
+                  "limit_disclosure":"required",
+                  "fields":[
+                    {
+                      "id": "given-name",
+                      "path":[
+                        "$.credentialSubject.given_name",
+                        "$.vc.credentialSubject.given_name",
+                        "$.given_name"
+                      ],
+                      "filter":{
+                        "type":"string"
+                      }
+                    },
+                    {
+                      "id": "family-name",
+                      "path":[
+                        "$.credentialSubject.family_name",
+                        "$.vc.credentialSubject.family_name",
+                        "$.family_name"
+                      ],
+                      "filter":{
+                        "type":"string"
+                      }
+                    },
+                    {
+                      "id": "birth-date",
+                      "path":[
+                        "$.credentialSubject.birthdate",
+                        "$.vc.credentialSubject.birthdate",
+                        "$.birthdate"
+                      ],
+                      "filter":{
+                        "type":"string"
+                      }
+                    }
+                  ]
+                }
               }
             ]
           }
