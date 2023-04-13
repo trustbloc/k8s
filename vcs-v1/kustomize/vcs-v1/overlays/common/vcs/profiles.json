@@ -199,7 +199,7 @@
               "https://w3id.org/citizenship/v1"
             ],
             "type": "PermanentResidentCard",
-            "id": "templateID",
+            "id": "permanent-resident-card-template-id",
             "issuer": "did:ion:pr_card_issuer_jwtsd"
           }
         ],
@@ -292,6 +292,188 @@
                       "locale": "en-US"
                     }
                   ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "createDID": true
+    },
+    {
+      "issuer": {
+        "id": "vaccination_certificate_issuer",
+        "name": "Vaccination Certificate Issuer",
+        "organizationID": "test-org",
+        "url": "https://vcs.||DOMAIN||",
+        "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
+        "active": true,
+        "vcConfig": {
+          "signingAlgorithm": "EcdsaSecp256k1Signature2019",
+          "signatureRepresentation": 0,
+          "keyType": "ECDSASecp256k1DER",
+          "format": "jwt",
+          "didMethod": "ion",
+          "status": {
+            "type": "RevocationList2021Status",
+            "disable": true
+          }
+        },
+        "oidcConfig": {
+          "client_id": "vaccination_certificate_issuer",
+          "client_secret_handle": "vaccination_certificate_issuer-secret",
+          "redirect_uri": "https://api-gateway.||DOMAIN||/oidc/redirect",
+          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration"
+        },
+        "credentialTemplates": [
+          {
+            "contexts": [
+              "https://www.w3.org/2018/credentials/v1",
+              "https://w3id.org/vaccination/v1"
+            ],
+            "type": "VaccinationCertificate",
+            "id": "vaccination-certificate-template-id",
+            "issuer": "did:ion:vaccination_certificate_issuer"
+          }
+        ],
+        "credentialMetadata": {
+          "credentials_supported": [
+            {
+              "format": "jwt_vc_json",
+              "id": "VaccinationCertificate",
+              "types":[
+                "VerifiableCredential",
+                "VaccinationCertificate"
+              ],
+              "display": [
+                {
+                  "name": "COVID-19 Vaccination Certificate",
+                  "locale": "en-US",
+                  "logo": {
+                    "url": "https://example.com/public/logo.png",
+                    "alt_text": "Vaccination Certificate logo"
+                  },
+                  "background_color": "#277B3E",
+                  "text_color": "#FFFFFF"
+                }
+              ],
+              "credentialSubject":{
+                "givenName":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Given Name"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "familyName":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Family Name"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "birthDate":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Date of Birth"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "gender":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Gender"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "medicinalProductName":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Product Name"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "marketingAuthorizationHolder":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Product By"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "disease":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Protection Against"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "atcCode":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Vaccination Code"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "countryOfVaccination":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Vaccination Country"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "dateOfVaccination":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Date of Vaccination"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "administeringCentre":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Administering Centre"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "batchNumber":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Batch Number"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "healthProfessional":{
+                  "display":[
+                    {
+                      "locale":"en-US",
+                      "name":"Health Professional"
+                    }
+                  ],
+                  "value_type":"string"
                 }
               }
             }
@@ -446,6 +628,87 @@
                       ],
                       "filter":{
                         "type":"string"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "createDID": true
+    },
+    {
+      "verifier": {
+        "id": "medical-clinic-verifier",
+        "name": "Medical Clinic Verifier",
+        "organizationID": "test-org",
+        "url": "https://demo-rp.||DOMAIN||/",
+        "active": true,
+        "webHook": "https://demo-rp.||DOMAIN||/verify/openid4vp/webhook",
+        "checks": {
+          "credential": {
+            "format": [
+              "jwt"
+            ],
+            "proof": true,
+            "status": false
+          },
+          "presentation": {
+            "format": [
+              "jwt"
+            ],
+            "vcSubject": true,
+            "proof": true
+          }
+        },
+        "oidcConfig": {
+          "roSigningAlgorithm": "EcdsaSecp256k1Signature2019",
+          "keyType": "ECDSASecp256k1DER",
+          "didMethod": "ion"
+        },
+        "presentationDefinitions": [
+          {
+            "id": "b6b89b94-3ef4-4494-88e2-f5657be7483e",
+            "input_descriptors": [
+              {
+                "id": "permanent-resident-card",
+                "purpose": "We need you to present your permanent resident card.",
+                "constraints": {
+                  "fields": [
+                    {
+                      "path": [
+                        "$.type",
+                        "$.vc.type"
+                      ],
+                      "filter": {
+                        "type": "array",
+                        "contains": {
+                          "type": "string",
+                          "const": "PermanentResidentCard"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "vaccination-certificate",
+                "purpose": "We need you to present your vaccination certificate.",
+                "constraints": {
+                  "fields": [
+                    {
+                      "path": [
+                        "$.type",
+                        "$.vc.type"
+                      ],
+                      "filter": {
+                        "type": "array",
+                        "contains": {
+                          "type": "string",
+                          "const": "VaccinationCertificate"
+                        }
                       }
                     }
                   ]
