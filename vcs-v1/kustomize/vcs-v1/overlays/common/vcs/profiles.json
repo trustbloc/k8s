@@ -3,6 +3,7 @@
     {
       "issuer": {
         "id": "ldp-web-P256-JsonWebSignature2020",
+        "version": "v1.0",
         "name": "Test Issuer with vc-ldp signed with did-web with P256 key and JsonWebSignature2020 signature",
         "organizationID": "test-org",
         "url": "https://test-issuer.com",
@@ -24,6 +25,7 @@
     {
       "issuer": {
         "id": "ldp-orb-P256-JsonWebSignature2020",
+        "version": "v1.0",
         "name": "Test Issuer with vc-ldp signed with did-orb with P256 key and JsonWebSignature2020 signature",
         "organizationID": "test-org",
         "url": "https://test-issuer.com",
@@ -46,6 +48,7 @@
     {
       "issuer": {
         "id": "bank_issuer",
+        "version": "v1.0",
         "name": "Acme Corp",
         "organizationID": "test-org",
         "url": "https://vcs.||DOMAIN||",
@@ -166,6 +169,7 @@
     {
       "issuer": {
         "id": "pr_card_issuer_jwtsd",
+        "version": "v1.0",
         "name": "PR Card Issuer",
         "organizationID": "test-org",
         "url": "https://vcs.||DOMAIN||",
@@ -303,6 +307,7 @@
     {
       "issuer": {
         "id": "vaccination_certificate_issuer",
+        "version": "v1.0",
         "name": "Vaccination Certificate Issuer",
         "organizationID": "test-org",
         "url": "https://vcs.||DOMAIN||",
@@ -487,6 +492,7 @@
     {
       "verifier": {
         "id": "test-verifier",
+        "version": "v1.0",
         "name": "Test Verifier",
         "organizationID": "test-org",
         "url": "https://test-verifier.com",
@@ -508,6 +514,7 @@
     {
       "verifier": {
         "id": "jwt-web-ED25519-JsonWebSignature2020",
+        "version": "v1.0",
         "name": "Utopian Background Check",
         "organizationID": "test-org",
         "url": "https://demo-rp.||DOMAIN||/",
@@ -557,6 +564,7 @@
     {
       "verifier": {
         "id": "pr-card-jwtsd-verifier",
+        "version": "v1.0",
         "name": "PR Card Verifier",
         "organizationID": "test-org",
         "url": "https://demo-rp.||DOMAIN||/",
@@ -642,6 +650,7 @@
     {
       "verifier": {
         "id": "medical-clinic-verifier",
+        "version": "v1.0",
         "name": "Medical Clinic Verifier",
         "organizationID": "test-org",
         "url": "https://demo-rp.||DOMAIN||/",

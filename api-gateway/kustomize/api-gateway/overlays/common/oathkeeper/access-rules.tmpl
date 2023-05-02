@@ -11,7 +11,7 @@
       "url": "http://vcs"
     },
     "match": {
-      "url": "http://api-gateway.||DOMAIN||/issuer/profiles/<.*>/credentials/<.*>",
+      "url": "http://api-gateway.||DOMAIN||/issuer/profiles/<.*>/<.*>/credentials/<.*>",
       "methods": [
         "POST"
       ]
@@ -47,7 +47,7 @@
       "url": "http://vcs"
     },
     "match": {
-      "url": "http://api-gateway.||DOMAIN||/verifier/profiles/<.*>/credentials/verify",
+      "url": "http://api-gateway.||DOMAIN||/verifier/profiles/<.*>/<.*>/credentials/verify",
       "methods": [
         "POST"
       ]
@@ -83,7 +83,7 @@
       "url": "http://vcs"
     },
     "match": {
-      "url": "http://api-gateway.||DOMAIN||/verifier/profiles/<.*>/interactions/initiate-oidc",
+      "url": "http://api-gateway.||DOMAIN||/verifier/profiles/<.*>/<.*>/interactions/initiate-oidc",
       "methods": [
         "POST"
       ]
@@ -193,7 +193,7 @@
       "url": "http://vcs"
     },
     "match": {
-      "url": "http://api-gateway.||DOMAIN||/issuer/profiles/<.*>/interactions/initiate-oidc",
+      "url": "http://api-gateway.||DOMAIN||/issuer/profiles/<.*>/<.*>/interactions/initiate-oidc",
       "methods": [
         "GET",
         "POST"
@@ -252,7 +252,7 @@
         "url": "http://vcs"
       },
       "match": {
-        "url": "http://api-gateway.||DOMAIN||/issuer/<.*>/.well-known/openid-configuration",
+        "url": "http://api-gateway.||DOMAIN||/issuer/<.*>/<.*>/.well-known/openid-configuration",
         "methods": [
           "GET"
         ]
@@ -268,24 +268,24 @@
       }
     },
     {
-          "id": "openid-configuration-endpoint-issuer",
-          "upstream": {
-            "url": "http://vcs"
-          },
-          "match": {
-            "url": "http://api-gateway.||DOMAIN||/issuer/<.*>/.well-known/openid-credential-issuer",
-            "methods": [
-              "GET"
-            ]
-          },
-          "authenticators": [{
-            "handler": "noop"
-          }],
-          "mutators": [{
-            "handler": "noop"
-          }],
-          "authorizer": {
-            "handler": "allow"
-          }
+      "id": "openid-configuration-endpoint-issuer",
+      "upstream": {
+        "url": "http://vcs"
+      },
+      "match": {
+        "url": "http://api-gateway.||DOMAIN||/issuer/<.*>/<.*>/.well-known/openid-credential-issuer",
+        "methods": [
+          "GET"
+        ]
+      },
+      "authenticators": [{
+        "handler": "noop"
+      }],
+      "mutators": [{
+        "handler": "noop"
+      }],
+      "authorizer": {
+        "handler": "allow"
+      }
     }
 ]
