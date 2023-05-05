@@ -51,7 +51,7 @@
         "version": "v1.0",
         "name": "Acme Corp",
         "organizationID": "test-org",
-        "url": "https://vcs.||DOMAIN||",
+        "url": "https://demo-issuer.||DOMAIN||/",
         "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
         "active": true,
         "vcConfig": {
@@ -172,7 +172,7 @@
         "version": "v1.0",
         "name": "PR Card Issuer",
         "organizationID": "test-org",
-        "url": "https://vcs.||DOMAIN||",
+        "url": "https://demo-issuer.||DOMAIN||/",
         "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
         "active": true,
         "vcConfig": {
@@ -310,7 +310,7 @@
         "version": "v1.0",
         "name": "Vaccination Certificate Issuer",
         "organizationID": "test-org",
-        "url": "https://vcs.||DOMAIN||",
+        "url": "https://demo-issuer.||DOMAIN||/",
         "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
         "active": true,
         "vcConfig": {
