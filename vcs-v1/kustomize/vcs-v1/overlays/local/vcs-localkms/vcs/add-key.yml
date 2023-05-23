@@ -12,11 +12,11 @@ spec:
   template:
     spec:
       volumes:
-        - name: ca-cert
-          configMap:
-            name: vcs-ca-cert
+        - name: kms-key
+          secret:
+            secretName: vcs-kms-key-localkms
       containers:
         - name: vcs
           volumeMounts:
-            - name: ca-cert
-              mountPath: /etc/vcs/tls
+            - name: kms-key
+              mountPath: /etc/keys

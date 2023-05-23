@@ -8,20 +8,20 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: vcs
+  name: vcs-localkms
 spec:
   tls:
   - hosts:
-      - vcs.||DOMAIN||
+      - vcs-localkms.||DOMAIN||
     secretName: INGRESS_TLS_SECRET
   rules:
-  - host: vcs.||DOMAIN||
+  - host: vcs-localkms.||DOMAIN||
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: vcs
+            name: localkms-vcs
             port:
               name: http
