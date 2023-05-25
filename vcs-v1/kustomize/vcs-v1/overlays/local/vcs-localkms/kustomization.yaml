@@ -1,0 +1,63 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+
+commonLabels:
+  component: vcs-localkms
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+replacements:
+- path: vcs/replacements.yml
+  source: null
+  targets: null
+- source:
+    kind: Secret
+    name: vcs-wildcard-cert-localkms
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: vcs-localkms
+
+resources:
+  - ../../common/vcs-localkms
+  - vcs/ingress.yml
+
+replicas:
+- count: 1
+  name: vcs-localkms
+
+configMapGenerator:
+- behavior: merge
+  envs:
+  - vcs/config.env
+  name: vcs-env-localkms
+- files:
+  - ../certs/ca.crt
+  name: vcs-ca-cert-localkms
+
+secretGenerator:
+- files:
+  - ../certs/tls.crt
+  - ../certs/tls.key
+  name: vcs-wildcard-cert-localkms
+  type: kubernetes.io/tls
+- files:
+  - ../keys/vcs-kms-key.pem
+  name: vcs-kms-key-localkms
+
+transformers:
+- sedtransform.yml
+- sedb64transform.yml
+
+
+patchesStrategicMerge:
+- vcs/add-ca.yml
+- vcs/add-key.yml

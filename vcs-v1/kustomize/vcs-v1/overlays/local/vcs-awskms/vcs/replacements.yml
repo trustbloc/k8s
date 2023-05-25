@@ -1,7 +1,7 @@
 ---
 source:
   kind: Service
-  name: vcs
+  name: vcs-awskms
   version: v1
 targets:
 - fieldPaths:
@@ -11,9 +11,9 @@ targets:
     delimiter: .
   select:
     kind: Ingress
-    name: vcs
+    name: vcs-awskms
 - fieldPaths:
   - spec.rules.0.http.paths.0.backend.service.name
   select:
     kind: Ingress
-    name: vcs
+    name: vcs-awskms
