@@ -287,5 +287,298 @@
       "authorizer": {
         "handler": "allow"
       }
-    }
+    },
+    {
+        "id": "issuer-credential-management-localkms",
+        "upstream": {
+          "url": "http://vcs-localkms",
+          "strip_path": "/vcs-localkms"
+        },
+        "match": {
+          "url": "http://api-gateway.||DOMAIN||/vcs-localkms/issuer/profiles/<.*>/<.*>/credentials/<.*>",
+          "methods": [
+            "POST"
+          ]
+        },
+        "authenticators": [
+          {
+            "handler": "oauth2_introspection",
+            "config": {
+              "required_scope": [
+                "org_admin"
+              ]
+            }
+          }
+        ],
+        "mutators": [
+          {
+            "handler": "header",
+            "config": {
+              "headers": {
+                "X-Tenant-ID": "{{ print .Subject }}",
+                "X-API-Key": "rw_token"
+              }
+            }
+          }
+        ],
+        "authorizer": {
+          "handler": "allow"
+        }
+      },
+      {
+        "id": "verifier-credential-verify-localkms",
+        "upstream": {
+          "url": "http://vcs-localkms",
+          "strip_path": "/vcs-localkms"
+        },
+        "match": {
+          "url": "http://api-gateway.||DOMAIN||/vcs-localkms/verifier/profiles/<.*>/<.*>/credentials/verify",
+          "methods": [
+            "POST"
+          ]
+        },
+        "authenticators": [
+          {
+            "handler": "oauth2_introspection",
+            "config": {
+              "required_scope": [
+                "org_admin"
+              ]
+            }
+          }
+        ],
+        "mutators": [
+          {
+            "handler": "header",
+            "config": {
+              "headers": {
+                "X-Tenant-ID": "{{ print .Subject }}",
+                "X-API-Key": "rw_token"
+              }
+            }
+          }
+        ],
+        "authorizer": {
+          "handler": "allow"
+        }
+      },
+      {
+        "id": "oidc4vp-initiate-oidc-localkms",
+        "upstream": {
+          "url": "http://vcs-localkms",
+          "strip_path": "/vcs-localkms"
+        },
+        "match": {
+          "url": "http://api-gateway.||DOMAIN||/vcs-localkms/verifier/profiles/<.*>/<.*>/interactions/initiate-oidc",
+          "methods": [
+            "POST"
+          ]
+        },
+        "authenticators": [
+          {
+            "handler": "oauth2_introspection",
+            "config": {
+              "required_scope": [
+                "org_admin"
+              ]
+            }
+          }
+        ],
+        "mutators": [
+          {
+            "handler": "header",
+            "config": {
+              "headers": {
+                "X-Tenant-ID": "{{ print .Subject }}",
+                "X-API-Key": "rw_token"
+              }
+            }
+          }
+        ],
+        "authorizer": {
+          "handler": "allow"
+        }
+      },
+      {
+        "id": "oidc4vp-interactions-claims-localkms",
+        "upstream": {
+          "url": "http://vcs-localkms",
+          "strip_path": "/vcs-localkms"
+        },
+        "match": {
+          "url": "http://api-gateway.||DOMAIN||/vcs-localkms/verifier/interactions/<.*>/claim",
+          "methods": [
+            "GET"
+          ]
+        },
+        "authenticators": [
+          {
+            "handler": "oauth2_introspection",
+            "config": {
+              "required_scope": [
+                "org_admin"
+              ]
+            }
+          }
+        ],
+        "mutators": [
+          {
+            "handler": "header",
+            "config": {
+              "headers": {
+                "X-Tenant-ID": "{{ print .Subject }}",
+                "X-API-Key": "rw_token"
+              }
+            }
+          }
+        ],
+        "authorizer": {
+          "handler": "allow"
+        }
+      },
+      {
+        "id": "dev-interactions-authorization-response-localkms",
+        "upstream": {
+          "url": "http://vcs-localkms",
+          "strip_path": "/vcs-localkms"
+        },
+        "match": {
+          "url": "http://api-gateway.||DOMAIN||/vcs-localkms/verifier/interactions/authorization-response",
+          "methods": ["POST"]
+        },
+        "authenticators": [{
+          "handler": "noop"
+        }],
+        "mutators": [{
+          "handler": "noop"
+        }],
+        "authorizer": {
+          "handler": "allow"
+        }
+      },
+      {
+        "id": "dev-request-object-localkms",
+        "upstream": {
+          "url": "http://vcs-localkms",
+          "strip_path": "/vcs-localkms"
+        },
+        "match": {
+          "url": "http://api-gateway.||DOMAIN||/vcs-localkms/request-object/<.*>",
+          "methods": ["GET"]
+        },
+        "authenticators": [{
+          "handler": "noop"
+        }],
+        "mutators": [{
+          "handler": "noop"
+        }],
+        "authorizer": {
+          "handler": "allow"
+        }
+      },
+      {
+        "id": "oidc4vc-initiate-oidc-localkms",
+        "upstream": {
+          "url": "http://vcs-localkms",
+          "strip_path": "/vcs-localkms"
+        },
+        "match": {
+          "url": "http://api-gateway.||DOMAIN||/vcs-localkms/issuer/profiles/<.*>/<.*>/interactions/initiate-oidc",
+          "methods": [
+            "GET",
+            "POST"
+          ]
+        },
+        "authenticators": [
+          {
+            "handler": "oauth2_introspection",
+            "config": {
+              "required_scope": [
+                "org_admin"
+              ]
+            }
+          }
+        ],
+        "mutators": [
+          {
+            "handler": "header",
+            "config": {
+              "headers": {
+                "X-Tenant-ID": "{{ print .Subject }}",
+                "X-API-Key": "rw_token"
+              }
+            }
+          }
+        ],
+        "authorizer": {
+          "handler": "allow"
+        }
+      },
+      {
+        "id": "oidc4vc-public-oidc-endpoints-localkms",
+        "upstream": {
+          "url": "http://vcs-localkms",
+          "strip_path": "/vcs-localkms"
+        },
+        "match": {
+          "url": "http://api-gateway.||DOMAIN||/vcs-localkms/oidc/<.*>",
+          "methods": [
+            "GET",
+            "POST"
+          ]
+        },
+        "authenticators": [{
+          "handler": "noop"
+        }],
+        "mutators": [{
+          "handler": "noop"
+        }],
+        "authorizer": {
+          "handler": "allow"
+        }
+      },
+        {
+          "id": "openid-configuration-endpoint-localkms",
+          "upstream": {
+            "url": "http://vcs-localkms",
+            "strip_path": "/vcs-localkms"
+          },
+          "match": {
+            "url": "http://api-gateway.||DOMAIN||/vcs-localkms/issuer/<.*>/<.*>/.well-known/openid-configuration",
+            "methods": [
+              "GET"
+            ]
+          },
+          "authenticators": [{
+            "handler": "noop"
+          }],
+          "mutators": [{
+            "handler": "noop"
+          }],
+          "authorizer": {
+            "handler": "allow"
+          }
+        },
+        {
+          "id": "openid-configuration-endpoint-issuer-localkms",
+          "upstream": {
+            "url": "http://vcs-localkms",
+            "strip_path": "/vcs-localkms"
+          },
+          "match": {
+            "url": "http://api-gateway.||DOMAIN||/vcs-localkms/issuer/<.*>/<.*>/.well-known/openid-credential-issuer",
+            "methods": [
+              "GET"
+            ]
+          },
+          "authenticators": [{
+            "handler": "noop"
+          }],
+          "mutators": [{
+            "handler": "noop"
+          }],
+          "authorizer": {
+            "handler": "allow"
+          }
+        }
 ]

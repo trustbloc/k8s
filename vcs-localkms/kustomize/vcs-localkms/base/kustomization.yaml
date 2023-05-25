@@ -1,0 +1,44 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+# Copyright Gen Digital Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Labels to add to all resources and selectors.
+#commonLabels:
+#  someName: someValue
+
+# Annotations to add to all resources
+#commonAnnotations:
+#  someName: someValue
+
+generatorOptions: {}
+
+configMapGenerator:
+- envs:
+  - config.env
+  name: vcs-env
+- files:
+  - profiles.json
+  - clients.json
+  name: vcs-profile-config
+
+secretGenerator:
+- envs:
+  - secret.env
+  name: vcs-env-secret
+
+resources:
+- deployment.yml
+- service.yml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: vcs
+  newName: ghcr.io/trustbloc-cicd/vc-server
+  newTag: v1.0.1-snapshot-30669e8
+- name: vcs-localkms
+  newName: ghcr.io/trustbloc-cicd/vc-server
+  newTag: v1.0.1-snapshot-30669e8

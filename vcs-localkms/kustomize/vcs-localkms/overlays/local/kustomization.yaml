@@ -1,0 +1,74 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Adds namespace to all resources.
+#namespace: edge-sandbox-system
+
+# Value of this field is prepended to the
+# names of all resources, e.g. a deployment named
+# "wordpress" becomes "alices-wordpress".
+# Note that it should also match with the prefix (text before '-') of the namespace
+# field above.
+#namePrefix: edge-sandbox-
+
+commonLabels:
+  component: vcs-localkms
+  group: core
+  instance: local
+  project: trustbloc
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+replacements:
+- path: vcs/replacements.yml
+  source: null
+  targets: null
+- source:
+    kind: Secret
+    name: vcs-wildcard-cert
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.tls.0.secretName
+    select:
+      kind: Ingress
+      name: vcs-localkms
+
+replicas:
+- count: 1
+  name: vcs-localkms
+
+configMapGenerator:
+- behavior: merge
+  envs:
+  - vcs/config.env
+  name: vcs-env
+- files:
+  - certs/ca.crt
+  name: vcs-ca-cert
+
+secretGenerator:
+- files:
+  - certs/tls.crt
+  - certs/tls.key
+  name: vcs-wildcard-cert
+  type: kubernetes.io/tls
+- files:
+  - ./keys/vcs-kms-key.pem
+  name: vcs-kms-key
+
+transformers:
+- sedtransform.yml
+- sedb64transform.yml
+
+resources:
+- ../common
+- vcs/ingress.yml
+
+patchesStrategicMerge:
+- vcs/add-ca.yml
+- vcs/add-key.yml

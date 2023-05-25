@@ -1,0 +1,48 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: vcs-localkms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vcs-localkms
+  template:
+    metadata:
+      labels:
+        app: vcs-localkms
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: vcs-profile-config
+      containers:
+      - name: vcs-localkms
+        envFrom:
+          - configMapRef:
+              name: vcs-env
+          - secretRef:
+              name: vcs-env-secret
+        image: vcs:latest
+        args: ["start"]
+        ports:
+          - containerPort: 8081
+            protocol: TCP
+            name: http-port
+        volumeMounts:
+          - name: config
+            mountPath: /etc/vcs/config
+        livenessProbe:
+          httpGet:
+            path: /version
+            port: http-port
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 5
