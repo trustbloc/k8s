@@ -147,7 +147,7 @@
         "oidcConfig": {
           "roSigningAlgorithm": "Ed25519Signature2018",
           "keyType": "ED25519",
-          "didMethod": "orb"
+          "didMethod": "ion"
         },
         "presentationDefinitions": [
           {
@@ -200,9 +200,7 @@
           }
         ]
       },
-      "createDID": true,
-      "didDomain": "https://||BLOC_DOMAIN||",
-      "didServiceAuthToken": "ADMIN_TOKEN"
+      "createDID": true
     }
   ]
 }
