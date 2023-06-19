@@ -68,8 +68,21 @@
         "oidcConfig": {
           "client_id": "bank_issuer",
           "client_secret_handle": "bank-issuer-secret",
-          "redirect_uri": "https://api-gateway.||DOMAIN||/oidc/redirect",
-          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration"
+          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration",
+          "scopes_supported": [
+            "openid",
+            "profile"
+          ],
+          "grant_types_supported": [
+            "authorization_code"
+          ],
+          "response_types_supported": [
+            "code"
+          ],
+          "token_endpoint_auth_methods_supported": [
+            "none"
+          ],
+          "enable_dynamic_client_registration": true
         },
         "credentialTemplates": [
           {
@@ -193,8 +206,21 @@
         "oidcConfig": {
           "client_id": "pr_card_issuer_jwtsd",
           "client_secret_handle": "pr-card-issuer-jwtsd-secret",
-          "redirect_uri": "https://api-gateway.||DOMAIN||/oidc/redirect",
-          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration"
+          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration",
+          "scopes_supported": [
+            "openid",
+            "profile"
+          ],
+          "grant_types_supported": [
+            "authorization_code"
+          ],
+          "response_types_supported": [
+            "code"
+          ],
+          "token_endpoint_auth_methods_supported": [
+            "none"
+          ],
+          "enable_dynamic_client_registration": true
         },
         "credentialTemplates": [
           {
@@ -327,8 +353,21 @@
         "oidcConfig": {
           "client_id": "vaccination_certificate_issuer",
           "client_secret_handle": "vaccination_certificate_issuer-secret",
-          "redirect_uri": "https://api-gateway.||DOMAIN||/oidc/redirect",
-          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration"
+          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration",
+          "scopes_supported": [
+            "openid",
+            "profile"
+          ],
+          "grant_types_supported": [
+            "authorization_code"
+          ],
+          "response_types_supported": [
+            "code"
+          ],
+          "token_endpoint_auth_methods_supported": [
+            "none"
+          ],
+          "enable_dynamic_client_registration": true
         },
         "credentialTemplates": [
           {

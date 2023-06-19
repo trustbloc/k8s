@@ -22,12 +22,21 @@
         "oidcConfig": {
           "client_id": "university_degree_issuer_bbs",
           "client_secret_handle": "university_degree_issuer_bbs-secret",
-          "scope": [
+          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration",
+          "scopes_supported": [
             "openid",
             "profile"
           ],
-          "redirect_uri": "https://api-gateway.||DOMAIN||/vcs-localkms/oidc/redirect",
-          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration"
+          "grant_types_supported": [
+            "authorization_code"
+          ],
+          "response_types_supported": [
+            "code"
+          ],
+          "token_endpoint_auth_methods_supported": [
+            "none"
+          ],
+          "enable_dynamic_client_registration": true
         },
         "credentialTemplates": [
           {
