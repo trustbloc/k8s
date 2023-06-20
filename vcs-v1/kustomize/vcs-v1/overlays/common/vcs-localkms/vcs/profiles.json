@@ -2,6 +2,122 @@
   "issuers": [
     {
       "issuer": {
+        "id": "utopian_customs_and_immigration_issuer",
+        "version": "v1.0",
+        "name": "Utopian Customs and Immigration",
+        "organizationID": "test-org",
+        "url": "https://demo-issuer.||DOMAIN||/",
+        "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
+        "active": true,
+        "vcConfig": {
+          "signingAlgorithm": "BbsBlsSignature2020",
+          "signatureRepresentation": 0,
+          "keyType": "BLS12381G2",
+          "format": "ldp",
+          "didMethod": "jwk",
+          "status": {
+            "type": "StatusList2021Entry"
+          }
+        },
+        "oidcConfig": {
+          "client_id": "university_degree_issuer_bbs",
+          "client_secret_handle": "university_degree_issuer_bbs-secret",
+          "scope": [
+            "openid",
+            "profile"
+          ],
+          "redirect_uri": "https://api-gateway.||DOMAIN||/vcs-localkms/oidc/redirect",
+          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration"
+        },
+        "credentialTemplates": [
+          {
+            "contexts": [
+              "https://www.w3.org/2018/credentials/v1",
+              "https://www.w3.org/2018/credentials/examples/v1"
+            ],
+            "type": "UniversityDegreeCredential",
+            "id": "university_degree_issuer-template-id",
+            "issuer": "did:jwk:university_degree_issuer",
+            "checks": {
+              "strict": false
+            }
+          }
+        ],
+        "credentialMetadata": {
+          "credentials_supported": [
+            {
+              "id": "UniversityDegreeCredential",
+              "format": "ldp_vc",
+              "types":[
+                "VerifiableCredential",
+                "UniversityDegreeCredential"
+              ],
+              "display": [
+                {
+                  "name": "University Degree Credential",
+                  "locale": "en-US",
+                  "logo": {
+                    "url": "https://example.com/public/logo.png",
+                    "alt_text": "a square logo of a degree verification"
+                  },
+                  "background_color": "#12107c",
+                  "text_color": "#FFFFFF"
+                }
+              ],
+              "credentialSubject": {
+                "familyName": {
+                  "display": [
+                    {
+                      "name": "Family Name",
+                      "locale": "en-US"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "givenName": {
+                  "display": [
+                    {
+                      "name": "Given Name",
+                      "locale": "en-US"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "photo":{
+                  "display":[
+                    {
+                      "name":"Photo"
+                    }
+                  ],
+                  "value_type":"image"
+                },
+                "degree": {
+                  "display": [
+                    {
+                      "name": "Degree",
+                      "locale": "en-US"
+                    }
+                  ],
+                  "value_type":"string"
+                },
+                "degreeSchool": {
+                  "display": [
+                    {
+                      "name": "Degree School",
+                      "locale": "en-US"
+                    }
+                  ],
+                  "value_type":"string"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "createDID": true
+    },
+    {
+      "issuer": {
         "id": "university_degree_issuer_bbs",
         "version": "v1.0",
         "name": "University Degree Issuer",
