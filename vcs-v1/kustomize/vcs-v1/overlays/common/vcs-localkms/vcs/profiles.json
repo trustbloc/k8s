@@ -152,7 +152,7 @@
           "token_endpoint_auth_methods_supported": [
             "none"
           ],
-          "enable_dynamic_client_registration": true
+          "enable_dynamic_client_registration": false
         },
         "credentialTemplates": [
           {
