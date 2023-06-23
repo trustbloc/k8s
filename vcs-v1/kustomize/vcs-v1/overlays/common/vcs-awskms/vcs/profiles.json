@@ -69,7 +69,8 @@
           "client_id": "utopian_customs_and_immigration_issuer",
           "client_secret_handle": "utopian_customs_and_immigration_issuer-secret",
           "redirect_uri": "https://api-gateway.||DOMAIN||/oidc/redirect",
-          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration"
+          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration",
+          "pre-authorized_grant_anonymous_access_supported": true
         },
         "credentialTemplates": [
           {
