@@ -47,6 +47,163 @@
     },
     {
       "issuer": {
+        "id": "true_id_issuer",
+        "version": "v1.0",
+        "name": "True Identity Issuer",
+        "organizationID": "test-org",
+        "url": "https://demo-issuer.||DOMAIN||/",
+        "webHook": "https://demo-issuer.||DOMAIN||/verify/openid4ci/webhook",
+        "active": true,
+        "vcConfig": {
+          "signingAlgorithm": "EcdsaSecp256k1Signature2019",
+          "signatureRepresentation": 0,
+          "keyType": "ECDSASecp256k1DER",
+          "format": "jwt",
+          "didMethod": "ion",
+          "status": {
+            "type": "RevocationList2021Status",
+            "disable": true
+          }
+        },
+        "oidcConfig": {
+          "client_id": "trueid-issuer",
+          "client_secret_handle": "trueid-issuer-secret",
+          "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration",
+          "scopes_supported": [
+            "openid",
+            "profile"
+          ],
+          "grant_types_supported": [
+            "authorization_code",
+            "urn:ietf:params:oauth:grant-type:pre-authorized_code"
+          ],
+          "response_types_supported": [
+            "code"
+          ],
+          "token_endpoint_auth_methods_supported": [
+            "none"
+          ],
+          "pre-authorized_grant_anonymous_access_supported": true,
+          "enable_dynamic_client_registration": true
+        },
+        "credentialTemplates": [
+          {
+            "contexts": [
+              "https://www.w3.org/2018/credentials/v1"
+            ],
+            "type": "TrueIdentity",
+            "id": "true-id-temp",
+            "issuer": "did:ion:true_identity_issuer"
+          }
+        ],
+        "credentialMetadata": {
+          "credentials_supported": [
+            {
+              "format": "jwt_vc_json",
+              "id": "TrueIdentity",
+              "types": [
+                "VerifiableCredential",
+                "TrueIdentity"
+              ],
+              "display": [
+                {
+                  "name": "True Identity",
+                  "locale": "en-US",
+                  "logo": {
+                    "url": "https://media.githubusercontent.com/media/trustbloc/wallet-sdk/main/demo/app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57%402x.png",
+                    "alt_text": "true identity logo"
+                  },
+                  "background_color": "#0000FF",
+                  "text_color": "#FFFFFF"
+                }
+              ],
+              "credentialSubject": {
+                "firstName": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "order": 1,
+                  "display": [
+                    {
+                      "name": "First Name",
+                      "locale": "en-US"
+                    }
+                  ]
+                },
+                "lastName": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "order": 2,
+                  "display": [
+                    {
+                      "name": "Last Name",
+                      "locale": "en-US"
+                    }
+                  ]
+                },
+                "scanneddoc": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "order": 3,
+                  "display": [
+                    {
+                      "name": "Document Scanned",
+                      "locale": "en-US"
+                    }
+                  ]
+                },
+                "selfie": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "order": 4,
+                  "display": [
+                    {
+                      "name": "Selfie",
+                      "locale": "en-US"
+                    }
+                  ]
+                },
+                "verification": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "order": 4,
+                  "display": [
+                    {
+                      "name": "Document Verification ",
+                      "locale": "en-US"
+                    }
+                  ]
+                },
+                "address": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "order": 4,
+                  "display": [
+                    {
+                      "name": "Address",
+                      "locale": "en-US"
+                    }
+                  ]
+                },
+                "ageverified": {
+                  "mandatory": false,
+                  "value_type": "string",
+                  "order": 4,
+                  "display": [
+                    {
+                      "name": "Age verifie",
+                      "locale": "en-US"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "createDID": true
+    },
+    {
+      "issuer": {
         "id": "utopian_customs_and_immigration_issuer",
         "version": "v1.0",
         "name": "Utopian Customs and Immigration",
@@ -1020,6 +1177,67 @@
                         "contains": {
                           "type": "string",
                           "const": "VaccinationCertificate"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "createDID": true
+    },
+    {
+      "verifier": {
+        "id": "true-id-verifier",
+        "version": "v1.0",
+        "name": "True Identity Verifier",
+        "organizationID": "test-org",
+        "url": "https://demo-rp.||DOMAIN||/",
+        "active": true,
+        "webHook": "https://demo-rp.||DOMAIN||/verify/openid4vp/webhook",
+        "checks": {
+          "credential": {
+            "format": [
+              "jwt"
+            ],
+            "proof": true,
+            "status": false
+          },
+          "presentation": {
+            "format": [
+              "jwt"
+            ],
+            "vcSubject": true,
+            "proof": true
+          }
+        },
+        "oidcConfig": {
+          "roSigningAlgorithm": "EcdsaSecp256k1Signature2019",
+          "keyType": "ECDSASecp256k1DER",
+          "didMethod": "ion"
+        },
+        "presentationDefinitions": [
+          {
+            "id": "b6b89b94-3ef4-4494-88e2-f8957be1283e",
+            "input_descriptors": [
+              {
+                "id": "true-id",
+                "purpose": "We need you to present your True Identity credential.",
+                "constraints": {
+                  "fields": [
+                    {
+                      "path": [
+                        "$.type",
+                        "$.vc.type"
+                      ],
+                      "filter": {
+                        "type": "array",
+                        "contains": {
+                          "type": "string",
+                          "const": "TrueIdentity"
                         }
                       }
                     }
