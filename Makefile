@@ -8,7 +8,10 @@ export DOMAIN			?= ${DEPLOYMENT_ENV}.trustbloc.dev
 export DEPLOYMENT_ENV	?= local
 COMPONENTS				?=
 
-.PHONY: all checks license deploy-all deploy-components setup-and-deploy minikube-setup minikube-reset
+OS 								= $(shell uname -s | tr '[:upper:]' '[:lower:]')
+ARCH  							= $(shell uname -m | sed 's/x86_64/amd64/')
+
+.PHONY: all checks license deploy-all kustomize deploy-components setup-and-deploy minikube-setup minikube-reset
 
 all: checks
 
@@ -19,6 +22,11 @@ license:
 
 deploy-all:
 	./scripts/deploy_all.sh
+
+kustomize:
+	@{ \
+	curl -sSLo - https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v4.3.0/kustomize_v4.3.0_$(OS)_$(ARCH).tar.gz | tar xzf - -C /usr/local/bin ;\
+	}
 
 deploy-components:
 	COMPONENTS="$(COMPONENTS)" ./scripts/deploy_all.sh
