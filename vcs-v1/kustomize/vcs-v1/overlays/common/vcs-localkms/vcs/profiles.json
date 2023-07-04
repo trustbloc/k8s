@@ -21,7 +21,7 @@
         },
         "oidcConfig": {
           "client_id": "university_degree_issuer_bbs",
-          "client_secret_handle": "university_degree_issuer_bbs-secret",
+          "client_secret_handle": "university-degree-issuer-bbs-secret",
           "scope": [
             "openid",
             "profile"
@@ -37,7 +37,7 @@
               "https://www.w3.org/2018/credentials/examples/v1"
             ],
             "type": "UniversityDegreeCredential",
-            "id": "university_degree_issuer-template-id",
+            "id": "university-degree-issuer-template-id",
             "issuer": "did:jwk:university_degree_issuer",
             "checks": {
               "strict": false
@@ -138,7 +138,7 @@
         },
         "oidcConfig": {
           "client_id": "university_degree_issuer_bbs",
-          "client_secret_handle": "university_degree_issuer_bbs-secret",
+          "client_secret_handle": "university-degree-issuer-bbs-secret",
           "issuer_well_known": "https://hydra.||DOMAIN||/.well-known/openid-configuration",
           "scopes_supported": [
             "openid",
@@ -164,8 +164,8 @@
               "https://www.w3.org/2018/credentials/examples/v1"
             ],
             "type": "UniversityDegreeCredential",
-            "id": "university_degree_issuer-template-id",
-            "issuer": "did:jwk:university_degree_issuer",
+            "id": "university-degree-issuer-template-id",
+            "issuer": "did:jwk:university_degree_issuer_bbs",
             "checks": {
               "strict": false
             }
