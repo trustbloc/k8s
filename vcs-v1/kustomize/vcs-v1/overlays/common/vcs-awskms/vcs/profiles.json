@@ -453,7 +453,7 @@
           "pre-authorized_grant_anonymous_access_supported": true,
           "enable_dynamic_client_registration": true,
           "wallet_initiated_auth_flow_supported": true,
-          "claims_endpoint": "https://login-consent.||DOMAIN||/claim-data"
+          "claims_endpoint": "https://login-consent.||DOMAIN||/claim-data?profile_id=bank_issuer"
         },
         "credentialTemplates": [
           {
