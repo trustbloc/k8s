@@ -13,6 +13,7 @@
     "match": {
       "url": "http://api-gateway.||DOMAIN||/issuer/profiles/<.*>/<.*>/credentials/<.*>",
       "methods": [
+        "OPTIONS",
         "POST"
       ]
     },
@@ -49,6 +50,7 @@
     "match": {
       "url": "http://api-gateway.||DOMAIN||/verifier/profiles/<.*>/<.*>/credentials/verify",
       "methods": [
+        "OPTIONS",
         "POST"
       ]
     },
@@ -85,6 +87,7 @@
     "match": {
       "url": "http://api-gateway.||DOMAIN||/verifier/profiles/<.*>/<.*>/interactions/initiate-oidc",
       "methods": [
+        "OPTIONS",
         "POST"
       ]
     },
@@ -121,6 +124,7 @@
     "match": {
       "url": "http://api-gateway.||DOMAIN||/verifier/interactions/<.*>/claim",
       "methods": [
+        "OPTIONS",
         "GET"
       ]
     },
@@ -156,7 +160,10 @@
     },
     "match": {
       "url": "http://api-gateway.||DOMAIN||/verifier/interactions/authorization-response",
-      "methods": ["POST"]
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ]
     },
     "authenticators": [{
       "handler": "noop"
@@ -175,7 +182,7 @@
     },
     "match": {
       "url": "http://api-gateway.||DOMAIN||/request-object/<.*>",
-      "methods": ["GET"]
+      "methods": ["OPTIONS","GET"]
     },
     "authenticators": [{
       "handler": "noop"
@@ -195,6 +202,7 @@
     "match": {
       "url": "http://api-gateway.||DOMAIN||/issuer/profiles/<.*>/<.*>/interactions/initiate-oidc",
       "methods": [
+        "OPTIONS",
         "GET",
         "POST"
       ]
@@ -232,6 +240,7 @@
     "match": {
       "url": "http://api-gateway.||DOMAIN||/oidc/<.*>",
       "methods": [
+        "OPTIONS",
         "GET",
         "POST"
       ]
@@ -254,6 +263,7 @@
       "match": {
         "url": "http://api-gateway.||DOMAIN||/issuer/<.*>/<.*>/.well-known/openid-configuration",
         "methods": [
+          "OPTIONS",
           "GET"
         ]
       },
@@ -275,6 +285,7 @@
       "match": {
         "url": "http://api-gateway.||DOMAIN||/issuer/<.*>/<.*>/.well-known/openid-credential-issuer",
         "methods": [
+          "OPTIONS",
           "GET"
         ]
       },
@@ -297,6 +308,7 @@
         "match": {
           "url": "http://api-gateway.||DOMAIN||/vcs-localkms/issuer/profiles/<.*>/<.*>/credentials/<.*>",
           "methods": [
+            "OPTIONS",
             "POST"
           ]
         },
@@ -334,6 +346,7 @@
         "match": {
           "url": "http://api-gateway.||DOMAIN||/vcs-localkms/verifier/profiles/<.*>/<.*>/credentials/verify",
           "methods": [
+            "OPTIONS",
             "POST"
           ]
         },
@@ -371,6 +384,7 @@
         "match": {
           "url": "http://api-gateway.||DOMAIN||/vcs-localkms/verifier/profiles/<.*>/<.*>/interactions/initiate-oidc",
           "methods": [
+            "OPTIONS",
             "POST"
           ]
         },
@@ -408,6 +422,7 @@
         "match": {
           "url": "http://api-gateway.||DOMAIN||/vcs-localkms/verifier/interactions/<.*>/claim",
           "methods": [
+            "OPTIONS",
             "GET"
           ]
         },
@@ -444,7 +459,7 @@
         },
         "match": {
           "url": "http://api-gateway.||DOMAIN||/vcs-localkms/verifier/interactions/authorization-response",
-          "methods": ["POST"]
+          "methods": ["OPTIONS","POST"]
         },
         "authenticators": [{
           "handler": "noop"
@@ -464,7 +479,7 @@
         },
         "match": {
           "url": "http://api-gateway.||DOMAIN||/vcs-localkms/request-object/<.*>",
-          "methods": ["GET"]
+          "methods": ["OPTIONS","GET"]
         },
         "authenticators": [{
           "handler": "noop"
@@ -485,6 +500,7 @@
         "match": {
           "url": "http://api-gateway.||DOMAIN||/vcs-localkms/issuer/profiles/<.*>/<.*>/interactions/initiate-oidc",
           "methods": [
+            "OPTIONS",
             "GET",
             "POST"
           ]
@@ -523,6 +539,7 @@
         "match": {
           "url": "http://api-gateway.||DOMAIN||/vcs-localkms/oidc/<.*>",
           "methods": [
+            "OPTIONS",
             "GET",
             "POST"
           ]
@@ -546,6 +563,7 @@
           "match": {
             "url": "http://api-gateway.||DOMAIN||/vcs-localkms/issuer/<.*>/<.*>/.well-known/openid-configuration",
             "methods": [
+              "OPTIONS",
               "GET"
             ]
           },
@@ -568,6 +586,7 @@
           "match": {
             "url": "http://api-gateway.||DOMAIN||/vcs-localkms/issuer/<.*>/<.*>/.well-known/openid-credential-issuer",
             "methods": [
+              "OPTIONS",
               "GET"
             ]
           },
