@@ -38,4 +38,4 @@ kind: Kustomization
 images:
 - name: vcs
   newName: ghcr.io/trustbloc-cicd/vc-server
-  newTag: v1.1.1-snapshot-a10a2ad
+  newTag: v1.1.1-snapshot-b97340f
