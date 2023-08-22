@@ -30,4 +30,5 @@ vcs-awskms
 vcs-localkms
 vcwallet
 wallet
+wallet-demo-app
 static-file-server

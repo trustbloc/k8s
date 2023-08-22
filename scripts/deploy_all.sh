@@ -15,7 +15,7 @@ set -e
 : ${DEPLOYMENT_ENV:=local}
 
 ## Should be deployed in the listed order
-: ${COMPONENTS=api-gateway auth-hydra edv kms vct orb resolver csh vcs vcs-v1 vault-server hub-auth hub-router wallet-web adapter-issuer adapter-rp}
+: ${COMPONENTS=api-gateway auth-hydra edv kms vct orb resolver csh vcs vcs-v1 vault-server hub-auth hub-router wallet-web adapter-issuer adapter-rp wallet-demo-app}
 DEPLOY_LIST=( $COMPONENTS )
 
 ## Map: component --> healthcheck(s)
@@ -36,6 +36,7 @@ declare -A HEALTCHECK_URL=(
     [wallet-web]="https://wallet.$DOMAIN/healthcheck https://vcwallet.$DOMAIN/healthcheck"
     [adapter-issuer]="https://adapter-issuer.$DOMAIN/healthcheck"
     [adapter-rp]="https://adapter-rp.$DOMAIN/healthcheck"
+    [wallet-demo-app]="https://wallet-demo-app.$DOMAIN/healthcheck"
 )
 ## Map: healthckeck --> http-code
 declare -A HEALTHCHECK_CODE=(
@@ -61,7 +62,9 @@ declare -A HEALTHCHECK_CODE=(
     [https://adapter-rp.$DOMAIN/healthcheck]=200
     [https://adapter-issuer.$DOMAIN/healthcheck]=200
     [https://auth-hydra.$DOMAIN/health/ready]=200
-    [https://auth-hydra-admin.$DOMAIN/health/ready]=200)
+    [https://auth-hydra-admin.$DOMAIN/health/ready]=200
+    [https://wallet-demo-app.$DOMAIN/health/ready]=200
+)
 
 # healthCheck function -- copied from sandbox
 RED=$(tput setaf 1)
