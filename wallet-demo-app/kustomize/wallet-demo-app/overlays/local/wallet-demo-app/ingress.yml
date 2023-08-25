@@ -1,0 +1,29 @@
+#
+# Copyright Gen Digital Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wallet-demo-app
+  labels:
+    app: wallet-demo-app
+spec:
+  tls:
+  - hosts:
+      - wallet-demo-app.||DOMAIN||
+    secretName: INGRESS_TLS_SECRET
+  rules:
+  - host: wallet-demo-app.||DOMAIN||
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: wallet-demo-app
+            port:
+              name: http

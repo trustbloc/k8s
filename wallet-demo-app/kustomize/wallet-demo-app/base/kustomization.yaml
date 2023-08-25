@@ -1,0 +1,18 @@
+#
+# Copyright Gen Digital Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+generatorOptions: {}
+
+resources:
+- deployment.yml
+- service.yml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: wallet-demo-app
+  newName: ghcr.io/trustbloc-cicd/wallet-demo-app
+  newTag: 1.2.2-snapshot-b08a949

@@ -1,0 +1,35 @@
+#
+# Copyright Gen Digital Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: wallet-demo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wallet-demo-app
+  template:
+    metadata:
+      labels:
+        app: wallet-demo-app
+    spec:
+      containers:
+      - name: wallet-demo-app
+        image: wallet-demo-app:latest
+        ports:
+          - containerPort: 80
+            protocol: TCP
+            name: http-port
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: http-port
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 5
