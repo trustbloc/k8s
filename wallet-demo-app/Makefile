@@ -19,7 +19,7 @@ OS 				= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH  				= $(shell uname -m | sed 's/x86_64/amd64/')
 
 #IMAGES
-WALLET_DEMO_APP_IMG				?= ghcr.io/trustbloc-cicd/wallet-demo-app:1.2.2-snapshot-b08a949
+WALLET_DEMO_APP_IMG				?= ghcr.io/trustbloc-cicd/wallet-demo-app:1.2.2-snapshot-a6a1a39
 
 
 # do not modify
