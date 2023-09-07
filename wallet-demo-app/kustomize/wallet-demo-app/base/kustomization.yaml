@@ -15,4 +15,4 @@ kind: Kustomization
 images:
 - name: wallet-demo-app
   newName: ghcr.io/trustbloc-cicd/wallet-demo-app
-  newTag: 1.2.2-snapshot-a6a1a39
+  newTag: 1.2.4-snapshot-dc9d264
