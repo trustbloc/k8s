@@ -24,9 +24,9 @@
     },
     {
       "issuer": {
-        "id": "ldp-orb-P256-JsonWebSignature2020",
+        "id": "ldp-ion-P256-JsonWebSignature2020",
         "version": "v1.0",
-        "name": "Test Issuer with vc-ldp signed with did-orb with P256 key and JsonWebSignature2020 signature",
+        "name": "Test Issuer with vc-ldp signed with did-ion with P256 key and JsonWebSignature2020 signature",
         "organizationID": "test-org",
         "url": "https://test-issuer.com",
         "active": true,
@@ -35,7 +35,7 @@
           "signatureRepresentation": 1,
           "keyType": "ECDSAP256DER",
           "format": "ldp",
-          "didMethod": "orb",
+          "didMethod": "ion",
           "status": {
             "type": "StatusList2021Entry"
           }
